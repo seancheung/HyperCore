@@ -44,7 +44,6 @@
     <Compile Include="Common\FORMAT.cs" />
     <Compile Include="Common\LANGUAGE.cs" />
     <Compile Include="Common\WEBSITE.cs" />
-    <Compile Include="Data\Internal\Card.cs" />
     <Compile Include="Data\Internal\ParseDetail.cs" />
     <Compile Include="Data\Internal\ParseID.cs" />
     <Compile Include="Data\Internal\ParsezID.cs" />
@@ -60,7 +59,6 @@
     <Compile Include="Exceptions\IOFileException.cs" />
     <Compile Include="Exceptions\ParseException.cs" />
     <Compile Include="Exceptions\RequestException.cs" />
-    <Compile Include="IO\Internal\Cards.cs" />
     <Compile Include="IO\Database.cs" />
     <Compile Include="IO\Internal\Merger.cs" />
     <Compile Include="Net\Downloader.cs" />

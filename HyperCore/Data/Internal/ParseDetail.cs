@@ -1,4 +1,5 @@
-﻿using HyperCore.Exceptions;
+﻿using HyperCore.Common;
+using HyperCore.Exceptions;
 using HyperCore.Net;
 using System;
 using System.Text.RegularExpressions;
@@ -32,6 +33,9 @@ namespace HyperCore.Data
 			{
 				return;
 			}
+
+			bool issplit = false;
+			bool isdoubleface = false;
 
 			#region Card Var
 			if (webdata.Contains("Other Variations"))
@@ -67,14 +71,14 @@ namespace HyperCore.Data
 			{
 				if (webdata.IndexOf("Converted Mana Cost:") != webdata.LastIndexOf("Converted Mana Cost:"))
 				{
-					card.issplit = true;
+					issplit = true;
 				}
 				else
 				{
-					card.isdoubleface = true;
+					isdoubleface = true;
 				}
 
-				if (card.isdoubleface)
+				if (isdoubleface)
 				{
 					int num25 = webdata.IndexOf("multiverseid=", webdata.LastIndexOf("<img src=\"../../Handlers/Image.ashx?multiverseid=")) + 13;
 					int num26 = webdata.IndexOf("&amp", num25);
@@ -303,7 +307,7 @@ namespace HyperCore.Data
 			}
 			#endregion
 
-			if (card.isdoubleface)
+			if (isdoubleface)
 			{
 				#region bID
 				try
@@ -487,7 +491,7 @@ namespace HyperCore.Data
 				}
 				#endregion
 			}
-			else if (card.issplit)
+			else if (issplit)
 			{
 				#region sType
 				try

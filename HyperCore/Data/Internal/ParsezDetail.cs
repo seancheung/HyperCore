@@ -1,6 +1,8 @@
 ﻿using HyperCore.Exceptions;
 using HyperCore.Net;
 using System;
+using HyperCore.Utilities;
+using HyperCore.Common;
 
 namespace HyperCore.Data
 {
@@ -141,7 +143,7 @@ namespace HyperCore.Data
 			}
 			#endregion
 
-			if (card.isdoubleface)
+			if (card.IsDoubleFaced())
 			{
 				#region zbName
 				try
@@ -232,7 +234,7 @@ namespace HyperCore.Data
 				}
 				#endregion
 			}
-			else if (card.issplit)
+			else if (card.IsSplit())
 			{
 				try
 				{

@@ -74,7 +74,7 @@ namespace HyperCore.Data
 			{
 				GetzID(card, LANGUAGE.Chinese_Traditional);
 			}
-			
+
 		}
 	}
 }

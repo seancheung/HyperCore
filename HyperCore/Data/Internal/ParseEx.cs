@@ -1,4 +1,5 @@
-﻿using HyperCore.Exceptions;
+﻿using HyperCore.Common;
+using HyperCore.Exceptions;
 using HyperCore.Utilities;
 using System;
 using System.Linq;
@@ -109,7 +110,7 @@ namespace HyperCore.Data
 				card.ColorCode += "C";
 			}
 			card.Color = card.Color.Trim();
-			if (card.isdoubleface)
+			if (card.IsDoubleFaced())
 			{
 				card.Color = String.Format("{0}|{1}", card.Color, card.ColorBside);
 			}

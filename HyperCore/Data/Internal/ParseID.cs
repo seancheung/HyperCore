@@ -1,4 +1,5 @@
-﻿using HyperCore.Exceptions;
+﻿using HyperCore.Common;
+using HyperCore.Exceptions;
 using HyperCore.Net;
 using System;
 using System.Collections.Generic;

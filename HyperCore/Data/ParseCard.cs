@@ -5,6 +5,7 @@ namespace HyperCore.Data
 {
 	public class ParseCard
 	{
+
 		/// <summary>
 		/// Get a list of cards with ID property filled
 		/// </summary>
@@ -46,7 +47,7 @@ namespace HyperCore.Data
 					throw;
 				}
 			}
-			
+
 		}
 
 		/// <summary>

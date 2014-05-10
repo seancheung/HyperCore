@@ -2,7 +2,6 @@
 using System.Xml.Serialization;
 namespace HyperCore.Common
 {
-
 	/// <summary>
 	/// Card class that contains all basic info
 	/// </summary>
@@ -197,6 +196,8 @@ namespace HyperCore.Common
 		/// Community rating of the card
 		/// </summary>
 		public string Rating { get; set; }
+
+		public string ColorBside;
 
 	}
 }

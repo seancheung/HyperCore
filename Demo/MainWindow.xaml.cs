@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using HyperCore.Common;
 using HyperCore.Data;
 using HyperCore.IO;
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Linq;
 
 namespace Demo
 {
@@ -37,7 +29,11 @@ namespace Demo
 			if (lbSets.SelectedValue != null)
 			{
 				var set = lbSets.SelectedValue.ToString().Split(new char[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
-
+				var cards = ParseCard.GetCards(set[0], set[1]);
+				foreach (var card in cards)
+				{
+					ParseCard.Parse(card,LANGUAGE.English);
+				}
 			}
 			
 		}
@@ -47,7 +43,9 @@ namespace Demo
 			if (lvCards.ItemsSource != null)
 			{
 				var path = String.Format("data{0}.xml", System.DateTime.Now.ToString("-yy-MM-dd-HH-mm-ss"));
-				Database.Save(lvCards.ItemsSource as IEnumerable<HyperCore.Common.Card>, path);
+				var data = lvCards.ItemsSource as IEnumerable<Card>;
+				var newdata = new List<Card>(data);
+				Database.Save(newdata, "data.xml");
 			}
 			
 		}
@@ -57,6 +55,7 @@ namespace Demo
 			var path = "data.xml";
 			var data = Database.Load(path);
 			lvCards.ItemsSource = data;
+			
 		}
 	}
 }
