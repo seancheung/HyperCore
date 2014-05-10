@@ -1,0 +1,28 @@
+﻿<Window x:Class="Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140*"/>
+            <ColumnDefinition Width="247*"/>
+            <ColumnDefinition Width="130*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox Name="lbSets" Margin="4"/>
+        <ListView Name="lvCards" Grid.Column="1" Margin="4">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding ID}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding SetCode}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Column="2" Orientation="Vertical">
+            <Button Height="40" Margin="4" Content="Refresh Sets" Click="Button_Click"/>
+            <Button Height="40" Margin="4" Content="Download Selected" Click="Button_Click_1"/>
+            <Button Height="40" Margin="4" Content="Save" Click="Button_Click_2"/>
+            <Button Height="40" Margin="4" Content="Load" Click="Button_Click_3"/>
+        </StackPanel>
+    </Grid>
+</Window>

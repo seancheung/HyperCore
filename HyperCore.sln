@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperCore", "HyperCore\HyperCore.csproj", "{31E320FF-FC81-4EA8-8136-328352497107}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{CBB1E031-7B93-4B19-85E7-C56554BA1C6E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31E320FF-FC81-4EA8-8136-328352497107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31E320FF-FC81-4EA8-8136-328352497107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31E320FF-FC81-4EA8-8136-328352497107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31E320FF-FC81-4EA8-8136-328352497107}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB1E031-7B93-4B19-85E7-C56554BA1C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB1E031-7B93-4B19-85E7-C56554BA1C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB1E031-7B93-4B19-85E7-C56554BA1C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB1E031-7B93-4B19-85E7-C56554BA1C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

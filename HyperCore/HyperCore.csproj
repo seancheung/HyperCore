@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{31E320FF-FC81-4EA8-8136-328352497107}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HyperCore</RootNamespace>
+    <AssemblyName>HyperCore</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Card.cs" />
+    <Compile Include="Common\FILETYPE.cs" />
+    <Compile Include="Common\FORMAT.cs" />
+    <Compile Include="Common\LANGUAGE.cs" />
+    <Compile Include="Common\WEBSITE.cs" />
+    <Compile Include="Data\Internal\Card.cs" />
+    <Compile Include="Data\Internal\ParseDetail.cs" />
+    <Compile Include="Data\Internal\ParseID.cs" />
+    <Compile Include="Data\Internal\ParsezID.cs" />
+    <Compile Include="Data\Internal\ParsezDetail.cs" />
+    <Compile Include="Data\Internal\ParseEx.cs" />
+    <Compile Include="Data\Internal\ParseLegality.cs" />
+    <Compile Include="Data\ParseCard.cs" />
+    <Compile Include="Data\ParseFormat.cs" />
+    <Compile Include="Data\DownloadImage.cs" />
+    <Compile Include="Data\ParseSet.cs" />
+    <Compile Include="Exceptions\DownloaderException.cs" />
+    <Compile Include="Exceptions\HyperException.cs" />
+    <Compile Include="Exceptions\IOFileException.cs" />
+    <Compile Include="Exceptions\ParseException.cs" />
+    <Compile Include="Exceptions\RequestException.cs" />
+    <Compile Include="IO\Internal\Cards.cs" />
+    <Compile Include="IO\Database.cs" />
+    <Compile Include="IO\Internal\Merger.cs" />
+    <Compile Include="Net\Downloader.cs" />
+    <Compile Include="Net\Request.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\CardTool.cs" />
+    <Compile Include="Utilities\FileType.cs" />
+    <Compile Include="Utilities\Language.cs" />
+    <Compile Include="Utilities\Html.cs" />
+    <Compile Include="Utilities\Characters.cs" />
+    <Compile Include="Utilities\ManaExtractor.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
