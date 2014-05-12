@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml.Serialization;
 namespace HyperCore.Common
 {
 	/// <summary>
@@ -21,20 +22,23 @@ namespace HyperCore.Common
 	/// </summary>
 	public class Format
 	{
+		[XmlAttribute("type")]
 		/// <summary>
 		/// Type of the format
 		/// </summary>
-		public FORMAT Type { get; private set; }
+		public FORMAT Type { get; set; }
 
+		[XmlArray("sets"), XmlArrayItem("set")]
 		/// <summary>
 		/// A list that contains names of all legal sets
 		/// </summary>
-		public IEnumerable<string> LegalSets { get; private set; }
+		public List<string> LegalSets { get; set; }
 
+		[XmlArray("banned"), XmlArrayItem("name")]
 		/// <summary>
 		/// A list that contains names of all banned cards
 		/// </summary>
-		public IEnumerable<string> BannedCards { get; private set; }
+		public List<string> BannedCards { get; set; }
 
 		/// <summary>
 		/// Initialize with parameters
@@ -47,6 +51,12 @@ namespace HyperCore.Common
 			Type = format;
 			LegalSets = new List<string>(sets);
 			BannedCards = new List<string>(cards);
+		}
+
+		public Format()
+		{
+			LegalSets = new List<string>();
+			BannedCards = new List<string>();
 		}
 	}
 }

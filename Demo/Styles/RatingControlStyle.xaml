@@ -1,0 +1,43 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTemplate x:Key="StarToggle" TargetType="{x:Type ToggleButton}">
+        <Viewbox>
+            <Path Name="star" Fill="Gray" Data="F1 M 145.637,174.227 127.619,110.39 180.809,70.7577 114.528,68.1664 93.2725,5.33333 70.3262,67.569 4,68.3681 56.0988,109.423 36.3629,172.75 91.508,135.888 145.637,174.227 Z"/>
+        </Viewbox>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="star" Property="Fill" Value="Gold"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Key="StarIndicator" TargetType="{x:Type ProgressBar}">
+        <Grid>
+            <StackPanel Name="PART_Track" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Path  Fill="{TemplateBinding Foreground}" Stroke="Transparent" StrokeThickness="1" Data="M 5,0 4,4 0,4 3,7 2,11 5,9 6,9 9,11 8,7 11,4 7,4 6,0"/>
+                <Path  Fill="{TemplateBinding Foreground}" Stroke="Transparent" StrokeThickness="1" Data="M 5,0 4,4 0,4 3,7 2,11 5,9 6,9 9,11 8,7 11,4 7,4 6,0"/>
+                <Path  Fill="{TemplateBinding Foreground}" Stroke="Transparent" StrokeThickness="1" Data="M 5,0 4,4 0,4 3,7 2,11 5,9 6,9 9,11 8,7 11,4 7,4 6,0"/>
+                <Path  Fill="{TemplateBinding Foreground}" Stroke="Transparent" StrokeThickness="1" Data="M 5,0 4,4 0,4 3,7 2,11 5,9 6,9 9,11 8,7 11,4 7,4 6,0"/>
+                <Path  Fill="{TemplateBinding Foreground}" Stroke="Transparent" StrokeThickness="1" Data="M 5,0 4,4 0,4 3,7 2,11 5,9 6,9 9,11 8,7 11,4 7,4 6,0"/>
+            </StackPanel>
+            <Rectangle x:Name="PART_Indicator" Margin="0" Fill="{TemplateBinding Background}" HorizontalAlignment="Right"/>
+        </Grid>
+    </ControlTemplate>
+    
+    <Style x:Key="StarProgressBar" TargetType="ProgressBar">
+        <Setter Property="Foreground" Value="DodgerBlue"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Template" Value="{StaticResource StarIndicator}"/>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                    <SkewTransform AngleY="0" AngleX="0"/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

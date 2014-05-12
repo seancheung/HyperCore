@@ -197,6 +197,7 @@ namespace HyperCore.Common
 		/// </summary>
 		public string Rating { get; set; }
 
+		[XmlIgnore]
 		public string ColorBside;
 
 	}

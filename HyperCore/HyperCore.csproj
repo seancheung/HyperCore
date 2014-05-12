@@ -60,16 +60,19 @@
     <Compile Include="Exceptions\ParseException.cs" />
     <Compile Include="Exceptions\RequestException.cs" />
     <Compile Include="IO\Database.cs" />
+    <Compile Include="IO\Extern.cs" />
     <Compile Include="IO\Internal\Merger.cs" />
     <Compile Include="Net\Downloader.cs" />
     <Compile Include="Net\Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\CardTool.cs" />
+    <Compile Include="Utilities\Comparer.cs" />
     <Compile Include="Utilities\FileType.cs" />
     <Compile Include="Utilities\Language.cs" />
     <Compile Include="Utilities\Html.cs" />
     <Compile Include="Utilities\Characters.cs" />
     <Compile Include="Utilities\ManaExtractor.cs" />
+    <Compile Include="Utilities\Spliter.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

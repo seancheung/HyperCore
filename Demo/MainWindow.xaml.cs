@@ -5,57 +5,74 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
+using Microsoft.Win32;
+using HyperCore.Utilities;
 
 namespace Demo
 {
-	/// <summary>
-	/// MainWindow.xaml 的交互逻辑
-	/// </summary>
+
 	public partial class MainWindow : Window
 	{
+		private static string DBPath = "data.hd";
 		public MainWindow()
 		{
 			InitializeComponent();
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void ClickRefresh(object sender, RoutedEventArgs e)
 		{
-			var sets = ParseSet.Parse();
-			lbSets.ItemsSource = sets;
+			//var sets = ParseSet.Parse();
+			//lbSets.ItemsSource = sets;
+			lbSets.ItemsSource = Database.LoadSets(DBPath);
+			//Database.Save(sets, DBPath);
+			//Extern.VPT.Open("m14.deck");
 		}
 
-		private void Button_Click_1(object sender, RoutedEventArgs e)
+		private void ClickDownload(object sender, RoutedEventArgs e)
 		{
 			if (lbSets.SelectedValue != null)
 			{
-				var set = lbSets.SelectedValue.ToString().Split(new char[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
+				var set = lbSets.SelectedValue.ToString().SplitSetName();
 				var cards = ParseCard.GetCards(set[0], set[1]);
 				foreach (var card in cards)
 				{
-					ParseCard.Parse(card,LANGUAGE.English);
+					ParseCard.Parse(card, LANGUAGE.English);
 				}
 			}
-			
+
 		}
 
-		private void Button_Click_2(object sender, RoutedEventArgs e)
+		private void ClickSave(object sender, RoutedEventArgs e)
 		{
 			if (lvCards.ItemsSource != null)
 			{
-				var path = String.Format("data{0}.xml", System.DateTime.Now.ToString("-yy-MM-dd-HH-mm-ss"));
-				var data = lvCards.ItemsSource as IEnumerable<Card>;
-				var newdata = new List<Card>(data);
-				Database.Save(newdata, "data.xml");
+
+				SaveFileDialog dlg = new SaveFileDialog();
+				dlg.Filter = "Database(*.hd)|*.hd|All(*.*)|*.*";
+				dlg.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+				dlg.RestoreDirectory = true;
+				if (dlg.ShowDialog() == true)
+				{
+					var path = dlg.FileName;
+					var data = lvCards.ItemsSource as IEnumerable<Card>;
+					Database.Save(data, path);
+				}
 			}
-			
+
 		}
 
-		private void Button_Click_3(object sender, RoutedEventArgs e)
+		private void ClickOpen(object sender, RoutedEventArgs e)
 		{
-			var path = "data.xml";
-			var data = Database.Load(path);
-			lvCards.ItemsSource = data;
-			
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Database(*.hd)|*.hd|All(*.*)|*.*";
+			dlg.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+			dlg.RestoreDirectory = true;
+			if (dlg.ShowDialog() == true)
+			{
+				var path = dlg.FileName;
+				var data = Database.LoadCards(path);
+				lvCards.ItemsSource = data;
+			}
 		}
 	}
 }
