@@ -54,6 +54,7 @@
     <Compile Include="Data\ParseFormat.cs" />
     <Compile Include="Data\DownloadImage.cs" />
     <Compile Include="Data\ParseSet.cs" />
+    <Compile Include="Exceptions\CardMissingException.cs" />
     <Compile Include="Exceptions\DownloaderException.cs" />
     <Compile Include="Exceptions\HyperException.cs" />
     <Compile Include="Exceptions\IOFileException.cs" />
