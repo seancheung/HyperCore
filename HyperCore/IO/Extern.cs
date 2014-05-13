@@ -14,16 +14,32 @@ namespace HyperCore.IO
 			public class VPTCard
 			{
 				[XmlAttribute("set")]
-				public string SetCode { get; set; }
+				public string SetCode
+				{
+					get;
+					set;
+				}
 
 				[XmlAttribute("lang")]
-				public string Lang { get; set; }
+				public string Lang
+				{
+					get;
+					set;
+				}
 
 				[XmlAttribute("ver")]
-				public string Var { get; set; }
+				public string Var
+				{
+					get;
+					set;
+				}
 
 				[XmlAttribute("count")]
-				public int Count { get; set; }
+				public int Count
+				{
+					get;
+					set;
+				}
 
 				/// <summary>
 				/// Initializes a new instance of the VPTCard class.
@@ -52,10 +68,18 @@ namespace HyperCore.IO
 			public class VPTItem
 			{
 				[XmlAttribute("id")]
-				public string Name { get; set; }
+				public string Name
+				{
+					get;
+					set;
+				}
 
 				[XmlElement("card")]
-				public List<VPTCard> Cards { get; set; }
+				public List<VPTCard> Cards
+				{
+					get;
+					set;
+				}
 
 				/// <summary>
 				/// Initializes a new instance of the VPTItem class.
@@ -80,10 +104,18 @@ namespace HyperCore.IO
 			public class VPTSection
 			{
 				[XmlAttribute("id")]
-				public string ID { get; set; }
+				public string ID
+				{
+					get;
+					set;
+				}
 
 				[XmlElement("item")]
-				public List<VPTItem> items { get; set; }
+				public List<VPTItem> items
+				{
+					get;
+					set;
+				}
 
 				/// <summary>
 				/// Initializes a new instance of the VPTSection class.
@@ -108,19 +140,39 @@ namespace HyperCore.IO
 			public class VPTDeck
 			{
 				[XmlAttribute("game")]
-				public string Game { get; set; }
+				public string Game
+				{
+					get;
+					set;
+				}
 
 				[XmlAttribute("mode")]
-				public string Mode { get; set; }
+				public string Mode
+				{
+					get;
+					set;
+				}
 
 				[XmlAttribute("format")]
-				public string Format { get; set; }
+				public string Format
+				{
+					get;
+					set;
+				}
 
 				[XmlAttribute("name")]
-				public string Name { get; set; }
+				public string Name
+				{
+					get;
+					set;
+				}
 
 				[XmlElement("section")]
-				public List<VPTSection> Sections { get; set; }
+				public List<VPTSection> Sections
+				{
+					get;
+					set;
+				}
 
 				/// <summary>
 				/// Initializes a new instance of the VPTDeck class.
@@ -200,13 +252,29 @@ namespace HyperCore.IO
 		{
 			public class MWSCard
 			{
-				public int Count { get; set; }
+				public int Count
+				{
+					get;
+					set;
+				}
 
-				public string SetCode { get; set; }
+				public string SetCode
+				{
+					get;
+					set;
+				}
 
-				public string Name { get; set; }
+				public string Name
+				{
+					get;
+					set;
+				}
 
-				public string Var { get; set; }
+				public string Var
+				{
+					get;
+					set;
+				}
 
 				/// <summary>
 				/// Initializes a new instance of the MWSCard class with parameters.
@@ -227,15 +295,35 @@ namespace HyperCore.IO
 
 			public class MWSDeck
 			{
-				public string Name { get; set; }
+				public string Name
+				{
+					get;
+					set;
+				}
 
-				public string Comment { get; set; }
+				public string Comment
+				{
+					get;
+					set;
+				}
 
-				public List<MWSCard> MainBoardLands { get; set; }
+				public List<MWSCard> MainBoardLands
+				{
+					get;
+					set;
+				}
 
-				public List<MWSCard> MainBoardSpells { get; set; }
+				public List<MWSCard> MainBoardSpells
+				{
+					get;
+					set;
+				}
 
-				public List<MWSCard> SideBoard { get; set; }
+				public List<MWSCard> SideBoard
+				{
+					get;
+					set;
+				}
 
 				/// <summary>
 				/// Initializes a new instance of the MWSDeck class with parameters.
@@ -254,7 +342,11 @@ namespace HyperCore.IO
 				/// </summary>
 				public MWSDeck()
 				{
-
+					Name = String.Empty;
+					Comment = String.Empty;
+					MainBoardLands = new List<MWSCard>();
+					MainBoardSpells = new List<MWSCard>();
+					SideBoard = new List<MWSCard>();
 				}
 			}
 
@@ -447,5 +539,371 @@ namespace HyperCore.IO
 				}
 			}
 		}
+
+		public class MO
+		{
+			public class MOCard
+			{
+				public int Count
+				{
+					get;
+					set;
+				}
+
+				public string Name
+				{
+					get;
+					set;
+				}
+			}
+
+			public class MODeck
+			{
+				public string Name
+				{
+					get;
+					set;
+				}
+
+				public List<MOCard> MainBoard
+				{
+					get;
+					set;
+				}
+
+				public List<MOCard> SideBoard
+				{
+					get;
+					set;
+				}
+
+				/// <summary>
+				/// Initializes a new instance of the MODeck class.
+				/// </summary>
+				public MODeck(IEnumerable<MOCard> mainBoard, IEnumerable<MOCard> sideBoard, string name = "")
+				{
+					Name = name;
+					MainBoard = new List<MOCard>(mainBoard);
+					SideBoard = new List<MOCard>(sideBoard);
+				}
+
+				/// <summary>
+				/// Initializes a new instance of the MODeck class.
+				/// </summary>
+				public MODeck()
+				{
+					Name = String.Empty;
+					MainBoard = new List<MOCard>();
+					SideBoard = new List<MOCard>();
+				}
+			}
+
+			/// <summary>
+			/// Export as mo file
+			/// </summary>
+			/// <param name="deck"></param>
+			/// <param name="path"></param>
+			public static void Export(MODeck deck, string path)
+			{
+				try
+				{
+					using (var stream = new FileStream(path, FileMode.Create))
+					{
+						var sw = new StreamWriter(stream);
+
+						deck.MainBoard.ForEach(c => sw.WriteLine(String.Format("{0} {1}", c.Count, c.Name)));
+
+						sw.WriteLine("Sideboard");
+
+						deck.SideBoard.ForEach(c => sw.WriteLine(String.Format("{0} {1}", c.Count, c.Name)));
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new IOFileException(path, "IO Error happended when exporting mo file", ex);
+				}
+			}
+
+			/// <summary>
+			/// Open MO file
+			/// </summary>
+			/// <param name="path"></param>
+			/// <returns></returns>
+			public static MODeck Open(string path)
+			{
+				try
+				{
+					using (var stream = new FileStream(path, FileMode.Open))
+					{
+						var sr = new StreamReader(stream);
+						sr.BaseStream.Seek(0L, SeekOrigin.Begin);
+						MODeck deck = new MODeck();
+
+						var line = sr.ReadLine();
+						int partID = 0; // 0 - main, 1 - side
+						while (line != null)
+						{
+
+							if (line.Contains("Sideboard"))
+							{
+								partID = 1;
+							}
+							else if (!string.IsNullOrWhiteSpace(line))
+							{
+								MOCard card = new MOCard();
+
+								if (partID == 0)
+								{
+									var idx = line.IndexOf(" ");
+									if (idx > 0)
+									{
+										var count = line.Remove(idx).Trim();
+										var name = line.Substring(idx).Trim();
+										int cnt = 0;
+										if (Int32.TryParse(count, out cnt))
+										{
+											card.Count = cnt;
+											card.Name = name;
+
+											deck.MainBoard.Add(card);
+										}
+
+									}
+
+								}
+								else
+								{
+									var idx = line.IndexOf(" ");
+									if (idx > 0)
+									{
+										var count = line.Remove(idx).Trim();
+										var name = line.Substring(idx).Trim();
+										int cnt;
+										if (Int32.TryParse(count, out cnt))
+										{
+											card.Count = cnt;
+											card.Name = name;
+
+											deck.SideBoard.Add(card);
+										}
+
+									}
+								}
+							}
+
+							line = sr.ReadLine();
+						}
+
+						return deck;
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new IOFileException(path, "IO Error happended when opening mo file", ex);
+				}
+
+			}
+		}
+
+		public class MAGE
+		{
+			public class MAGECard
+			{
+				public int Count
+				{
+					get;
+					set;
+				}
+
+				public string SetCode
+				{
+					get;
+					set;
+				}
+
+				public string Number
+				{
+					get;
+					set;
+				}
+
+				public string Name
+				{
+					get;
+					set;
+				}
+
+			}
+
+			public class MAGEDeck
+			{
+				public string Name
+				{
+					get;
+					set;
+				}
+
+				public List<MAGECard> MainBoard
+				{
+					get;
+					set;
+				}
+
+				public List<MAGECard> SideBoard
+				{
+					get;
+					set;
+				}
+
+				/// <summary>
+				/// Initializes a new instance of the MageDeck class.
+				/// </summary>
+				public MAGEDeck(IEnumerable<MAGECard> mainBoard, IEnumerable<MAGECard> sideBoard, string name = "")
+				{
+					Name = name;
+					MainBoard = new List<MAGECard>(mainBoard);
+					SideBoard = new List<MAGECard>(sideBoard);
+				}
+
+				/// <summary>
+				/// Initializes a new instance of the MageDeck class.
+				/// </summary>
+				public MAGEDeck()
+				{
+					Name = String.Empty;
+					MainBoard = new List<MAGECard>();
+					SideBoard = new List<MAGECard>();
+				}
+			}
+
+			/// <summary>
+			/// Export Mage file
+			/// </summary>
+			/// <param name="deck"></param>
+			/// <param name="path"></param>
+			public static void Export(MAGEDeck deck, string path)
+			{
+				try
+				{
+					using (var stream = new FileStream(path, FileMode.Create))
+					{
+						var sw = new StreamWriter(stream);
+
+						sw.WriteLine("NAME: " + deck.Name);
+
+						deck.MainBoard.ForEach(c => sw.WriteLine(String.Format("{0} [{1}:{2}] {3}", c.Count, c.SetCode, c.Number, c.Name)));
+
+						deck.SideBoard.ForEach(c => sw.WriteLine(String.Format("SB: {0} [{1}:{2}] {3}", c.Count, c.SetCode, c.Number, c.Name)));
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new IOFileException(path, "IO Error happended when exporting mage file", ex);
+				}
+			}
+
+			/// <summary>
+			/// Open Mage file
+			/// </summary>
+			/// <param name="path"></param>
+			/// <returns></returns>
+			public static MAGEDeck Open(string path)
+			{
+				try
+				{
+					using (var stream = new FileStream(path, FileMode.Open))
+					{
+						var sr = new StreamReader(stream);
+						sr.BaseStream.Seek(0L, SeekOrigin.Begin);
+						MAGEDeck deck = new MAGEDeck();
+
+						var line = sr.ReadLine();
+
+						while (line != null)
+						{
+							if (line.Contains("["))
+							{
+								MAGECard card = new MAGECard();
+
+								if (line.Contains("SB:"))
+								{
+									var idxa = line.IndexOf("[");
+									var idxb = line.IndexOf("]");
+
+									if (idxa > 0 && idxb > idxa)
+									{
+										var idxc = line.IndexOf(":", idxa);
+										if (idxc > idxa && idxc < idxb)
+										{
+											var count = line.Remove(idxa).Trim();
+											var setcode = line.Substring(idxa + 1, idxc - idxa).Trim();
+											var number = line.Substring(idxc + 1, idxb - idxc).Trim();
+											var name = line.Substring(idxc + 1).Replace("SB:", string.Empty).Trim();
+											int cnt;
+
+											if (Int32.TryParse(count, out cnt))
+											{
+												card.Name = name;
+												card.Count = cnt;
+												card.Number = number;
+												card.SetCode = setcode;
+
+												deck.SideBoard.Add(card);
+											}
+
+										}
+
+									}
+								}
+								else
+								{
+									var idxa = line.IndexOf("[");
+									var idxb = line.IndexOf("]");
+
+									if (idxa > 0 && idxb > idxa)
+									{
+										var idxc = line.IndexOf(":", idxa);
+										if (idxc > idxa && idxc < idxb)
+										{
+											var count = line.Remove(idxa).Trim();
+											var setcode = line.Substring(idxa + 1, idxc - idxa).Trim();
+											var number = line.Substring(idxc + 1, idxb - idxc).Trim();
+											var name = line.Substring(idxc + 1).Trim();
+											int cnt;
+
+											if (Int32.TryParse(count, out cnt))
+											{
+												card.Name = name;
+												card.Count = cnt;
+												card.Number = number;
+												card.SetCode = setcode;
+
+												deck.MainBoard.Add(card);
+											}
+
+										}
+
+									}
+
+								}
+							}
+							else if (!string.IsNullOrWhiteSpace(line))
+							{
+								deck.Name = line.Replace("NAME:", string.Empty).Replace("name:", string.Empty).Trim();
+							}
+
+							line = sr.ReadLine();
+						}
+
+						return deck;
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new IOFileException(path, "IO Error happended when opening mage file", ex);
+				}
+			}
+		}
+
 	}
 }

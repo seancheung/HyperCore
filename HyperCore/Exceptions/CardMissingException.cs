@@ -33,11 +33,12 @@ namespace HyperCore.Exceptions
 		/// <summary>
 		/// Initializes a new instance of the CardMissingException class.
 		/// </summary>
-		public CardMissingException(string message, Exception inner, string @set, string number)
+		public CardMissingException(string message, Exception inner, string @set, string number,string setcode = "")
 			: base("{0}\n{1} - {2}", inner, message, set, number)
 		{
 			Set = @set;
 			Number = number;
+			SetCode = setcode;
 		}
 	}
 }

@@ -24,7 +24,13 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <ComboBox/>
-            <ListBox Name="lbSets" Margin="4" Grid.Row="1"/>
+            <ListBox Name="lbSets" Margin="4" Grid.Row="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="2"/>
         <Grid Grid.Column="2">
