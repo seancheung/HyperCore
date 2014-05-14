@@ -65,7 +65,7 @@ namespace Demo
 
 		}
 
-		private void Button_Open(object sender, RoutedEventArgs e)
+		private void Button_Load(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "Database(*.hd)|*.hd|All(*.*)|*.*";
@@ -94,6 +94,29 @@ namespace Demo
 				}
 			}
 			
+		}
+
+		private void Button_Export(object sender, RoutedEventArgs e)
+		{
+			if (deck.MainBoard.Count + deck.SideBoard.Count > 0)
+			{
+				new Extern(DBPath).Export(deck, "mydeck.deck", FILETYPE.Virtual_Play_Table);
+			}
+			
+		}
+
+		private void Button_Open(object sender, RoutedEventArgs e)
+		{
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Virtual Play Table(*.deck)|*.deck|All(*.*)|*.*";
+			dlg.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+			dlg.RestoreDirectory = true;
+			if (dlg.ShowDialog() == true)
+			{
+				var path = dlg.FileName;
+				deck = new Extern(DBPath).Open(path);
+				gdDeck.DataContext = deck;
+			}
 		}
 	}
 }

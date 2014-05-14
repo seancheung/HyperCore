@@ -141,8 +141,10 @@
             <Button Height="40" Margin="4" Content="Refresh Sets" Click="Button_Refresh"/>
             <Button Height="40" Margin="4" Content="Download Selected" Click="Button_Download"/>
             <Button Height="40" Margin="4" Content="Save" Click="Button_Save"/>
-            <Button Height="40" Margin="4" Content="Load" Click="Button_Open"/>
+            <Button Height="40" Margin="4" Content="Load" Click="Button_Load"/>
             <Button Height="40" Margin="4" Content="Add" Click="Button_Add"/>
+            <Button Height="40" Margin="4" Content="Export" Click="Button_Export"/>
+            <Button Height="40" Margin="4" Content="Open" Click="Button_Open"/>
         </StackPanel>
     </Grid>
 </Window>

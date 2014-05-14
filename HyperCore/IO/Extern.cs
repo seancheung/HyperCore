@@ -11,6 +11,8 @@ namespace HyperCore.IO
 {
 	public class Extern
 	{
+		public string DataPath { get; private set; }
+
 		public class VPT
 		{
 			[XmlType("card")]
@@ -114,7 +116,7 @@ namespace HyperCore.IO
 				}
 
 				[XmlElement("item")]
-				public List<VPTItem> items
+				public List<VPTItem> Items
 				{
 					get;
 					set;
@@ -126,7 +128,7 @@ namespace HyperCore.IO
 				public VPTSection(string iD, List<VPTItem> items)
 				{
 					ID = iD;
-					this.items = items;
+					this.Items = items;
 				}
 
 				/// <summary>
@@ -135,7 +137,7 @@ namespace HyperCore.IO
 				public VPTSection()
 				{
 					ID = String.Empty;
-					items = new List<VPTItem>();
+					Items = new List<VPTItem>();
 				}
 			}
 
@@ -207,7 +209,7 @@ namespace HyperCore.IO
 			/// </summary>
 			/// <param name="path"></param>
 			/// <returns></returns>
-			public static VPTDeck Open(string path)
+			internal static VPTDeck Open(string path)
 			{
 				try
 				{
@@ -230,7 +232,7 @@ namespace HyperCore.IO
 			/// </summary>
 			/// <param name="deck"></param>
 			/// <param name="path"></param>
-			public static void Export(VPTDeck deck, string path)
+			internal static void Export(VPTDeck deck, string path)
 			{
 				try
 				{
@@ -364,7 +366,7 @@ namespace HyperCore.IO
 			/// </summary>
 			/// <param name="path"></param>
 			/// <returns></returns>
-			public static MWSDeck Open(string path)
+			internal static MWSDeck Open(string path)
 			{
 				try
 				{
@@ -388,97 +390,97 @@ namespace HyperCore.IO
 
 								switch (partID)
 								{
-								case 0:
-									if (deck.Comment == null)
-									{
-										deck.Comment = line;
-									}
-									else
-									{
-										deck.Comment += line;
-									}
-									break;
-								case 1:
-									var idxa = line.IndexOf("[");
-									var idxb = line.IndexOf("]");
-
-									if (idxa > 0 && idxb > idxa)
-									{
-										MWSCard card = new MWSCard();
-
-										var count = line.Remove(idxa).Trim();
-										card.Count = Convert.ToInt32(count);
-
-										var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa) : string.Empty;
-										card.SetCode = setcode.Trim();
-
-										var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
-										card.Name = name.Trim();
-
-										deck.MainBoardSpells.Add(card);
-									}
-									break;
-								case 2:
-
-									idxa = line.IndexOf("[");
-									idxb = line.IndexOf("]");
-
-									if (idxa > 0 && idxb > idxa)
-									{
-										MWSCard card = new MWSCard();
-
-										var count = line.Remove(idxa).Trim();
-										card.Count = Convert.ToInt32(count);
-
-										var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa) : string.Empty;
-										card.SetCode = setcode.Trim();
-
-										var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
-										card.Name = name.Trim();
-
-										var idxc = line.IndexOf("(");
-										var idxd = line.IndexOf(")");
-										if (idxc > 0 && idxd > idxc)
+									case 0:
+										if (deck.Comment == null)
 										{
-											var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc) : string.Empty;
-											card.Var = var.Trim();
-											card.Name = name.Remove(name.IndexOf("("));
+											deck.Comment = line;
 										}
-
-										deck.MainBoardLands.Add(card);
-									}
-									break;
-								case 3:
-									idxa = line.IndexOf("[");
-									idxb = line.IndexOf("]");
-
-									if (idxa > 0 && idxb > idxa)
-									{
-										MWSCard card = new MWSCard();
-
-										var count = line.Remove(idxa).Replace("SB:", string.Empty).Trim();
-										card.Count = Convert.ToInt32(count);
-
-										var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa) : string.Empty;
-										card.SetCode = setcode.Trim();
-
-										var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
-										card.Name = name.Trim();
-
-										var idxc = line.IndexOf("(");
-										var idxd = line.IndexOf(")");
-										if (idxc > 0 && idxd > idxc)
+										else
 										{
-											var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc) : string.Empty;
-											card.Var = var.Trim();
-											card.Name = name.Remove(name.IndexOf("("));
+											deck.Comment += line;
 										}
+										break;
+									case 1:
+										var idxa = line.IndexOf("[");
+										var idxb = line.IndexOf("]");
 
-										deck.SideBoard.Add(card);
-									}
-									break;
-								default:
-									break;
+										if (idxa > 0 && idxb > idxa)
+										{
+											MWSCard card = new MWSCard();
+
+											var count = line.Remove(idxa).Trim();
+											card.Count = Convert.ToInt32(count);
+
+											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa) : string.Empty;
+											card.SetCode = setcode.Trim();
+
+											var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
+											card.Name = name.Trim();
+
+											deck.MainBoardSpells.Add(card);
+										}
+										break;
+									case 2:
+
+										idxa = line.IndexOf("[");
+										idxb = line.IndexOf("]");
+
+										if (idxa > 0 && idxb > idxa)
+										{
+											MWSCard card = new MWSCard();
+
+											var count = line.Remove(idxa).Trim();
+											card.Count = Convert.ToInt32(count);
+
+											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa) : string.Empty;
+											card.SetCode = setcode.Trim();
+
+											var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
+											card.Name = name.Trim();
+
+											var idxc = line.IndexOf("(");
+											var idxd = line.IndexOf(")");
+											if (idxc > 0 && idxd > idxc)
+											{
+												var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc) : string.Empty;
+												card.Var = var.Trim();
+												card.Name = name.Remove(name.IndexOf("("));
+											}
+
+											deck.MainBoardLands.Add(card);
+										}
+										break;
+									case 3:
+										idxa = line.IndexOf("[");
+										idxb = line.IndexOf("]");
+
+										if (idxa > 0 && idxb > idxa)
+										{
+											MWSCard card = new MWSCard();
+
+											var count = line.Remove(idxa).Replace("SB:", string.Empty).Trim();
+											card.Count = Convert.ToInt32(count);
+
+											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa) : string.Empty;
+											card.SetCode = setcode.Trim();
+
+											var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
+											card.Name = name.Trim();
+
+											var idxc = line.IndexOf("(");
+											var idxd = line.IndexOf(")");
+											if (idxc > 0 && idxd > idxc)
+											{
+												var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc) : string.Empty;
+												card.Var = var.Trim();
+												card.Name = name.Remove(name.IndexOf("("));
+											}
+
+											deck.SideBoard.Add(card);
+										}
+										break;
+									default:
+										break;
 								}
 
 							}
@@ -519,7 +521,7 @@ namespace HyperCore.IO
 			/// </summary>
 			/// <param name="deck"></param>
 			/// <param name="path"></param>
-			public static void Export(MWSDeck deck, string path)
+			internal static void Export(MWSDeck deck, string path)
 			{
 				try
 				{
@@ -612,7 +614,7 @@ namespace HyperCore.IO
 			/// </summary>
 			/// <param name="deck"></param>
 			/// <param name="path"></param>
-			public static void Export(MODeck deck, string path)
+			internal static void Export(MODeck deck, string path)
 			{
 				try
 				{
@@ -638,7 +640,7 @@ namespace HyperCore.IO
 			/// </summary>
 			/// <param name="path"></param>
 			/// <returns></returns>
-			public static MODeck Open(string path)
+			internal static MODeck Open(string path)
 			{
 				try
 				{
@@ -790,7 +792,7 @@ namespace HyperCore.IO
 			/// </summary>
 			/// <param name="deck"></param>
 			/// <param name="path"></param>
-			public static void Export(MAGEDeck deck, string path)
+			internal static void Export(MAGEDeck deck, string path)
 			{
 				try
 				{
@@ -816,7 +818,7 @@ namespace HyperCore.IO
 			/// </summary>
 			/// <param name="path"></param>
 			/// <returns></returns>
-			public static MAGEDeck Open(string path)
+			internal static MAGEDeck Open(string path)
 			{
 				try
 				{
@@ -915,6 +917,14 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
+		/// Initializes a new instance of the Extern class.
+		/// </summary>
+		public Extern(string dataPath)
+		{
+			DataPath = dataPath;
+		}
+
+		/// <summary>
 		/// Open deck files
 		/// </summary>
 		/// <param name="path"></param>
@@ -928,10 +938,10 @@ namespace HyperCore.IO
 			{
 				try
 				{
-					var database = Database.LoadCards("");
+					var database = Database.LoadCards(DataPath);
 					var vdeck = VPT.Open(path);
-					vdeck.Sections[0].items.ForEach(i => deck.MainBoard.Add(ConvertToCard(i, database), i.Cards.Sum(c => c.Count)));
-					vdeck.Sections[1].items.ForEach(i => deck.SideBoard.Add(ConvertToCard(i, database), i.Cards.Sum(c => c.Count)));
+					vdeck.Sections[0].Items.ForEach(i => deck.MainBoard.Add(ConvertToCard(i, database), i.Cards.Sum(c => c.Count)));
+					vdeck.Sections[1].Items.ForEach(i => deck.SideBoard.Add(ConvertToCard(i, database), i.Cards.Sum(c => c.Count)));
 					deck.Name = vdeck.Name;
 					MODE mode;
 					if (Enum.TryParse<MODE>(vdeck.Mode, true, out mode))
@@ -955,7 +965,7 @@ namespace HyperCore.IO
 			{
 				try
 				{
-					var database = Database.LoadCards("");
+					var database = Database.LoadCards(DataPath);
 					var mdeck = MWS.Open(path);
 					mdeck.MainBoardLands.ForEach(c => deck.MainBoard.Add(ConvertToCard(c, database), c.Count));
 					mdeck.MainBoardSpells.ForEach(c => deck.MainBoard.Add(ConvertToCard(c, database), c.Count));
@@ -981,7 +991,7 @@ namespace HyperCore.IO
 					{
 						return null;
 					}
-					var database = Database.LoadCards("");
+					var database = Database.LoadCards(DataPath);
 					odeck.MainBoard.ForEach(c => deck.MainBoard.Add(ConvertToCard(c, database), c.Count));
 					odeck.SideBoard.ForEach(c => deck.SideBoard.Add(ConvertToCard(c, database), c.Count));
 					deck.Name = odeck.Name;
@@ -990,7 +1000,7 @@ namespace HyperCore.IO
 				}
 				else
 				{
-					var database = Database.LoadCards("");
+					var database = Database.LoadCards(DataPath);
 					gdeck.MainBoard.ForEach(c => deck.MainBoard.Add(ConvertToCard(c, database), c.Count));
 					gdeck.SideBoard.ForEach(c => deck.SideBoard.Add(ConvertToCard(c, database), c.Count));
 					deck.Name = gdeck.Name;
@@ -1007,24 +1017,238 @@ namespace HyperCore.IO
 
 		}
 
+		/// <summary>
+		/// Export deck to a specified filetype
+		/// </summary>
+		/// <param name="deck"></param>
+		/// <param name="path"></param>
+		/// <param name="fileType"></param>
+		public void Export(Deck deck, string path, FILETYPE fileType)
+		{
+			try
+			{
+				switch (fileType)
+				{
+					case FILETYPE.Virtual_Play_Table:
+						VPT.Export(ConvertToVDeck(deck), path);
+						break;
+					case FILETYPE.Magic_Workstation:
+						MWS.Export(ConvertToMDeck(deck), path);
+						break;
+					case FILETYPE.Mage:
+						MAGE.Export(ConvertToGDeck(deck), path);
+						break;
+					case FILETYPE.Magic_Online:
+						MO.Export(ConvertToODeck(deck), path);
+						break;
+					default:
+						throw new IOFileException(path, "File type not supported", null);
+				}
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
 		private Card ConvertToCard(VPT.VPTItem item, IEnumerable<Card> database)
 		{
-			return database.First(c => item.Cards[0].SetCode == c.SetCode && item.Name == c.GetLegalName());
+			var res = database.First(c => item.Cards[0].SetCode == c.SetCode && item.Name == c.GetLegalName());
+			if (res != null)
+			{
+				return res;
+			}
+			else
+			{
+				throw new CardMissingException("Card not found when loading vpt deck.", null, item.Name, item.Cards[0].SetCode);
+			}
 		}
 
 		private Card ConvertToCard(MWS.MWSCard card, IEnumerable<Card> database)
 		{
-			return database.First(c => card.SetCode == c.SetCode && card.Name == c.GetLegalName());
+			var res = database.First(c => card.SetCode == c.SetCode && card.Name == c.GetLegalName());
+			if (res != null)
+			{
+				return res;
+			}
+			else
+			{
+				throw new CardMissingException("Card not found when loading vpt deck.", null, card.Name, card.SetCode);
+			}
 		}
 
 		private Card ConvertToCard(MO.MOCard card, IEnumerable<Card> database)
 		{
-			return database.First(c => card.Name == c.GetLegalName());
+			var res = database.First(c => card.Name == c.GetLegalName());
+			if (res != null)
+			{
+				return res;
+			}
+			else
+			{
+				throw new CardMissingException("Card not found when loading vpt deck.", null, card.Name, "Unknown");
+			}
 		}
 
 		private Card ConvertToCard(MAGE.MAGECard card, IEnumerable<Card> database)
 		{
-			return database.First(c => card.Name == c.GetLegalName() && card.SetCode == c.SetCode);
+			var res = database.First(c => card.Name == c.GetLegalName() && card.SetCode == c.SetCode);
+			if (res != null)
+			{
+				return res;
+			}
+			else
+			{
+				throw new CardMissingException("Card not found when loading vpt deck.", null, card.Name, card.SetCode);
+			}
+		}
+
+		private VPT.VPTDeck ConvertToVDeck(Deck deck)
+		{
+			try
+			{
+				VPT.VPTSection sectionM = new VPT.VPTSection();
+				sectionM.ID = "main";
+				foreach (KeyValuePair<Card, int> kv in deck.MainBoard)
+				{
+					VPT.VPTCard card = new VPT.VPTCard(kv.Key.SetCode, LANGUAGE.English.GetLangCode(), kv.Key.Var, kv.Value);
+					VPT.VPTItem item = new VPT.VPTItem();
+					item.Name = kv.Key.Name;
+					item.Cards.Add(card);
+					sectionM.Items.Add(item);
+				}
+
+				VPT.VPTSection sectionS = new VPT.VPTSection();
+				sectionS.ID = "sideboard";
+				foreach (KeyValuePair<Card, int> kv in deck.SideBoard)
+				{
+					VPT.VPTCard card = new VPT.VPTCard(kv.Key.SetCode, "ENG", kv.Key.Var, kv.Value);
+					VPT.VPTItem item = new VPT.VPTItem();
+					item.Name = kv.Key.Name;
+					item.Cards.Add(card);
+					sectionS.Items.Add(item);
+				}
+
+				VPT.VPTDeck vdeck = new VPT.VPTDeck("mtg", deck.Mode.ToString(), deck.Format.ToString(), deck.Name, new List<VPT.VPTSection>() { sectionM, sectionS });
+
+				return vdeck;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		private MWS.MWSDeck ConvertToMDeck(Deck deck)
+		{
+			try
+			{
+				MWS.MWSDeck mdeck = new MWS.MWSDeck();
+				foreach (KeyValuePair<Card, int> kv in deck.MainBoard)
+				{
+					MWS.MWSCard mcard = new MWS.MWSCard();
+					mcard.Name = kv.Key.Name;
+					mcard.SetCode = kv.Key.SetCode;
+					mcard.Var = kv.Key.Var;
+					mcard.Count = kv.Value;
+
+					if (kv.Key.TypeCode.Contains("L"))
+					{
+						mdeck.MainBoardLands.Add(mcard);
+					}
+					else
+					{
+						mdeck.MainBoardSpells.Add(mcard);
+					}
+				}
+
+				foreach (KeyValuePair<Card, int> kv in deck.SideBoard)
+				{
+					MWS.MWSCard mcard = new MWS.MWSCard();
+					mcard.Name = kv.Key.Name;
+					mcard.SetCode = kv.Key.SetCode;
+					mcard.Var = kv.Key.Var;
+					mcard.Count = kv.Value;
+
+					mdeck.SideBoard.Add(mcard);
+				}
+
+				mdeck.Name = deck.Name;
+				mdeck.Comment = deck.Comment;
+
+				return mdeck;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		private MAGE.MAGEDeck ConvertToGDeck(Deck deck)
+		{
+			try
+			{
+				MAGE.MAGEDeck gdeck = new MAGE.MAGEDeck();
+				foreach (KeyValuePair<Card, int> kv in deck.MainBoard)
+				{
+					MAGE.MAGECard gcard = new MAGE.MAGECard();
+					gcard.Name = kv.Key.Name;
+					gcard.SetCode = kv.Key.SetCode;
+					gcard.Number = kv.Key.Number;
+					gcard.Count = kv.Value;
+
+					gdeck.MainBoard.Add(gcard);
+				}
+
+				foreach (KeyValuePair<Card, int> kv in deck.SideBoard)
+				{
+					MAGE.MAGECard gcard = new MAGE.MAGECard();
+					gcard.Name = kv.Key.Name;
+					gcard.SetCode = kv.Key.SetCode;
+					gcard.Number = kv.Key.Number;
+					gcard.Count = kv.Value;
+
+					gdeck.SideBoard.Add(gcard);
+				}
+
+				gdeck.Name = deck.Name;
+
+				return gdeck;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		private MO.MODeck ConvertToODeck(Deck deck)
+		{
+			try
+			{
+				MO.MODeck odeck = new MO.MODeck();
+				foreach (KeyValuePair<Card, int> kv in deck.MainBoard)
+				{
+					MO.MOCard ocard = new MO.MOCard();
+					ocard.Name = kv.Key.Name;
+					ocard.Count = kv.Value;
+					odeck.MainBoard.Add(ocard);
+				}
+
+				foreach (KeyValuePair<Card, int> kv in deck.SideBoard)
+				{
+					MO.MOCard ocard = new MO.MOCard();
+					ocard.Name = kv.Key.Name;
+					ocard.Count = kv.Value;
+					odeck.SideBoard.Add(ocard);
+				}
+				odeck.Name = deck.Name;
+
+				return odeck;
+			}
+			catch
+			{
+				throw;
+			}
 		}
 	}
 }
