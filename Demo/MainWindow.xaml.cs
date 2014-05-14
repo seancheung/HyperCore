@@ -13,22 +13,26 @@ namespace Demo
 
 	public partial class MainWindow : Window
 	{
-		private static string DBPath = "data.hd";
+		public static string DBPath = "data.hd";
+
+		Deck deck = new Deck();
+
 		public MainWindow()
 		{
 			InitializeComponent();
+			gdDeck.DataContext = deck;
 		}
 
-		private void ClickRefresh(object sender, RoutedEventArgs e)
+		private void Button_Refresh(object sender, RoutedEventArgs e)
 		{
 			//var sets = ParseSet.Parse();
 			//lbSets.ItemsSource = sets;
-			lbSets.ItemsSource = Database.LoadSets(DBPath);
+			//lbSets.ItemsSource = Database.LoadSets(DBPath);
 			//Database.Save(sets, DBPath);
 			//Extern.VPT.Open("m14.deck");
 		}
 
-		private void ClickDownload(object sender, RoutedEventArgs e)
+		private void Button_Download(object sender, RoutedEventArgs e)
 		{
 			if (lbSets.SelectedValue != null)
 			{
@@ -42,7 +46,7 @@ namespace Demo
 
 		}
 
-		private void ClickSave(object sender, RoutedEventArgs e)
+		private void Button_Save(object sender, RoutedEventArgs e)
 		{
 			if (lvCards.ItemsSource != null)
 			{
@@ -61,7 +65,7 @@ namespace Demo
 
 		}
 
-		private void ClickOpen(object sender, RoutedEventArgs e)
+		private void Button_Open(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Filter = "Database(*.hd)|*.hd|All(*.*)|*.*";
@@ -73,6 +77,23 @@ namespace Demo
 				var data = Database.LoadCards(path);
 				lvCards.ItemsSource = data;
 			}
+		}
+
+		private void Button_Add(object sender, RoutedEventArgs e)
+		{
+			if (lvCards.SelectedValue != null)
+			{
+				var card = lvCards.SelectedValue as Card;
+				if (!deck.MainBoard.ContainsKey(card))
+				{
+					deck.MainBoard.Add(card, 1);
+				}
+				else
+				{
+					deck.MainBoard[card] += 1;
+				}
+			}
+			
 		}
 	}
 }

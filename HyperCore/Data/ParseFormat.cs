@@ -175,6 +175,11 @@ namespace HyperCore.Data
 			foreach (FORMAT format in Enum.GetValues(typeof(FORMAT)))
 			{
 				Format result = null;
+				if (format == FORMAT.Default)
+				{
+					continue;
+				}
+				
 				try
 				{
 					result = Parse(format);

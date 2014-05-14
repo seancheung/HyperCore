@@ -265,5 +265,17 @@ namespace HyperCore.Utilities
 					yield return item.Substring(2);
 			}
 		}
+
+		public static string GetLegalName(this Card card)
+		{
+			if (card.IsDoubleFaced())
+			{
+				return new List<string>(card.GetNames())[0];
+			}
+			else
+			{
+				return card.Name;
+			}
+		}
 	}
 }

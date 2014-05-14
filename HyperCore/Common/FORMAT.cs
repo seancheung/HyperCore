@@ -3,10 +3,11 @@ using System.Xml.Serialization;
 namespace HyperCore.Common
 {
 	/// <summary>
-	/// Format of the game
+	/// Format of the deck
 	/// </summary>
 	public enum FORMAT
 	{
+		Default,
 		Standard,
 		Modern,
 		Extended,

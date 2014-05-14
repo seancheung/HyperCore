@@ -40,9 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Card.cs" />
+    <Compile Include="Common\Deck.cs" />
     <Compile Include="Common\FILETYPE.cs" />
     <Compile Include="Common\FORMAT.cs" />
     <Compile Include="Common\LANGUAGE.cs" />
+    <Compile Include="Common\MODE.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\WEBSITE.cs" />
     <Compile Include="Data\Internal\ParseDetail.cs" />
     <Compile Include="Data\Internal\ParseID.cs" />
