@@ -19,6 +19,7 @@ namespace HyperCore.Data
 
 		/// <summary>
 		/// Fill card properties
+		/// If card is not found, it'll be set NULL
 		/// </summary>
 		/// <param name="card"></param>
 		/// <param name="lang"></param>

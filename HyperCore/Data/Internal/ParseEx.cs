@@ -249,6 +249,22 @@ namespace HyperCore.Data
 			
 		}
 
+		private static void RemoveEmptyProp(Card card)
+		{
+			foreach (var prop in typeof(Card).GetProperties())
+			{
+				if (prop.CanWrite)
+				{
+					if (prop.GetValue(card, null) == string.Empty)
+					{
+						prop.SetValue(card, null, null);
+					}
+					
+				}
+				
+			}
+		}
+
 		/// <summary>
 		/// Parse card properties
 		/// </summary>
@@ -267,6 +283,7 @@ namespace HyperCore.Data
 			ParseType(card);
 			ParseRarity(card);
 			ParseCharacters(card);
+			RemoveEmptyProp(card);
 		}
 	}
 }

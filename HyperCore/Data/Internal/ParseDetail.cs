@@ -29,8 +29,10 @@ namespace HyperCore.Data
 				throw;
 			}
 
+			//This card would be null,do remove it
 			if (!webdata.Contains("Card Name:"))
 			{
+				card = null;
 				return;
 			}
 
