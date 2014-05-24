@@ -411,7 +411,7 @@ namespace HyperCore.IO
 											var count = line.Remove(idxa).Trim();
 											card.Count = Convert.ToInt32(count);
 
-											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa) : string.Empty;
+											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
 											card.SetCode = setcode.Trim();
 
 											var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
@@ -432,7 +432,7 @@ namespace HyperCore.IO
 											var count = line.Remove(idxa).Trim();
 											card.Count = Convert.ToInt32(count);
 
-											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa) : string.Empty;
+											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
 											card.SetCode = setcode.Trim();
 
 											var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
@@ -442,9 +442,9 @@ namespace HyperCore.IO
 											var idxd = line.IndexOf(")");
 											if (idxc > 0 && idxd > idxc)
 											{
-												var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc) : string.Empty;
+												var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc - 1) : string.Empty;
 												card.Var = var.Trim();
-												card.Name = name.Remove(name.IndexOf("("));
+												card.Name = name.Remove(name.IndexOf("(")).Trim();
 											}
 
 											deck.MainBoardLands.Add(card);
@@ -461,7 +461,7 @@ namespace HyperCore.IO
 											var count = line.Remove(idxa).Replace("SB:", string.Empty).Trim();
 											card.Count = Convert.ToInt32(count);
 
-											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa) : string.Empty;
+											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
 											card.SetCode = setcode.Trim();
 
 											var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
@@ -471,9 +471,9 @@ namespace HyperCore.IO
 											var idxd = line.IndexOf(")");
 											if (idxc > 0 && idxd > idxc)
 											{
-												var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc) : string.Empty;
+												var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc - 1) : string.Empty;
 												card.Var = var.Trim();
-												card.Name = name.Remove(name.IndexOf("("));
+												card.Name = name.Remove(name.IndexOf("(")).Trim();
 											}
 
 											deck.SideBoard.Add(card);
@@ -498,7 +498,7 @@ namespace HyperCore.IO
 								{
 									partID = 2;
 								}
-								else
+								else if (line.Contains("Spells"))
 								{
 									partID = 1;
 								}
@@ -542,6 +542,8 @@ namespace HyperCore.IO
 
 						sw.WriteLine("\r\n// Sideboard\n");
 						deck.SideBoard.ForEach(c => sw.WriteLine("SB: {0} [{1}] {2}", c.Count, c.SetCode, c.Name));
+
+						sw.Flush();
 					}
 				}
 				catch (Exception ex)
@@ -627,6 +629,8 @@ namespace HyperCore.IO
 						sw.WriteLine("Sideboard");
 
 						deck.SideBoard.ForEach(c => sw.WriteLine(String.Format("{0} {1}", c.Count, c.Name)));
+
+						sw.Flush();
 					}
 				}
 				catch (Exception ex)
@@ -805,6 +809,8 @@ namespace HyperCore.IO
 						deck.MainBoard.ForEach(c => sw.WriteLine(String.Format("{0} [{1}:{2}] {3}", c.Count, c.SetCode, c.Number, c.Name)));
 
 						deck.SideBoard.ForEach(c => sw.WriteLine(String.Format("SB: {0} [{1}:{2}] {3}", c.Count, c.SetCode, c.Number, c.Name)));
+
+						sw.Flush();
 					}
 				}
 				catch (Exception ex)
@@ -844,12 +850,13 @@ namespace HyperCore.IO
 									if (idxa > 0 && idxb > idxa)
 									{
 										var idxc = line.IndexOf(":", idxa);
+										var idxd = line.IndexOf(":");
 										if (idxc > idxa && idxc < idxb)
 										{
-											var count = line.Remove(idxa).Trim();
-											var setcode = line.Substring(idxa + 1, idxc - idxa).Trim();
-											var number = line.Substring(idxc + 1, idxb - idxc).Trim();
-											var name = line.Substring(idxc + 1).Replace("SB:", string.Empty).Trim();
+											var count = line.Substring(idxd + 1, idxa - idxd - 1).Trim();
+											var setcode = line.Substring(idxa + 1, idxc - idxa - 1).Trim();
+											var number = line.Substring(idxc + 1, idxb - idxc - 1).Trim();
+											var name = line.Substring(idxb + 1).Replace("SB:", string.Empty).Trim();
 											int cnt;
 
 											if (Int32.TryParse(count, out cnt))
@@ -877,9 +884,9 @@ namespace HyperCore.IO
 										if (idxc > idxa && idxc < idxb)
 										{
 											var count = line.Remove(idxa).Trim();
-											var setcode = line.Substring(idxa + 1, idxc - idxa).Trim();
-											var number = line.Substring(idxc + 1, idxb - idxc).Trim();
-											var name = line.Substring(idxc + 1).Trim();
+											var setcode = line.Substring(idxa + 1, idxc - idxa - 1).Trim();
+											var number = line.Substring(idxc + 1, idxb - idxc - 1).Trim();
+											var name = line.Substring(idxb + 1).Trim();
 											int cnt;
 
 											if (Int32.TryParse(count, out cnt))

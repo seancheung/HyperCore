@@ -25,11 +25,15 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <ProgressBar Name="progBar" HorizontalAlignment="Stretch" Height="12"/>
             <TextBlock Name="progTxt" Grid.Row="1" HorizontalAlignment="Stretch" Height="20"/>
-            <ListBox Name="lbSets" Margin="4" Grid.Row="2"/>
+            <ComboBox Name="combFormat" DisplayMemberPath="Type" Grid.Row="2" HorizontalAlignment="Stretch" Margin="2" SelectionChanged="combFormat_SelectionChanged"/>
+            <ComboBox Name="comboFormatSub" Grid.Row="3" HorizontalAlignment="Stretch" Margin="2" Visibility="Collapsed" SelectionChanged="comboFormatSub_SelectionChanged"/>
+            <ListBox Name="lbSets" Margin="4" Grid.Row="4"/>
         </Grid>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="2"/>
         <Grid Grid.Column="2">
@@ -66,7 +70,12 @@
                     <CheckBox Name="SetCode" Content="SetCode" IsChecked="True"/>
                 </ListBox>
             </Expander>
-            <ListView Name="lvCards" Grid.Column="1" Margin="4" Grid.Row="1" MouseMove="lvCards_MouseMove">
+            <ListView Name="lvCards" Grid.Column="1" Margin="4" Grid.Row="1">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <EventSetter Event="MouseMove" Handler="ListviewItem_MouseMove"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="{Binding IsChecked, ConverterParameter=auto, Converter={StaticResource b2w}, ElementName=ID}"/>
@@ -105,7 +114,12 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
-                <ListView Grid.Row="0" Margin="1" ItemsSource="{Binding MainBoard}">
+                <ListView Grid.Row="0" Margin="1" ItemsSource="{Binding MainBoard}" Drop="ListView_Drop_Main" AllowDrop="True">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <EventSetter Event="MouseMove" Handler="ListviewItem_MouseMove_Main"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Count" DisplayMemberBinding="{Binding Value}" Width="auto" />
@@ -115,7 +129,12 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ListView Grid.Row="2" Margin="1" ItemsSource="{Binding SideBoard}">
+                <ListView Grid.Row="2" Margin="1" ItemsSource="{Binding SideBoard}" Drop="ListView_Drop_Side" AllowDrop="True" DragLeave="ListView_DragLeave_Side">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <EventSetter Event="MouseMove" Handler="ListviewItem_MouseMove_Side"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Count" DisplayMemberBinding="{Binding Value}" Width="auto" />
@@ -125,7 +144,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <RichTextBox Grid.Row="4" >
+                <RichTextBox Name="rtCmnt" Grid.Row="4" >
                     <FlowDocument>
                         <Paragraph>Comment Goes Here</Paragraph>
                     </FlowDocument>
@@ -136,11 +155,12 @@
         </Grid>
         <StackPanel Grid.Column="5" Orientation="Vertical" Grid.RowSpan="2">
             <Button Height="auto" Margin="4" Content="Refresh Sets" Click="Button_Refresh"/>
+            <Button Height="auto" Margin="4" Content="Refresh Formats" Click="Button_Formats"/>
             <Button Height="auto" Margin="4" Content="Download Selected" Click="Button_Download"/>
+            <Button Height="auto" Margin="4" Content="Force Update" Click="Button_ForceUpdate"/>
+            <Separator/>
             <Button Height="auto" Margin="4" Content="Load" Click="Button_Load"/>
             <Button Height="auto" Margin="4" Content="Open Deck" Click="Button_Open"/>
-            <Button Height="auto" Margin="4" Content="Add To Mainboard" Click="Button_Add"/>
-            <Button Height="auto" Margin="4" Content="Add To Sideboard" Click="Button_Add_Side"/>
             <Button Height="auto" Margin="4" Content="Export Deck" Click="Button_Export"/>
             
         </StackPanel>

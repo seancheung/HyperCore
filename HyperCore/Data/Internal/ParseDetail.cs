@@ -107,6 +107,50 @@ namespace HyperCore.Data
 			}
 			#endregion
 
+			#region Card Cost
+			if (webdata.IndexOf("Mana Cost:") > 0)
+			{
+				try
+				{
+					int num27 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Card Name:")) + 20;
+					int num28 = webdata.IndexOf("</div>", num27);
+					int num45 = webdata.IndexOf("<div class=\"value\">", num28) + 20;
+					int num46 = webdata.IndexOf("</div>", num45);
+					string text6 = webdata.Substring(num45, num46 - num45).Trim();
+					int num34;
+					for (int k = text6.IndexOf("<img src="); k > 0; k = text6.IndexOf("<img src=", num34))
+					{
+						int num33 = text6.IndexOf("alt=", k) + 4;
+						num34 = text6.IndexOf("align=", num33);
+						string str = text6.Substring(num33, num34 - num33).Replace("\"", string.Empty).Trim();
+						text6 = text6.Insert(k, String.Format("{{{0}}}", str));
+					}
+					//Mark
+					string cost = string.Empty;
+					while (text6.Contains("<") && text6.Contains(">"))
+					{
+						int num11 = text6.IndexOf("<");
+						int num12 = text6.IndexOf(">");
+						int start = text6.IndexOf("alt=") + 5;
+						int end = text6.IndexOf(@"""", start);
+						var mana = text6.Substring(start, end - start).Trim();
+						mana = mana.Replace("Variable Colorless", "X");
+						cost += mana.Length > 1 ? String.Format("({0})", mana) : String.Format("{0}", mana);
+						text6 = text6.Remove(num11, num12 - num11 + 1).Trim();
+					}
+					card.Cost = cost;
+				}
+				catch (Exception ex)
+				{
+					throw new ParseException(card, "Parsing Error happended when parsing card Cost", ex);
+				}
+			}
+			else
+			{
+				card.Cost += string.Empty;
+			}
+			#endregion
+
 			#region Card CMC
 			if (webdata.IndexOf("Converted Mana Cost:") > 0)
 			{
@@ -556,7 +600,9 @@ namespace HyperCore.Data
 							int num12 = text6.IndexOf(">");
 							int start = text6.IndexOf("alt=") + 5;
 							int end = text6.IndexOf(@"""", start);
-							cost += String.Format("({0})", text6.Substring(start, end - start));
+							var mana = text6.Substring(start, end - start).Trim();
+							mana = mana.Replace("Variable Colorless", "X");
+							cost += mana.Length > 1 ? String.Format("({0})", mana) : String.Format("{0}", mana);
 							text6 = text6.Remove(num11, num12 - num11 + 1).Trim();
 						}
 						card.Cost = String.Format("{0}|{1}", card.Cost, cost);

@@ -11,7 +11,7 @@ namespace HyperCore.Data
 
 		private ParseEx()
 		{
-			
+
 		}
 
 		private static void ParseCharacters(Card card)
@@ -24,46 +24,46 @@ namespace HyperCore.Data
 
 		private static void ParseMana(Card card)
 		{
-			string cost = string.Empty;
+
 			card.Cost = card.Cost
-				.ReplaceColor()
-				.Replace("{", string.Empty)
-				.Replace("}", string.Empty);
+			            .ReplaceColor()
+			            .Replace("{", string.Empty)
+			            .Replace("}", string.Empty)
+			            .Replace(" or ", string.Empty)
+			            .Replace("/", string.Empty);
+
+			bool flag = false;
+			string cost = string.Empty;
+			string entry = string.Empty;
 
 			foreach (var c in card.Cost)
 			{
-				if (c == '|' || c == '(' | c == ')')
+				if (c == '(')
 				{
-					cost += c;
+					flag = true;
+					entry = string.Empty;
+					continue;
+				}
+				else if (c == ')')
+				{
+					flag = false;
+					cost += string.Concat("{", entry, "}");
+					continue;
+				}
+
+				if (flag)
+				{
+					entry += c;
 				}
 				else
 				{
-					cost = string.Concat(cost, '{', c, '}');
-				}
-			}
-
-			try
-			{
-				while (cost.Contains('(') && cost.Contains(')'))
-				{
-					int num = cost.IndexOf("(");
-					int length = cost.IndexOf(")") - num + 1;
-					var sub = cost.Substring(num, length);
-					var rep = cost
-						.Replace("{", string.Empty)
-						.Replace("}", string.Empty)
-						.Replace("(", "{")
-						.Replace(")", "}")
-						.Replace("/", string.Empty);
-					cost = cost.Replace(sub, rep);
+					cost += string.Concat("{", c, "}");
 				}
 
-				card.Cost = cost;
 			}
-			catch (Exception ex)
-			{
-				throw new ParseException(card, "Parsing Error happended when formatting card cost:", ex);
-			}
+
+			card.Cost = cost;
+
 
 			if (card.zText.Contains('{'))
 			{
@@ -73,8 +73,8 @@ namespace HyperCore.Data
 			{
 				card.Text = card.Text.ReplaceCost();
 			}
-			
-			
+
+
 		}
 
 		private static void ParseColor(Card card)
@@ -246,7 +246,7 @@ namespace HyperCore.Data
 			{
 				card.RarityCode = "B";
 			}
-			
+
 		}
 
 		private static void RemoveEmptyProp(Card card)
@@ -259,9 +259,9 @@ namespace HyperCore.Data
 					{
 						prop.SetValue(card, null, null);
 					}
-					
+
 				}
-				
+
 			}
 		}
 
