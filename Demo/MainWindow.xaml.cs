@@ -124,47 +124,57 @@ namespace Demo
 			tdDownload =
 				new Thread(() =>
 			{
-				foreach (var s in sets)
+				try
 				{
+					foreach (var s in sets)
+					{
+						Dispatcher.Invoke((Action)delegate
+						{
+							progTxt.Text = String.Format("Fetching ID list {0}", s);
+							progBar.Value = 0;
+						});
+
+						var cards = ParseCard.GetCards(s.SplitSetName()[0], s.SplitSetName()[1]).ToList();
+
+						var n = cards.Count;
+
+						Dispatcher.Invoke((Action)delegate
+						{
+							progBar.Maximum = n;
+						});
+
+						var tps = new List<List<Card>>();
+						for (int i = 0; i < maxThread - 1; i++)
+						{
+							tps.Add(cards.GetRange(n / maxThread * i, n / maxThread));
+						}
+						tps.Add(cards.GetRange(n / maxThread * (maxThread - 1), n / maxThread + n % maxThread));
+
+						WaitCallback waitCallback = new WaitCallback(DownloadCards);
+						WaitHandle[] waitHandles = new WaitHandle[maxThread];
+
+						for (int i = 0; i < maxThread; i++)
+						{
+							waitHandles[i] = new AutoResetEvent(false);
+							ThreadPool.QueueUserWorkItem(waitCallback, new object[] { tps[i], waitHandles[i] });
+						}
+
+						WaitHandle.WaitAll(waitHandles);
+					}
+
 					Dispatcher.Invoke((Action)delegate
 					{
-						progTxt.Text = String.Format("Fetching ID list {0}", s);
+						progTxt.Text = "Downloading complete!";
 						progBar.Value = 0;
 					});
-
-					var cards = ParseCard.GetCards(s.SplitSetName()[0], s.SplitSetName()[1]).ToList();
-
-					var n = cards.Count;
-
+				}
+				catch (Exception ex)
+				{
 					Dispatcher.Invoke((Action)delegate
 					{
-						progBar.Maximum = n;
+						MessageBox.Show(ex.Message);
 					});
-
-					var tps = new List<List<Card>>();
-					for (int i = 0; i < maxThread - 1; i++)
-					{
-						tps.Add(cards.GetRange(n / maxThread * i, n / maxThread));
-					}
-					tps.Add(cards.GetRange(n / maxThread * (maxThread - 1), n / maxThread + n % maxThread));
-
-					WaitCallback waitCallback = new WaitCallback(DownloadCards);
-					WaitHandle[] waitHandles = new WaitHandle[maxThread];
-
-					for (int i = 0; i < maxThread; i++)
-					{
-						waitHandles[i] = new AutoResetEvent(false);
-						ThreadPool.QueueUserWorkItem(waitCallback, new object[] { tps[i], waitHandles[i] });
-					}
-
-					WaitHandle.WaitAll(waitHandles);
 				}
-
-				Dispatcher.Invoke((Action)delegate
-				{
-					progTxt.Text = "Downloading complete!";
-					progBar.Value = 0;
-				});
 			});
 
 			tdDownload.Start();

@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>IO\DLL\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -66,6 +70,7 @@
     <Compile Include="IO\Database.cs" />
     <Compile Include="IO\Extern.cs" />
     <Compile Include="IO\Internal\Merger.cs" />
+    <Compile Include="IO\ZipComp.cs" />
     <Compile Include="Net\Downloader.cs" />
     <Compile Include="Net\Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,7 +83,9 @@
     <Compile Include="Utilities\ManaExtractor.cs" />
     <Compile Include="Utilities\Spliter.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="IO\DLL\Ionic.Zip.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

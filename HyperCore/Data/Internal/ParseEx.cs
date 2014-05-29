@@ -57,7 +57,14 @@ namespace HyperCore.Data
 				}
 				else
 				{
-					cost += string.Concat("{", c, "}");
+					if (c == '|' || c == '/')
+					{
+						cost += c;
+					}
+					else
+					{
+						cost += string.Concat("{", c, "}");
+					}
 				}
 
 			}
