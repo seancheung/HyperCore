@@ -160,6 +160,19 @@ namespace Demo
 						}
 
 						WaitHandle.WaitAll(waitHandles);
+
+						//Uncheck finished set
+						Dispatcher.Invoke((Action)delegate
+						{
+							foreach (CheckBox item in lbSets.Items)
+							{
+								if (item.Content.ToString() == s)
+								{
+									item.IsChecked = false;
+								}
+
+							}
+						});
 					}
 
 					Dispatcher.Invoke((Action)delegate
@@ -208,7 +221,7 @@ namespace Demo
 			{
 				deck.Comment = new TextRange(rtCmnt.Document.ContentStart, rtCmnt.Document.ContentEnd).Text;
 				deck.Comment += DateTime.Now;
-				
+
 				SaveFileDialog dlg = new SaveFileDialog();
 				dlg.Filter = "HyperDeck(*.hdeck)|*.hdeck|Virtual Playtable(*.deck)|*.deck|Magic Workstation(*.mwDeck)|*.mwDeck|Mage(*.txt)|*.txt|MTGO(*.txt)|*.txt";
 				dlg.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -257,7 +270,7 @@ namespace Demo
 					{
 						MessageBox.Show(ex.Message);
 					}
-					
+
 				}
 			}
 
@@ -414,7 +427,7 @@ namespace Demo
 
 		private void ListView_Drop_Main(object sender, DragEventArgs e)
 		{
-			
+
 			var card = e.Data.GetData(typeof(Card)) as Card;
 			if (card != null)
 			{
@@ -585,7 +598,7 @@ namespace Demo
 		private void Button_ForceUpdate(object sender, RoutedEventArgs e)
 		{
 			var card = lvCards.SelectedValue;
-			if (card!=null)
+			if (card != null)
 			{
 				try
 				{
@@ -603,7 +616,95 @@ namespace Demo
 					MessageBox.Show(ex.Message);
 				}
 			}
-			
+
+		}
+
+		private void Button_DownloadImages(object sender, RoutedEventArgs e)
+		{
+			if (tdDownload != null && tdDownload.ThreadState != ThreadState.Stopped)
+			{
+				MessageBox.Show("A dwonloading thread is already running.");
+				return;
+			}
+
+			List<string> sets = new List<string>();
+
+			foreach (CheckBox item in lbSets.Items)
+			{
+				if (item.IsChecked == true)
+				{
+					sets.Add(item.Content.ToString());
+				}
+
+			}
+
+			if (sets.Count == 0)
+			{
+				return;
+			}
+			tdDownload =
+				new Thread(() =>
+			{
+				try
+				{
+					foreach (var s in sets)
+					{
+						Dispatcher.Invoke((Action)delegate
+						{
+							progTxt.Text = String.Format("Loading data {0}", s);
+							progBar.Value = 0;
+						});
+
+						var db = Database.LoadCards(DBPath);
+						var cards = db.Where(c => c.SetCode == s.SplitSetName()[1]).ToList();
+
+						var n = cards.Count;
+
+						Dispatcher.Invoke((Action)delegate
+						{
+							progBar.Maximum = n;
+						});
+
+						Images dp = new Images("IMG\\", "tmp\\");
+						foreach (var c in cards)
+						{
+							dp.DownLoad(c);
+							Dispatcher.Invoke((Action)delegate
+							{
+								progBar.Value++;
+							});
+						}
+
+						//Uncheck finished set
+						Dispatcher.Invoke((Action)delegate
+						{
+							foreach (CheckBox item in lbSets.Items)
+							{
+								if (item.Content.ToString() == s)
+								{
+									item.IsChecked = false;
+								}
+
+							}
+						});
+					}
+
+					Dispatcher.Invoke((Action)delegate
+					{
+						progTxt.Text = "Downloading complete!";
+						progBar.Value = 0;
+					});
+				}
+				catch (Exception ex)
+				{
+					Dispatcher.Invoke((Action)delegate
+					{
+						MessageBox.Show(ex.Message);
+					});
+				}
+			});
+
+			tdDownload.Start();
 		}
 
 	}

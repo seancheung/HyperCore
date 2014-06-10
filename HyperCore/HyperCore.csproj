@@ -69,6 +69,7 @@
     <Compile Include="Exceptions\RequestException.cs" />
     <Compile Include="IO\Database.cs" />
     <Compile Include="IO\Extern.cs" />
+    <Compile Include="IO\Images.cs" />
     <Compile Include="IO\Internal\Merger.cs" />
     <Compile Include="IO\Internal\ZipComp.cs" />
     <Compile Include="Net\Downloader.cs" />

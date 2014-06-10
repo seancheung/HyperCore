@@ -43,12 +43,12 @@ namespace HyperCore.IO
 		{
 			foreach (var id in card.GetIDs())
 			{
-				Pack(id, card.SetCode);
+				Pack(card.SetCode,id);
 			}
 
 			foreach (var id in card.GetzIDs())
 			{
-				Pack(id, card.SetCode);
+				Pack(card.SetCode, id);
 			}
 
 		}
