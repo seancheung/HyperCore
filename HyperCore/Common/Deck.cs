@@ -71,5 +71,6 @@ namespace HyperCore.Common
 			Format = FORMAT.Default;
 			Mode = MODE.Default;
 		}
+
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HyperCore.Common;
+using System.Reflection;
 
 namespace HyperCore.IO
 {
@@ -76,6 +77,68 @@ namespace HyperCore.IO
 			{
 				//do sth here
 				return false;
+			}
+		}
+
+		/// <summary>
+		/// Rename a card by custom expression
+		/// </summary>
+		/// <param name="card"></param>
+		/// <param name="args"></param>
+		/// <returns></returns>
+		public bool Rename(Card card, params string[] args)
+		{
+			if (!Extract(card))
+			{
+				return false;
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			var props = typeof(Card).GetProperties();
+			foreach (var arg in args)
+			{
+				var prop = props.FirstOrDefault(p => p.Name.Equals(arg, StringComparison.OrdinalIgnoreCase));
+				if (prop != null)
+				{
+					sb.Append(
+					prop.GetValue(card, null) ?? arg
+					);
+				}
+				else
+				{
+					sb.Append(arg);
+				}
+				
+			}
+
+			try
+			{
+				zipComp.Wrap(card.Set, card.ID, sb.ToString());
+				return true;
+			}
+			catch (Exception ex)
+			{
+				//do sth
+				return false;
+			}
+
+		}
+
+		/// <summary>
+		/// Rename cards by custom expression
+		/// </summary>
+		/// <param name="cards"></param>
+		/// <param name="args"></param>
+		/// <returns>Failed cards</returns>
+		public IEnumerable<Card> Rename(IEnumerable<Card> cards, params string[] args)
+		{
+			foreach (var card in cards)
+			{
+				if (!Rename(card, args))
+				{
+					yield return card;
+				}
 			}
 		}
 	}

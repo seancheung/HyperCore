@@ -159,11 +159,12 @@
             <Button Height="auto" Margin="4" Content="Download Selected" Click="Button_Download"/>
             <Button Height="auto" Margin="4" Content="Force Update" Click="Button_ForceUpdate"/>
             <Button Height="auto" Margin="4" Content="Download Images" Click="Button_DownloadImages"/>
+            <Button Height="auto" Margin="4" Content="Rename Images" Click="Button_RenameImages"/>
             <Separator/>
             <Button Height="auto" Margin="4" Content="Load" Click="Button_Load"/>
             <Button Height="auto" Margin="4" Content="Open Deck" Click="Button_Open"/>
             <Button Height="auto" Margin="4" Content="Export Deck" Click="Button_Export"/>
-            
+            <Button Height="auto" Margin="4" Content="Test" Click="Button_Test"/>
         </StackPanel>
     </Grid>
 </Window>

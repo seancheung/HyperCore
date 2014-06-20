@@ -923,6 +923,82 @@ namespace HyperCore.IO
 			}
 		}
 
+		internal class Hyper
+		{
+			public class HyperDeck
+			{
+				public string Name { get; set; }
+				public string Comment { get; set; }
+				public FORMAT Format { get; set; }
+				public MODE Mode { get; set; }
+
+				public List<string> MainBoard { get; set; }
+				public List<string> SideBoard { get; set; }
+
+				/// <summary>
+				/// Initializes a new instance of the HyperDeck class with parameters.
+				/// </summary>
+				/// <param name="name"></param>
+				/// <param name="comment"></param>
+				/// <param name="format"></param>
+				/// <param name="mode"></param>
+				/// <param name="mainBoard"></param>
+				/// <param name="sideBoard"></param>
+				public HyperDeck(string name, string comment, FORMAT format, MODE mode, IEnumerable<string> mainBoard, IEnumerable<string> sideBoard)
+				{
+					Name = name;
+					Comment = comment;
+					Format = format;
+					Mode = mode;
+					MainBoard = new List<string>(mainBoard);
+					SideBoard = new List<string>(sideBoard);
+				}
+
+				/// <summary>
+				/// Initializes a new instance of the HyperDeck class.
+				/// </summary>
+				public HyperDeck()
+				{
+
+				}
+			}
+
+			internal static HyperDeck Open(string path)
+			{
+				try
+				{
+					using (var stream = new FileStream(path, FileMode.Open))
+					{
+						var sr = new StreamReader(stream);
+						var json = sr.ReadToEnd();
+						return new JsonIO().ReadDeck(json);
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new IOFileException(path, "IO Error happended when opening xdeck file", ex);
+				}
+			}
+
+			internal static void Export(HyperDeck xdeck, string path)
+			{
+				try
+				{
+					using (var stream = new FileStream(path, FileMode.Create))
+					{
+						var sw = new StreamWriter(stream);
+						var data = new JsonIO().Convert(xdeck);
+						sw.Write(data);
+						sw.Flush();
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new IOFileException(path, "IO Error happended when exporting xdeck file", ex);
+				}
+			}
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the Extern class.
 		/// </summary>
@@ -990,32 +1066,69 @@ namespace HyperCore.IO
 			}
 			else if (ext == FILETYPE.Mage.GetFileExt().ToUpper())
 			{
-				var gdeck = MAGE.Open(path);
-				if (gdeck.MainBoard.Count + gdeck.SideBoard.Count == 0)
+				try
 				{
-					var odeck = MO.Open(path);
-					if (odeck.MainBoard.Count + odeck.SideBoard.Count == 0)
+					var gdeck = MAGE.Open(path);
+					if (gdeck.MainBoard.Count + gdeck.SideBoard.Count == 0)
 					{
-						return null;
+						var odeck = MO.Open(path);
+						if (odeck.MainBoard.Count + odeck.SideBoard.Count == 0)
+						{
+							return null;
+						}
+						var database = Database.LoadCards(DataPath);
+						odeck.MainBoard.ForEach(c => deck.MainBoard.Add(ConvertToCard(c, database), c.Count));
+						odeck.SideBoard.ForEach(c => deck.SideBoard.Add(ConvertToCard(c, database), c.Count));
+						deck.Name = odeck.Name;
+
+						return deck;
 					}
-					var database = Database.LoadCards(DataPath);
-					odeck.MainBoard.ForEach(c => deck.MainBoard.Add(ConvertToCard(c, database), c.Count));
-					odeck.SideBoard.ForEach(c => deck.SideBoard.Add(ConvertToCard(c, database), c.Count));
-					deck.Name = odeck.Name;
+					else
+					{
+						var database = Database.LoadCards(DataPath);
+						gdeck.MainBoard.ForEach(c => deck.MainBoard.Add(ConvertToCard(c, database), c.Count));
+						gdeck.SideBoard.ForEach(c => deck.SideBoard.Add(ConvertToCard(c, database), c.Count));
+						deck.Name = gdeck.Name;
 
-					return deck;
+						return deck;
+					}
 				}
-				else
+				catch
 				{
-					var database = Database.LoadCards(DataPath);
-					gdeck.MainBoard.ForEach(c => deck.MainBoard.Add(ConvertToCard(c, database), c.Count));
-					gdeck.SideBoard.ForEach(c => deck.SideBoard.Add(ConvertToCard(c, database), c.Count));
-					deck.Name = gdeck.Name;
-
-					return deck;
+					throw;
 				}
 
 			}
+			else if (ext == FILETYPE.HyperDeck.GetFileExt().ToUpper())
+			{
+				try
+				{
+					var xdeck = Hyper.Open(path);
+					var database = Database.LoadCards(DataPath);
+					foreach (var str in xdeck.MainBoard)
+					{
+						var kv = ConvertToCardStack(str, database);
+						deck.MainBoard.Add(kv.Key, kv.Value);
+					}
+					foreach (var str in xdeck.SideBoard)
+					{
+						var kv = ConvertToCardStack(str, database);
+						deck.SideBoard.Add(kv.Key, kv.Value);
+					}
+
+					deck.Name = xdeck.Name;
+					deck.Comment = xdeck.Comment;
+					deck.Mode = xdeck.Mode;
+					deck.Format = xdeck.Format;
+
+					return deck;
+				}
+				catch
+				{
+					throw;
+				}
+			}
+
 			else
 			{
 				throw new IOFileException(path, "File type not supported", null);
@@ -1047,6 +1160,9 @@ namespace HyperCore.IO
 						break;
 					case FILETYPE.Magic_Online:
 						MO.Export(ConvertToODeck(deck), path);
+						break;
+					case FILETYPE.HyperDeck:
+						Hyper.Export(ConvertToXDeck(deck), path);
 						break;
 					default:
 						throw new IOFileException(path, "File type not supported", null);
@@ -1108,6 +1224,15 @@ namespace HyperCore.IO
 			{
 				throw new CardMissingException("Card not found when loading vpt deck.", null, card.Name, card.SetCode);
 			}
+		}
+
+		private KeyValuePair<Card, int> ConvertToCardStack(string cardIDwithQnt, IEnumerable<Card> database)
+		{
+			var split = cardIDwithQnt.Split(new char[] { '#' });
+			var card = database.First(c => c.ID == split[0]);
+			int qnt = Int32.Parse(split[1]);
+
+			return new KeyValuePair<Card, int>(card, qnt);
 		}
 
 		private VPT.VPTDeck ConvertToVDeck(Deck deck)
@@ -1257,5 +1382,22 @@ namespace HyperCore.IO
 				throw;
 			}
 		}
+
+		private Hyper.HyperDeck ConvertToXDeck(Deck deck)
+		{
+			try
+			{
+				var main = deck.MainBoard.Select(c => c.Key.ID + "#" + c.Value.ToString());
+				var side = deck.SideBoard.Select(c => c.Key.ID + "#" + c.Value.ToString());
+				Hyper.HyperDeck xdeck = new Hyper.HyperDeck(deck.Name, deck.Comment, deck.Format, deck.Mode, main, side);
+
+				return xdeck;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
 	}
 }

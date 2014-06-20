@@ -34,6 +34,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>IO\DLL\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="LitJson, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>IO\Internal\DLL\LitJson.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -70,6 +74,8 @@
     <Compile Include="IO\Database.cs" />
     <Compile Include="IO\Extern.cs" />
     <Compile Include="IO\Images.cs" />
+    <Compile Include="IO\Internal\AccessIO.cs" />
+    <Compile Include="IO\Internal\JsonIO.cs" />
     <Compile Include="IO\Internal\Merger.cs" />
     <Compile Include="IO\Internal\ZipComp.cs" />
     <Compile Include="Net\Downloader.cs" />
@@ -86,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="IO\Internal\DLL\Ionic.Zip.dll" />
+    <Content Include="IO\Internal\DLL\LitJson.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

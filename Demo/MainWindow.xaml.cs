@@ -223,7 +223,7 @@ namespace Demo
 				deck.Comment += DateTime.Now;
 
 				SaveFileDialog dlg = new SaveFileDialog();
-				dlg.Filter = "HyperDeck(*.hdeck)|*.hdeck|Virtual Playtable(*.deck)|*.deck|Magic Workstation(*.mwDeck)|*.mwDeck|Mage(*.txt)|*.txt|MTGO(*.txt)|*.txt";
+				dlg.Filter = "HyperDeck(*.xdeck)|*.xdeck|Virtual Playtable(*.deck)|*.deck|Magic Workstation(*.mwDeck)|*.mwDeck|Mage(*.txt)|*.txt|MTGO(*.txt)|*.txt";
 				dlg.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
 				dlg.RestoreDirectory = true;
 				if (dlg.ShowDialog() == true)
@@ -238,7 +238,8 @@ namespace Demo
 						switch (dlg.FilterIndex)
 						{
 							case 1:
-
+								new Extern(DBPath).Export(deck, path, FILETYPE.HyperDeck);
+								status = true;
 								break;
 							case 2:
 								new Extern(DBPath).Export(deck, path, FILETYPE.Virtual_Play_Table);
@@ -279,7 +280,7 @@ namespace Demo
 		private void Button_Open(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "HyperDeck(*.hdeck)|*.hdeck|Virtual Playtable(*.deck)|*.deck|Magic Workstation(*.mwDeck)|*.mwDeck|Mage(*.txt)|*.txt|MTGO(*.txt)|*.txt|All(*.*)|*.*";
+			dlg.Filter = "HyperDeck(*.xdeck)|*.xdeck|Virtual Playtable(*.deck)|*.deck|Magic Workstation(*.mwDeck)|*.mwDeck|Mage(*.txt)|*.txt|MTGO(*.txt)|*.txt|All(*.*)|*.*";
 			dlg.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
 			dlg.RestoreDirectory = true;
 			if (dlg.ShowDialog() == true)
@@ -705,6 +706,17 @@ namespace Demo
 			});
 
 			tdDownload.Start();
+		}
+
+		private void Button_RenameImages(object sender, RoutedEventArgs e)
+		{
+			var dbcards = Database.LoadCards(DBPath);
+			Images dp = new Images("IMG\\", "tmp\\");
+			dp.Rename(dbcards, "name", "(", "number", ")").ToList();
+		}
+
+		private void Button_Test(object sender, RoutedEventArgs e)
+		{
 		}
 
 	}

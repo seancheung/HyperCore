@@ -43,7 +43,7 @@ namespace HyperCore.IO
 		{
 			foreach (var id in card.GetIDs())
 			{
-				Pack(card.SetCode,id);
+				Pack(card.SetCode, id);
 			}
 
 			foreach (var id in card.GetzIDs())
@@ -61,12 +61,12 @@ namespace HyperCore.IO
 		{
 			foreach (var id in card.GetIDs())
 			{
-				UnPack(id, card.SetCode);
+				UnPack(card.SetCode, id);
 			}
 
 			foreach (var id in card.GetzIDs())
 			{
-				UnPack(id, card.SetCode);
+				UnPack(card.SetCode, id);
 			}
 		}
 
@@ -161,6 +161,49 @@ namespace HyperCore.IO
 				catch (Exception ex)
 				{
 					throw;
+				}
+			}
+		}
+
+		public void Wrap(string zipName, string id, string newName)
+		{
+			if (!Directory.Exists(TmpPath))
+			{
+				Directory.CreateDirectory(TmpPath);
+			}
+			if (!Directory.Exists(SrcPath))
+			{
+				Directory.CreateDirectory(SrcPath);
+			}
+
+			string zipPath = string.Format("{0}{1}.zip", SrcPath, zipName);
+
+			if (!File.Exists(zipPath))
+			{
+				using (ZipFile zipFile = new ZipFile(zipPath))
+				{
+					zipFile.Save();
+				}
+			}
+
+			using (ZipFile zipFile = ZipFile.Read(zipPath))
+			{
+				if (!zipFile.ContainsEntry(string.Format("{0}.jpg", newName)))
+				{
+					try
+					{
+						lock (_lock)
+						{
+							File.Move(String.Format("{0}{1}.jpg", TmpPath, id), String.Format("{0}{1}.jpg", TmpPath, newName));
+							zipFile.AddFile(String.Format("{0}{1}.jpg", TmpPath, newName), "\\");
+							zipFile.Save();
+						}
+					}
+					catch (Exception ex)
+					{
+
+						throw;
+					}
 				}
 			}
 		}

@@ -322,5 +322,24 @@ namespace HyperCore.IO
 			}
 		}
 
+		//public static void SaveAsJson(Card card, string filePath)
+		//{
+		//	using (var stream = File.Open(filePath, FileMode.Create))
+		//	{
+		//		var sw = new StreamWriter(stream);
+		//		sw.Write(new JsonIO().Convert(card));
+		//		sw.Flush();
+		//	}
+		//}
+
+		//public static Card ReadCardFromJson(string filePath)
+		//{
+		//	using (var stream = File.Open(filePath, FileMode.Open))
+		//	{
+		//		var sr = new StreamReader(stream);
+		//		var json = sr.ReadToEnd();
+		//		return new JsonIO().ReadCard(json);
+		//	}
+		//}
 	}
 }

@@ -8,6 +8,7 @@ namespace HyperCore.Common
 		Virtual_Play_Table,
 		Magic_Workstation,
 		Mage,
-		Magic_Online
+		Magic_Online,
+		HyperDeck
 	}
 }
