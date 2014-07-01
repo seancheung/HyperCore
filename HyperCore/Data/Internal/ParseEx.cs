@@ -86,6 +86,11 @@ namespace HyperCore.Data
 
 		private static void ParseColor(Card card)
 		{
+			if (card.Color == null)
+			{
+				card.Color = "Colorless ";
+				card.ColorCode = "C";
+			}
 			if (card.Cost.Contains("W"))
 			{
 				card.Color += "White ";
@@ -111,11 +116,7 @@ namespace HyperCore.Data
 				card.Color += "Green ";
 				card.ColorCode += "G";
 			}
-			if (card.Color == null)
-			{
-				card.Color += "Colorless ";
-				card.ColorCode += "C";
-			}
+			
 			card.Color = card.Color.Trim();
 			if (card.IsDoubleFaced())
 			{

@@ -15,6 +15,12 @@ namespace HyperCore.Exceptions
 
 		}
 
+		public DownloaderException(string url, string message, Exception inner)
+			: base("{0}\nURL: {1}", inner, message, url)
+		{
+			URL = url;
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the DownloaderException class with parameters
 		/// </summary>

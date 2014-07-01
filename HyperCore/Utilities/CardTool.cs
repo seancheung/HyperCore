@@ -266,6 +266,11 @@ namespace HyperCore.Utilities
 			}
 		}
 
+		/// <summary>
+		/// Get split names
+		/// </summary>
+		/// <param name="card"></param>
+		/// <returns></returns>
 		public static string GetLegalName(this Card card)
 		{
 			if (card.IsDoubleFaced())
@@ -275,6 +280,26 @@ namespace HyperCore.Utilities
 			else
 			{
 				return card.Name;
+			}
+		}
+
+		/// <summary>
+		/// Copy a card's properties' values from a target card
+		/// </summary>
+		/// <param name="card"></param>
+		/// <param name="target"></param>
+		public static void CopyFrom(this Card card, Card target)
+		{
+			if (card == null || target == null || card == target)
+			{
+				return;
+			}
+			
+			foreach (var p in typeof(Card).GetProperties())
+			{
+				//Make sure it's readable
+				if (p.CanWrite)
+					p.SetValue(card, typeof(Card).GetProperty(p.Name).GetValue(target, null), null);
 			}
 		}
 	}

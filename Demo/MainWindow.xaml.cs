@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -205,7 +204,7 @@ namespace Demo
 				var path = dlg.FileName;
 				try
 				{
-					var data = Database.LoadCards(path);
+					var data = Database.LoadCards();
 					lvCards.ItemsSource = data;
 				}
 				catch (Exception ex)
@@ -315,12 +314,17 @@ namespace Demo
 				});
 
 				ParseCard.Parse(card, lang);
+				lock(_lock)
+				{
+					Database.GrabImage(card);
+				}
 			}
 
 			lock (_lock)
 			{
 				//Save Data
-				Database.Save(cards, DBPath);
+				//Database.Save(cards, DBPath);
+				Database.Save(cards);
 			}
 
 			//Set the current thread state as finished
@@ -345,7 +349,7 @@ namespace Demo
 		{
 			try
 			{
-				var formats = ParseFormat.Parse().ToList();
+				var formats = ParseFormat.Parse();
 				Database.Save(formats, DBPath);
 				MessageBox.Show("Successfuly updated formats");
 			}
@@ -666,7 +670,7 @@ namespace Demo
 							progBar.Maximum = n;
 						});
 
-						Images dp = new Images("IMG\\", "tmp\\");
+						ImageHandler dp = new ImageHandler("IMG\\", "tmp\\");
 						foreach (var c in cards)
 						{
 							dp.DownLoad(c);
@@ -711,12 +715,15 @@ namespace Demo
 		private void Button_RenameImages(object sender, RoutedEventArgs e)
 		{
 			var dbcards = Database.LoadCards(DBPath);
-			Images dp = new Images("IMG\\", "tmp\\");
+			ImageHandler dp = new ImageHandler("IMG\\", "tmp\\");
 			dp.Rename(dbcards, "name", "(", "number", ")").ToList();
 		}
 
 		private void Button_Test(object sender, RoutedEventArgs e)
 		{
+			Database.ReadImage(lvCards.SelectedValue as Card, Environment.CurrentDirectory);
+			MessageBox.Show("ok");
+
 		}
 
 	}

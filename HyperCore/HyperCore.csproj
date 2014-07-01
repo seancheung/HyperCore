@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,6 +41,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.SQLite, Version=1.0.92.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>IO\Internal\DLL\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,9 +57,11 @@
     <Compile Include="Common\Deck.cs" />
     <Compile Include="Common\FILETYPE.cs" />
     <Compile Include="Common\FORMAT.cs" />
+    <Compile Include="Common\ImageData.cs" />
     <Compile Include="Common\LANGUAGE.cs" />
     <Compile Include="Common\MODE.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\SetInfo.cs" />
     <Compile Include="Common\WEBSITE.cs" />
     <Compile Include="Data\Internal\ParseDetail.cs" />
     <Compile Include="Data\Internal\ParseID.cs" />
@@ -73,14 +81,21 @@
     <Compile Include="Exceptions\RequestException.cs" />
     <Compile Include="IO\Database.cs" />
     <Compile Include="IO\Extern.cs" />
+    <Compile Include="IO\Internal\GZipComp.cs" />
     <Compile Include="IO\Images.cs" />
     <Compile Include="IO\Internal\AccessIO.cs" />
     <Compile Include="IO\Internal\JsonIO.cs" />
     <Compile Include="IO\Internal\Merger.cs" />
+    <Compile Include="IO\Internal\SQLiteIO.cs" />
     <Compile Include="IO\Internal\ZipComp.cs" />
     <Compile Include="Net\Downloader.cs" />
     <Compile Include="Net\Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\CardTool.cs" />
     <Compile Include="Utilities\Comparer.cs" />
     <Compile Include="Utilities\FileType.cs" />
@@ -93,6 +108,15 @@
   <ItemGroup>
     <Content Include="IO\Internal\DLL\Ionic.Zip.dll" />
     <Content Include="IO\Internal\DLL\LitJson.dll" />
+    <Content Include="IO\Internal\DLL\System.Data.SQLite.dll" />
+    <None Include="Resources\ConnectionCommand.txt" />
+    <None Include="Resources\BuildCommand.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

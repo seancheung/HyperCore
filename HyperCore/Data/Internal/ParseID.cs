@@ -21,7 +21,7 @@ namespace HyperCore.Data
 			string webdata;
 			try
 			{
-				webdata = Request.GetWebData(GetURL(setname, setcode));
+				webdata = Request.GetWebData(GetURL_checklist(setname));
 			}
 			catch
 			{
@@ -33,30 +33,48 @@ namespace HyperCore.Data
 				yield break;
 			}
 
-			for (int i = webdata.IndexOf("href=\"../Card/Details.aspx?multiverseid="); i > 0; i = webdata.IndexOf("href=\"../Card/Details.aspx?multiverseid="))
+			while (webdata.Contains("multiverseid="))
 			{
 				Card card = new Card();
-
 				try
 				{
-					webdata = webdata.Remove(0, i + 40);
-					int length = webdata.IndexOf("\">");
-					int coststart = webdata.IndexOf("<td>", webdata.IndexOf("Cost:")) + 4;
-					int costend = webdata.IndexOf("</td>", coststart);
-					int textstart = webdata.IndexOf("<td>", webdata.IndexOf("Rules Text:")) + 4;
-					int textend = webdata.IndexOf("</td>", textstart);
+					var numa = webdata.IndexOf("\"number\"") + 9;
+					var numb = webdata.IndexOf("<", numa);
+					card.Number = webdata.Substring(numa, numb - numa);
 
-					card.ID = webdata.Substring(0, length);
-					card.Cost = webdata.Substring(coststart, costend - coststart).Trim();
-					card.Text = webdata.Substring(textstart, textend - textstart).Replace("<br />", "\n").Trim();
+					var ida = webdata.IndexOf("multiverseid=") + 13;
+					var idb = webdata.IndexOf("\"", ida);
+					card.ID = webdata.Substring(ida, idb - ida);
+
+					var namea = webdata.IndexOf(">", idb) + 1;
+					var nameb = webdata.IndexOf("<", namea);
+					card.Name = webdata.Substring(namea, nameb - namea);
+
+					var arta = webdata.IndexOf("\"artist\"") + 9;
+					var artb = webdata.IndexOf("<", arta);
+					card.Artist = webdata.Substring(arta, artb - arta);
+
+					var coa = webdata.IndexOf("\"color\"") + 8;
+					var cob = webdata.IndexOf("<", coa);
+					card.Color = webdata.Substring(coa, cob - coa).Replace("/", " ");
+
+					var rca = webdata.IndexOf("\"rarity\"") + 9;
+					var rcb = webdata.IndexOf("<", rca);
+					card.RarityCode = webdata.Substring(rca, rcb - rca).Replace("/", " ");
+
 					card.Set = setname;
 					card.SetCode = setcode;
+
+					webdata = webdata.Substring(idb);
+
 				}
 				catch (Exception ex)
 				{
 					throw new ParseException(card, "Parsing Error happended when fetching ID list", ex);
 				}
+
 				yield return card;
+				
 			}
 
 		}
@@ -67,9 +85,42 @@ namespace HyperCore.Data
 		/// <param name="setname">Full english set name</param>
 		/// <param name="setcode">Setcode in capital</param>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL(string setname, string setcode)
+		private static string GetURL_compact(string setname)
 		{
-			return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=text&action=advanced&set=+%5b%22{0}%22%5d", setname.Replace(" ", "+"));
+			return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=compact&set=%5b%22{0}%22%5d", setname.Replace(" ", "+"));
+		}
+
+		/// <summary>
+		/// Get url of the card list data
+		/// </summary>
+		/// <param name="setname">Full english set name</param>
+		/// <param name="setcode">Setcode in capital</param>
+		/// <returns>the url for webrequesting</returns>
+		private static string GetURL_standard(string setname)
+		{
+			return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=standard&set=%5b%22{0}%22%5d", setname.Replace(" ", "+"));
+		}
+
+		/// <summary>
+		/// Get url of the card list data
+		/// </summary>
+		/// <param name="setname">Full english set name</param>
+		/// <param name="setcode">Setcode in capital</param>
+		/// <returns>the url for webrequesting</returns>
+		private static string GetURL_checklist(string setname)
+		{
+			return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=checklist&set=%5b%22{0}%22%5d", setname.Replace(" ", "+"));
+		}
+
+		/// <summary>
+		/// Get url of the card list data
+		/// </summary>
+		/// <param name="setname">Full english set name</param>
+		/// <param name="setcode">Setcode in capital</param>
+		/// <returns>the url for webrequesting</returns>
+		private static string GetURL_visual(string setname)
+		{
+			return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=visual&set=%5b%22{0}%22%5d", setname.Replace(" ", "+"));
 		}
 	}
 }

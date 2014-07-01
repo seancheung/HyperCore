@@ -67,6 +67,24 @@ namespace HyperCore.Data
 		}
 
 		/// <summary>
+		/// Dwonload file into byte array
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static byte[] Download(string id)
+		{
+			string url = GetURL(id, null, null);
+			try
+			{
+				return Downloader.DownloadByte(url);
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		/// <summary>
 		/// Get image downloading url
 		/// </summary>
 		/// <param name="id"></param>

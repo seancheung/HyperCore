@@ -1,10 +1,12 @@
-﻿using System.Xml;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using System.Data.Linq.Mapping;
+
 namespace HyperCore.Common
 {
 	/// <summary>
 	/// Card class that contains all basic info
 	/// </summary>
+	[Table(Name = "Card")]
 	public class Card
 	{
 		[XmlAttribute("id")]
@@ -12,6 +14,7 @@ namespace HyperCore.Common
 		/// English WotcID of the card
 		/// (use '|' as separator for dual, e.g. '12345|67890')
 		/// </summary>
+		[Column(Name = "id", IsPrimaryKey = true)]
 		public string ID { get; set; }
 
 		[XmlAttribute("zid")]
@@ -19,6 +22,7 @@ namespace HyperCore.Common
 		/// Foreign WotcID of the card
 		/// (use '|' as separator for dual, e.g. '12345|67890')
 		/// </summary>
+		[Column(Name = "zid")]
 		public string zID { get; set; }
 
 		[XmlAttribute("var")]
@@ -26,6 +30,7 @@ namespace HyperCore.Common
 		/// Variation of the card(for basic land card)
 		/// (in the format of '(1:373546)(2:373609)(3:373683)(4:373746)')
 		/// </summary>
+		[Column(Name = "var")]
 		public string Var { get; set; }
 
 		[XmlAttribute("name")]
@@ -33,6 +38,7 @@ namespace HyperCore.Common
 		/// English name of the card
 		/// (use '|' as separator for dual, e.g. 'ABC|DEF')
 		/// </summary>
+		[Column(Name = "name")]
 		public string Name { get; set; }
 
 		[XmlAttribute("zname")]
@@ -40,6 +46,7 @@ namespace HyperCore.Common
 		/// Foreign name of the card
 		/// (use '|' as separator for dual, e.g. 'ABC|DEF')
 		/// </summary>
+		[Column(Name = "zname")]
 		public string zName { get; set; }
 
 		[XmlAttribute("set")]
@@ -47,12 +54,14 @@ namespace HyperCore.Common
 		/// Full english set name of the card
 		/// (use '|' as separator for dual, e.g. 'ABC|DEF')
 		/// </summary>
+		[Column(Name = "set")]
 		public string Set { get; set; }
 
 		[XmlAttribute("setcode")]
 		/// <summary>
 		/// Setcode in capital
 		/// </summary>
+		[Column(Name = "setcode")]
 		public string SetCode { get; set; }
 
 		[XmlAttribute("color")]
@@ -61,6 +70,7 @@ namespace HyperCore.Common
 		/// (use use ' ' as separator for multi-color, e.g. 'Blue Red')
 		/// (use use '|' as separator for dual, e.g. 'Blue|Black')
 		/// </summary>
+		[Column(Name = "color")]
 		public string Color { get; set; }
 
 		[XmlAttribute("colorcode")]
@@ -69,6 +79,7 @@ namespace HyperCore.Common
 		/// (no separator needed for multi-color, e.g. 'UR')
 		/// (use use '|' as separator for dual, e.g. 'U|B')
 		/// </summary>
+		[Column(Name = "colorcode")]
 		public string ColorCode { get; set; }
 
 		[XmlAttribute("cost")]
@@ -78,6 +89,7 @@ namespace HyperCore.Common
 		/// (bracket hybrid mana symbol as one, e.g. '{WU}')
 		/// (use use '|' as separator for dual, e.g. '{1}{W}|{2}{G}{G}')
 		/// </summary>
+		[Column(Name = "cost")]
 		public string Cost { get; set; }
 
 		[XmlAttribute("cmc")]
@@ -85,6 +97,7 @@ namespace HyperCore.Common
 		/// Converted mana cost of the card
 		/// (use use '|' as separator for dual, e.g. '3|2')
 		/// </summary>
+		[Column(Name = "cmc")]
 		public string CMC { get; set; }
 
 		[XmlAttribute("type")]
@@ -92,6 +105,7 @@ namespace HyperCore.Common
 		/// Type of the card
 		/// (use use '|' as separator for dual, e.g. 'Creature — Human Advisor|Creature — Human Mutant')
 		/// </summary>
+		[Column(Name = "type")]
 		public string Type { get; set; }
 
 		[XmlAttribute("ztype")]
@@ -99,6 +113,7 @@ namespace HyperCore.Common
 		/// Type of the card in foreign
 		/// (use use '|' as separator for dual, e.g. 'Creature — Human Advisor|Creature — Human Mutant')
 		/// </summary>
+		[Column(Name = "ztype")]
 		public string zType { get; set; }
 
 		[XmlAttribute("typecode")]
@@ -107,6 +122,7 @@ namespace HyperCore.Common
 		/// (no separator needed for multi-type, e.g. 'AC')
 		/// (use use '|' as separator for dual, e.g. 'C|C')
 		/// </summary>
+		[Column(Name = "typecode")]
 		public string TypeCode { get; set; }
 
 		[XmlAttribute("pow")]
@@ -114,6 +130,7 @@ namespace HyperCore.Common
 		/// Power of the card(creature)
 		/// (use use '|' as separator for dual, e.g. '1|3')
 		/// </summary>
+		[Column(Name = "pow")]
 		public string Pow { get; set; }
 
 		[XmlAttribute("tgh")]
@@ -121,6 +138,7 @@ namespace HyperCore.Common
 		/// Toughness of the card(creature)
 		/// (use use '|' as separator for dual, e.g. '1|3')
 		/// </summary>
+		[Column(Name = "tgh")]
 		public string Tgh { get; set; }
 
 		[XmlAttribute("loyalty")]
@@ -128,48 +146,56 @@ namespace HyperCore.Common
 		/// Loyalty of the card(planeswalker)
 		/// (use use '|' as separator for dual, e.g. '3|0')
 		/// </summary>
+		[Column(Name = "loyalty")]
 		public string Loyalty { get; set; }
 
 		[XmlAttribute("text")]
 		/// <summary>
 		/// English text of the card
 		/// </summary>
+		[Column(Name = "text")]
 		public string Text { get; set; }
 
 		[XmlAttribute("ztext")]
 		/// <summary>
 		/// Foreign text of the card
 		/// </summary>
+		[Column(Name = "ztext")]
 		public string zText { get; set; }
 
 		[XmlAttribute("flavor")]
 		/// <summary>
 		/// English flavor of the card
 		/// </summary>
+		[Column(Name = "flavor")]
 		public string Flavor { get; set; }
 
 		[XmlAttribute("zflavor")]
 		/// <summary>
 		/// Foreign flavor of the card
 		/// </summary>
+		[Column(Name = "zflavor")]
 		public string zFlavor { get; set; }
 
 		[XmlAttribute("artist")]
 		/// <summary>
 		/// Artist name of the card
 		/// </summary>
+		[Column(Name = "artist")]
 		public string Artist { get; set; }
 
 		[XmlAttribute("rarity")]
 		/// <summary>
 		/// Rarity of the card
 		/// </summary>
+		[Column(Name = "rarity")]
 		public string Rarity { get; set; }
 
 		[XmlAttribute("raritycode")]
 		/// <summary>
 		/// Raritycode of the card
 		/// </summary>
+		[Column(Name = "raritycode")]
 		public string RarityCode { get; set; }
 
 		[XmlAttribute("number")]
@@ -177,24 +203,28 @@ namespace HyperCore.Common
 		/// Number of the card
 		/// (use use '|' as separator for dual, e.g. '121a|121b')
 		/// </summary>
+		[Column(Name = "number")]
 		public string Number { get; set; }
 
 		[XmlAttribute("rulings")]
 		/// <summary>
 		/// Rulings of the card
 		/// </summary>
+		[Column(Name = "rulings")]
 		public string Rulings { get; set; }
 
 		[XmlAttribute("legality")]
 		/// <summary>
 		/// Legality of the card
 		/// </summary>
+		[Column(Name = "legality")]
 		public string Legality { get; set; }
 
 		[XmlAttribute("rating")]
 		/// <summary>
 		/// Community rating of the card
 		/// </summary>
+		[Column(Name = "rating")]
 		public string Rating { get; set; }
 
 		[XmlIgnore]

@@ -1,5 +1,6 @@
 ﻿using HyperCore.Exceptions;
 using System;
+using System.IO;
 using System.Net;
 
 namespace HyperCore.Net
@@ -26,6 +27,42 @@ namespace HyperCore.Net
 			catch (Exception ex)
 			{
 				throw new DownloaderException(url, path, "Downloading File Error", ex);
+			}
+		}
+
+		/// <summary>
+		/// Download file into byte array
+		/// </summary>
+		/// <param name="url"></param>
+		/// <returns></returns>
+		public static byte[] DownloadByte(string url)
+		{
+			try
+			{
+				HttpWebRequest req = HttpWebRequest.Create(url) as HttpWebRequest;
+				req.AllowAutoRedirect = true;
+				//req.Referer = "";
+
+				req.UserAgent = "Mozilla/5.0 (Windows; U; Windows NT 6.1; zh-CN; rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13";
+
+				HttpWebResponse res = req.GetResponse() as HttpWebResponse;
+
+				Stream stream = res.GetResponseStream();
+				MemoryStream memoryStream = new MemoryStream();
+				byte[] buffer = new byte[32 * 1024];
+				int bytes;
+				while ((bytes = stream.Read(buffer, 0, buffer.Length)) > 0)
+				{
+					memoryStream.Write(buffer, 0, bytes);
+				}
+				byte[] data = memoryStream.GetBuffer();
+				res.Close();
+				memoryStream.Dispose();
+				return data;
+			}
+			catch (Exception ex)
+			{
+				throw new DownloaderException(url, "Caching File Error", ex);
 			}
 		}
 	}

@@ -184,6 +184,41 @@ namespace HyperCore.Data
 			}
 			#endregion
 
+			#region Text
+			if (webdata.IndexOf("Card Text:") > 0)
+			{
+				try
+				{
+					int num47 = webdata.IndexOf("</div>", webdata.IndexOf("Card Text:")) + 6;
+					int num48 = webdata.IndexOf("</div></div>", num47);
+					card.Text = webdata.Substring(num47, num48 - num47).Trim();
+					int num34;
+					for (int k = card.Text.IndexOf("<img src="); k > 0; k = card.Text.IndexOf("<img src=", num34))
+					{
+						int num33 = card.Text.IndexOf("alt=", k) + 4;
+						num34 = card.Text.IndexOf("align=", num33);
+						string str = card.Text.Substring(num33, num34 - num33).Replace("\"", string.Empty).Trim();
+						card.Text = card.Text.Insert(k, String.Format("{{{0}}}", str));
+					}
+					while (card.Text.Contains("<") && card.Text.Contains(">"))
+					{
+						int num11 = card.Text.IndexOf("<");
+						int num12 = card.Text.IndexOf(">");
+						card.Text = card.Text.Remove(num11, num12 - num11 + 1).Trim();
+					}
+				}
+				catch (Exception ex)
+				{
+					throw new ParseException(card, "Parsing Error happended when parsing card Text", ex);
+				}
+			}
+			else
+			{
+				card.Text = string.Empty;
+			}
+			#endregion
+			
+
 			#region Card Flavor
 			if (webdata.IndexOf("Flavor Text:") > 0)
 			{
@@ -615,40 +650,6 @@ namespace HyperCore.Data
 				else
 				{
 					card.Cost += "|";
-				}
-				#endregion
-
-				#region sText
-				if (webdata.IndexOf("Card Text:") > 0)
-				{
-					try
-					{
-						int num47 = webdata.IndexOf("</div>", webdata.IndexOf("Card Text:")) + 6;
-						int num48 = webdata.IndexOf("</div></div>", num47);
-						card.Text = webdata.Substring(num47, num48 - num47).Trim();
-						int num34;
-						for (int k = card.Text.IndexOf("<img src="); k > 0; k = card.Text.IndexOf("<img src=", num34))
-						{
-							int num33 = card.Text.IndexOf("alt=", k) + 4;
-							num34 = card.Text.IndexOf("align=", num33);
-							string str = card.Text.Substring(num33, num34 - num33).Replace("\"", string.Empty).Trim();
-							card.Text = card.Text.Insert(k, String.Format("{{{0}}}", str));
-						}
-						while (card.Text.Contains("<") && card.Text.Contains(">"))
-						{
-							int num11 = card.Text.IndexOf("<");
-							int num12 = card.Text.IndexOf(">");
-							card.Text = card.Text.Remove(num11, num12 - num11 + 1).Trim();
-						}
-					}
-					catch (Exception ex)
-					{
-						throw new ParseException(card, "Parsing Error happended when parsing card sText", ex);
-					}
-				}
-				else
-				{
-					card.Text += "|";
 				}
 				#endregion
 

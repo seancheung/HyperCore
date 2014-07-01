@@ -69,7 +69,7 @@ namespace HyperCore.Data
 		/// <returns>the url for webrequesting</returns>
 		private static string GetURL()
 		{
-			return string.Format(@"http://magiccards.info/search.html");
+			return @"http://magiccards.info/search.html";
 		}
 	}
 }

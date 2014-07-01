@@ -1,5 +1,7 @@
 ﻿using HyperCore.Common;
+using HyperCore.Data;
 using HyperCore.Exceptions;
+using HyperCore.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -101,7 +103,24 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Load Formats
+		/// Load cards form local db
+		/// </summary>
+		/// <returns></returns>
+		public static IEnumerable<Card> LoadCards()
+		{
+			try
+			{
+				SQLiteIO sql = new SQLiteIO();
+				return sql.LoadCard();
+			}
+			catch (Exception ex)
+			{
+				throw new IOFileException("IO Error happended when loading card database", ex);
+			}
+		}
+
+		/// <summary>
+		/// Load formats
 		/// </summary>
 		/// <param name="xmlPath"></param>
 		/// <returns></returns>
@@ -124,7 +143,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Load Sets
+		/// Load sets
 		/// </summary>
 		/// <param name="xmlPath"></param>
 		/// <returns></returns>
@@ -171,7 +190,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Save Cards
+		/// Save cards
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <param name="xmlPath"></param>
@@ -222,6 +241,23 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
+		/// Save cards to local db
+		/// </summary>
+		/// <param name="cards"></param>
+		public static void Save(IEnumerable<Card> cards)
+		{
+			try
+			{
+				SQLiteIO sql = new SQLiteIO();
+				sql.Insert(cards);
+			}
+			catch (Exception ex)
+			{
+				throw new IOFileException("IO Error happended when saving cards database", ex);
+			}
+		}
+
+		/// <summary>
 		/// Save format list
 		/// </summary>
 		/// <param name="formats"></param>
@@ -259,7 +295,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Save Set list
+		/// Save set list
 		/// </summary>
 		/// <param name="sets"></param>
 		/// <param name="xmlPath"></param>
@@ -319,6 +355,58 @@ namespace HyperCore.IO
 				{
 					throw;
 				}
+			}
+		}
+
+		/// <summary>
+		/// Grab a card's images from online to local
+		/// </summary>
+		/// <param name="card"></param>
+		public static void GrabImage(Card card)
+		{
+			try
+			{
+				foreach (string id in card.GetIDs())
+				{
+					var data = DownloadImage.Download(id);
+					SaveImage(id, data);
+				}
+
+				foreach (string id in card.GetzIDs())
+				{
+					var data = DownloadImage.Download(id);
+					SaveImage(id, data);
+				}
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		/// <summary>
+		/// Save byte array into database
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="data"></param>
+		private static bool SaveImage(string id, byte[] data)
+		{
+			SQLiteIO sql = new SQLiteIO();
+			return sql.Insert(id, data);
+		}
+
+		/// <summary>
+		/// Read card to provided path
+		/// </summary>
+		/// <param name="card"></param>
+		/// <param name="path"></param>
+		public static void ReadImage(Card card, string path)
+		{
+			SQLiteIO sql = new SQLiteIO();
+			foreach (var id in card.GetIDs())
+			{
+				var bytes = sql.LoadFile(id);
+				File.WriteAllBytes(String.Format("{0}/{1}.jpg", path, id), bytes);
 			}
 		}
 

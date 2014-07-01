@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace HyperCore.IO
 {
-	public class Images
+	public class ImageHandler
 	{
 
 		private ZipComp zipComp;
@@ -15,7 +15,7 @@ namespace HyperCore.IO
 		/// <summary>
 		/// Initializes a new instance of the Images class.
 		/// </summary>
-		public Images(string srcPath, string tmpPath)
+		public ImageHandler(string srcPath, string tmpPath)
 		{
 			zipComp = new ZipComp(srcPath, tmpPath);
 		}

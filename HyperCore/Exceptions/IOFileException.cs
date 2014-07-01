@@ -17,6 +17,15 @@ namespace HyperCore.Exceptions
 		}
 
 		/// <summary>
+		/// Initializes a new instance of the IOFileException class with parameters
+		/// </summary>
+		public IOFileException(string message, Exception inner)
+			: base(message, inner)
+		{
+			
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the IOException class with parameters
 		/// </summary>
 		/// <param name="path"></param>

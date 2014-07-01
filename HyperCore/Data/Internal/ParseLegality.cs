@@ -9,7 +9,7 @@ namespace HyperCore.Data
 	{
 		private ParseLegality()
 		{
-			
+
 		}
 
 		/// <summary>
@@ -41,15 +41,16 @@ namespace HyperCore.Data
 				- webdata.IndexOf("This card has restrictions in the following formats"));
 				while (webdata.Contains("<td style=\"text-align:center;\">"))
 				{
-					int num = webdata.IndexOf("<td style=\"width:40%;\">") + 23;
-					int num2 = webdata.IndexOf("</td>", num);
-					string arg = webdata.Substring(num, num2 - num).Trim();
+					int num1 = webdata.IndexOf("<tr class=\"cardItem evenItem\">") + 30;
+					num1 = webdata.IndexOf(">", num1) + 1;
+					int num2 = webdata.IndexOf("</td>", num1);
+					string arg = webdata.Substring(num1, num2 - num1).Trim();
 					card.Legality += string.Format("[{0}]", arg);
 					webdata = webdata.Substring(webdata.IndexOf("<td style=\"text-align:center;\">") + 30);
 					if (webdata.Contains("<tr class=\"cardItem oddItem\">"))
 					{
-						int num3 = webdata.IndexOf("<tr class=\"cardItem oddItem\">");
-						num3 = webdata.IndexOf("<td>", num3) + 4;
+						int num3 = webdata.IndexOf("<tr class=\"cardItem oddItem\">") + 30;
+						num3 = webdata.IndexOf(">", num3) + 1;
 						int num4 = webdata.IndexOf("</td>", num3);
 						arg = webdata.Substring(num3, num4 - num3).Trim();
 						card.Legality += string.Format("[{0}]", arg);
