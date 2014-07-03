@@ -8,7 +8,6 @@ namespace HyperCore.Data
 {
 	internal class ParseID
 	{
-		private ParseID() { }
 
 		/// <summary>
 		/// Get a list of cards with ID property filled
@@ -16,12 +15,12 @@ namespace HyperCore.Data
 		/// <param name="setname">Full english set name</param>
 		/// <param name="setcode">Setcode in capital</param>
 		/// <returns>A list of cards</returns>
-		public static IEnumerable<Card> Parse(string setname, string setcode)
+		public IEnumerable<Card> Parse(string setname, string setcode)
 		{
 			string webdata;
 			try
 			{
-				webdata = Request.GetWebData(GetURL_checklist(setname));
+				webdata = Request.Instance.GetWebData(GetURL_checklist(setname));
 			}
 			catch
 			{
@@ -74,7 +73,7 @@ namespace HyperCore.Data
 				}
 
 				yield return card;
-				
+
 			}
 
 		}
@@ -83,9 +82,8 @@ namespace HyperCore.Data
 		/// Get url of the card list data
 		/// </summary>
 		/// <param name="setname">Full english set name</param>
-		/// <param name="setcode">Setcode in capital</param>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL_compact(string setname)
+		private string GetURL_compact(string setname)
 		{
 			return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=compact&set=%5b%22{0}%22%5d", setname.Replace(" ", "+"));
 		}
@@ -94,9 +92,8 @@ namespace HyperCore.Data
 		/// Get url of the card list data
 		/// </summary>
 		/// <param name="setname">Full english set name</param>
-		/// <param name="setcode">Setcode in capital</param>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL_standard(string setname)
+		private string GetURL_standard(string setname)
 		{
 			return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=standard&set=%5b%22{0}%22%5d", setname.Replace(" ", "+"));
 		}
@@ -105,9 +102,8 @@ namespace HyperCore.Data
 		/// Get url of the card list data
 		/// </summary>
 		/// <param name="setname">Full english set name</param>
-		/// <param name="setcode">Setcode in capital</param>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL_checklist(string setname)
+		private string GetURL_checklist(string setname)
 		{
 			return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=checklist&set=%5b%22{0}%22%5d", setname.Replace(" ", "+"));
 		}
@@ -116,9 +112,8 @@ namespace HyperCore.Data
 		/// Get url of the card list data
 		/// </summary>
 		/// <param name="setname">Full english set name</param>
-		/// <param name="setcode">Setcode in capital</param>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL_visual(string setname)
+		private string GetURL_visual(string setname)
 		{
 			return string.Format("http://gatherer.wizards.com/Pages/Search/Default.aspx?output=spoiler&method=visual&set=%5b%22{0}%22%5d", setname.Replace(" ", "+"));
 		}

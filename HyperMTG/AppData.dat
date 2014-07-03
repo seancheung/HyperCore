@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<appdata>
+  <colors>
+    <color name="Red" code="R"/>
+    <color name="Blue" code="U"/>
+    <color name="Green" code="G"/>
+    <color name="Black" code="B"/>
+    <color name="White" code="W"/>
+  </colors>
+  <formats>
+    <format name="Commander" code="EDH"/>
+    <format name="Freeform" code=""/>
+    <format name="Ice Age Block" code=""/>
+    <format name="Innistrad Block" code=""/>
+    <format name="Invasion Block" code=""/>
+    <format name="Kamigawa Block" code=""/>
+    <format name="Lorwyn-Shadowmoor Block" code=""/>
+    <format name="Masques Block" code=""/>
+    <format name="Mirage Block" code=""/>
+    <format name="Mirrodin Block" code=""/>
+    <format name="Odyssey Block" code=""/>
+    <format name="Onslaught Block" code=""/>
+    <format name="Prismatic" code=""/>
+    <format name="Ravnica Block" code=""/>
+    <format name="Return to Ravnica Block" code=""/>
+    <format name="Scars of Mirrodin Block" code=""/>
+    <format name="Shards of Alara Block" code=""/>
+    <format name="Tempest Block" code=""/>
+    <format name="Theros Block" code=""/>
+    <format name="Time Spiral Block" code=""/>
+    <format name="Urza Block" code=""/>
+    <format name="Zendikar Block" code=""/>
+    <format name="Legacy" code="T1.5"/>
+    <format name="Modern" code=""/>
+    <format name="Singleton 100" code=""/>
+    <format name="Standard" code="T2"/>
+    <format name="Tribal Wars Legacy" code=""/>
+    <format name="Tribal Wars Standard" code=""/>
+    <format name="Un-Sets" code=""/>
+    <format name="Vintage" code="T1"/>
+  </formats>
+  <rarities>
+    <rarity name="Common" code="C"/>
+    <rarity name="Uncommon" code="U"/>
+    <rarity name="Rare" code="R"/>
+    <rarity name="Mythic Rare" code="M"/>
+  </rarities>
+  <types>
+    <type name="Artifact" code="A"/>
+    <type name="Equipment" code="Q"/>
+    <type name="Basic" code="B"/>
+    <type name="Conspiracy" code="Y"/>
+    <type name="Creature" code="C"/>
+    <type name="Enchantment" code="E"/>
+    <type name="Aura" code="R"/>
+    <type name="Instant" code="I"/>
+    <type name="Land" code="L"/>
+    <type name="Legendary" code="U"/>
+    <type name="Ongoing" code="G"/>
+    <type name="Phenomenon" code="F"/>
+    <type name="Plane" code="N"/>
+    <type name="Planeswalker" code="P"/>
+    <type name="Scheme" code="K"/>
+    <type name="Snow" code="O"/>
+    <type name="Sorcery" code="S"/>
+    <type name="Tribal" code="T"/>
+    <type name="Vanguard" code="V"/>
+    <type name="World" code="W"/>
+  </types>
+</appdata>

@@ -1,0 +1,1 @@
+Provider=Microsoft.Jet.OLEDB.4.0;Data Source=DATA.ac;Jet OLEDB:Database Password=E019A401-2822-42B9;Jet OLEDB:Engine Type=5

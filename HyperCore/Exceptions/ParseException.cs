@@ -5,7 +5,11 @@ namespace HyperCore.Exceptions
 {
 	public class ParseException : HyperException
 	{
-		public Card Card { get; private set; }
+		public Card Card
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the ParseException class.
@@ -19,7 +23,7 @@ namespace HyperCore.Exceptions
 		/// Initializes a new instance of the ParseException class.
 		/// </summary>
 		public ParseException(string message, Exception inner)
-			: base(message, inner)
+		: base(message, inner)
 		{
 
 		}
@@ -28,7 +32,7 @@ namespace HyperCore.Exceptions
 		/// Initializes a new instance of the ParseException class.
 		/// </summary>
 		public ParseException(Card card, string message, Exception inner)
-			: base(message, inner)
+		: base(message, inner)
 		{
 			Card = card;
 		}

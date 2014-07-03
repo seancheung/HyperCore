@@ -15,7 +15,11 @@ namespace HyperCore.Common
 		/// (use '|' as separator for dual, e.g. '12345|67890')
 		/// </summary>
 		[Column(Name = "id", IsPrimaryKey = true)]
-		public string ID { get; set; }
+		public string ID
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("zid")]
 		/// <summary>
@@ -23,7 +27,11 @@ namespace HyperCore.Common
 		/// (use '|' as separator for dual, e.g. '12345|67890')
 		/// </summary>
 		[Column(Name = "zid")]
-		public string zID { get; set; }
+		public string zID
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("var")]
 		/// <summary>
@@ -31,7 +39,11 @@ namespace HyperCore.Common
 		/// (in the format of '(1:373546)(2:373609)(3:373683)(4:373746)')
 		/// </summary>
 		[Column(Name = "var")]
-		public string Var { get; set; }
+		public string Var
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("name")]
 		/// <summary>
@@ -39,7 +51,11 @@ namespace HyperCore.Common
 		/// (use '|' as separator for dual, e.g. 'ABC|DEF')
 		/// </summary>
 		[Column(Name = "name")]
-		public string Name { get; set; }
+		public string Name
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("zname")]
 		/// <summary>
@@ -47,7 +63,11 @@ namespace HyperCore.Common
 		/// (use '|' as separator for dual, e.g. 'ABC|DEF')
 		/// </summary>
 		[Column(Name = "zname")]
-		public string zName { get; set; }
+		public string zName
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("set")]
 		/// <summary>
@@ -55,14 +75,22 @@ namespace HyperCore.Common
 		/// (use '|' as separator for dual, e.g. 'ABC|DEF')
 		/// </summary>
 		[Column(Name = "set")]
-		public string Set { get; set; }
+		public string Set
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("setcode")]
 		/// <summary>
 		/// Setcode in capital
 		/// </summary>
 		[Column(Name = "setcode")]
-		public string SetCode { get; set; }
+		public string SetCode
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("color")]
 		/// <summary>
@@ -71,7 +99,11 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. 'Blue|Black')
 		/// </summary>
 		[Column(Name = "color")]
-		public string Color { get; set; }
+		public string Color
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("colorcode")]
 		/// <summary>
@@ -80,7 +112,11 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. 'U|B')
 		/// </summary>
 		[Column(Name = "colorcode")]
-		public string ColorCode { get; set; }
+		public string ColorCode
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("cost")]
 		/// <summary>
@@ -90,7 +126,11 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. '{1}{W}|{2}{G}{G}')
 		/// </summary>
 		[Column(Name = "cost")]
-		public string Cost { get; set; }
+		public string Cost
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("cmc")]
 		/// <summary>
@@ -98,7 +138,11 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. '3|2')
 		/// </summary>
 		[Column(Name = "cmc")]
-		public string CMC { get; set; }
+		public string CMC
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("type")]
 		/// <summary>
@@ -106,7 +150,11 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. 'Creature — Human Advisor|Creature — Human Mutant')
 		/// </summary>
 		[Column(Name = "type")]
-		public string Type { get; set; }
+		public string Type
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("ztype")]
 		/// <summary>
@@ -114,7 +162,11 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. 'Creature — Human Advisor|Creature — Human Mutant')
 		/// </summary>
 		[Column(Name = "ztype")]
-		public string zType { get; set; }
+		public string zType
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("typecode")]
 		/// <summary>
@@ -123,7 +175,11 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. 'C|C')
 		/// </summary>
 		[Column(Name = "typecode")]
-		public string TypeCode { get; set; }
+		public string TypeCode
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("pow")]
 		/// <summary>
@@ -131,7 +187,11 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. '1|3')
 		/// </summary>
 		[Column(Name = "pow")]
-		public string Pow { get; set; }
+		public string Pow
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("tgh")]
 		/// <summary>
@@ -139,7 +199,11 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. '1|3')
 		/// </summary>
 		[Column(Name = "tgh")]
-		public string Tgh { get; set; }
+		public string Tgh
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("loyalty")]
 		/// <summary>
@@ -147,56 +211,88 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. '3|0')
 		/// </summary>
 		[Column(Name = "loyalty")]
-		public string Loyalty { get; set; }
+		public string Loyalty
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("text")]
 		/// <summary>
 		/// English text of the card
 		/// </summary>
 		[Column(Name = "text")]
-		public string Text { get; set; }
+		public string Text
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("ztext")]
 		/// <summary>
 		/// Foreign text of the card
 		/// </summary>
 		[Column(Name = "ztext")]
-		public string zText { get; set; }
+		public string zText
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("flavor")]
 		/// <summary>
 		/// English flavor of the card
 		/// </summary>
 		[Column(Name = "flavor")]
-		public string Flavor { get; set; }
+		public string Flavor
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("zflavor")]
 		/// <summary>
 		/// Foreign flavor of the card
 		/// </summary>
 		[Column(Name = "zflavor")]
-		public string zFlavor { get; set; }
+		public string zFlavor
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("artist")]
 		/// <summary>
 		/// Artist name of the card
 		/// </summary>
 		[Column(Name = "artist")]
-		public string Artist { get; set; }
+		public string Artist
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("rarity")]
 		/// <summary>
 		/// Rarity of the card
 		/// </summary>
 		[Column(Name = "rarity")]
-		public string Rarity { get; set; }
+		public string Rarity
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("raritycode")]
 		/// <summary>
 		/// Raritycode of the card
 		/// </summary>
 		[Column(Name = "raritycode")]
-		public string RarityCode { get; set; }
+		public string RarityCode
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("number")]
 		/// <summary>
@@ -204,28 +300,44 @@ namespace HyperCore.Common
 		/// (use use '|' as separator for dual, e.g. '121a|121b')
 		/// </summary>
 		[Column(Name = "number")]
-		public string Number { get; set; }
+		public string Number
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("rulings")]
 		/// <summary>
 		/// Rulings of the card
 		/// </summary>
 		[Column(Name = "rulings")]
-		public string Rulings { get; set; }
+		public string Rulings
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("legality")]
 		/// <summary>
 		/// Legality of the card
 		/// </summary>
 		[Column(Name = "legality")]
-		public string Legality { get; set; }
+		public string Legality
+		{
+			get;
+			set;
+		}
 
 		[XmlAttribute("rating")]
 		/// <summary>
 		/// Community rating of the card
 		/// </summary>
 		[Column(Name = "rating")]
-		public string Rating { get; set; }
+		public string Rating
+		{
+			get;
+			set;
+		}
 
 		[XmlIgnore]
 		public string ColorBside;

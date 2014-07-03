@@ -11,12 +11,12 @@ namespace HyperCore.Data
 		/// Get a list of all available sets
 		/// </summary>
 		/// <returns></returns>
-		public static IEnumerable<string> Parse()
+		public IEnumerable<string> Parse()
 		{
 			string webdata;
 			try
 			{
-				webdata = Request.GetWebData(GetURL());
+				webdata = Request.Instance.GetWebData(GetURL());
 			}
 			catch
 			{
@@ -67,7 +67,7 @@ namespace HyperCore.Data
 		/// Get the set list url
 		/// </summary>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL()
+		private string GetURL()
 		{
 			return @"http://magiccards.info/search.html";
 		}

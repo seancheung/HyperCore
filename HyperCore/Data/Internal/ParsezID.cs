@@ -8,17 +8,12 @@ namespace HyperCore.Data
 	internal class ParsezID
 	{
 
-		private ParsezID()
-		{
-			
-		}
-
-		private static void GetzID(Card card, LANGUAGE lang)
+		private void GetzID(Card card, LANGUAGE lang)
 		{
 			string webdata;
 			try
 			{
-				webdata = Request.GetWebData(GetURL(card.ID));
+				webdata = Request.Instance.GetWebData(GetURL(card.ID));
 			}
 			catch
 			{
@@ -50,7 +45,7 @@ namespace HyperCore.Data
 		/// </summary>
 		/// <param name="id">Card ID</param>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL(string id)
+		private string GetURL(string id)
 		{
 			if (id.Contains("|"))
 			{
@@ -65,7 +60,7 @@ namespace HyperCore.Data
 		/// </summary>
 		/// <param name="card">Card to process</param>
 		/// <param name="lang">Language</param>
-		public static void Parse(Card card, LANGUAGE lang)
+		public void Parse(Card card, LANGUAGE lang)
 		{
 			GetzID(card, lang);
 

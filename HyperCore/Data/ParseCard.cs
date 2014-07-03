@@ -5,16 +5,38 @@ namespace HyperCore.Data
 {
 	public class ParseCard
 	{
+		private ParseDetail parseDetailInstance;
+		private ParseID parseIDInstance;
+		private ParsezID parsezIDInstance;
+		private ParsezDetail parsezDetailInstance;
+		private ParseLegality parseLegalityInstance;
+		private ParseEx parseExInstance;
 
+		/// <summary>
+		/// Single Instance
+		/// </summary>
+		public static readonly ParseCard Instance = new ParseCard();
+
+		/// <summary>
+		/// Initializes a new instance of the ParseCard class.
+		/// </summary>
+		private ParseCard()
+		{
+			parseDetailInstance = new ParseDetail();
+			parsezIDInstance = new ParsezID();
+			parsezDetailInstance = new ParsezDetail();
+			parseLegalityInstance = new ParseLegality();
+			parseExInstance = new ParseEx();
+		}
 		/// <summary>
 		/// Get a list of cards with ID property filled
 		/// </summary>
 		/// <param name="setname"></param>
 		/// <param name="setcode"></param>
 		/// <returns></returns>
-		public static IEnumerable<Card> GetCards(string setname, string setcode)
+		public IEnumerable<Card> GetCards(string setname, string setcode)
 		{
-			return ParseID.Parse(setname, setcode);
+			return parseIDInstance.Parse(setname, setcode);
 		}
 
 		/// <summary>
@@ -23,11 +45,11 @@ namespace HyperCore.Data
 		/// </summary>
 		/// <param name="card"></param>
 		/// <param name="lang"></param>
-		public static void Parse(Card card, LANGUAGE lang = LANGUAGE.English)
+		public void Parse(Card card, LANGUAGE lang = LANGUAGE.English)
 		{
 			try
 			{
-				ParseDetail.Parse(card);
+				parseDetailInstance.Parse(card);
 			}
 			catch
 			{
@@ -38,10 +60,10 @@ namespace HyperCore.Data
 			{
 				try
 				{
-					ParsezID.Parse(card, lang);
-					ParsezDetail.Parse(card);
-					ParseLegality.Parse(card);
-					ParseEx.Parse(card);
+					parsezIDInstance.Parse(card, lang);
+					parsezDetailInstance.Parse(card);
+					parseLegalityInstance.Parse(card);
+					parseExInstance.Parse(card);
 				}
 				catch
 				{
@@ -57,9 +79,12 @@ namespace HyperCore.Data
 		/// <param name="id"></param>
 		/// <param name="lang"></param>
 		/// <returns></returns>
-		public static Card Parse(string id, LANGUAGE lang = LANGUAGE.English)
+		public Card Parse(string id, LANGUAGE lang = LANGUAGE.English)
 		{
-			Card card = new Card() { ID = id };
+			Card card = new Card()
+			{
+				ID = id
+			};
 			try
 			{
 				Parse(card, lang);

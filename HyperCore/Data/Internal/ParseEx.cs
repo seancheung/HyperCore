@@ -9,12 +9,7 @@ namespace HyperCore.Data
 	internal class ParseEx
 	{
 
-		private ParseEx()
-		{
-
-		}
-
-		private static void ParseCharacters(Card card)
+		private void ParseCharacters(Card card)
 		{
 			card.Name = card.Name.ReplaceSpecial();
 			card.Text = card.Text.ReplaceSpecial();
@@ -22,7 +17,7 @@ namespace HyperCore.Data
 			card.Rulings = card.Rulings.ReplaceSpecial();
 		}
 
-		private static void ParseMana(Card card)
+		private void ParseMana(Card card)
 		{
 
 			card.Cost = card.Cost
@@ -84,7 +79,7 @@ namespace HyperCore.Data
 
 		}
 
-		private static void ParseColor(Card card)
+		private void ParseColor(Card card)
 		{
 			if (card.Color == null)
 			{
@@ -116,7 +111,7 @@ namespace HyperCore.Data
 				card.Color += "Green ";
 				card.ColorCode += "G";
 			}
-			
+
 			card.Color = card.Color.Trim();
 			if (card.IsDoubleFaced())
 			{
@@ -125,7 +120,7 @@ namespace HyperCore.Data
 			card.Color = card.Color.Trim();
 		}
 
-		private static void ParseType(Card card)
+		private void ParseType(Card card)
 		{
 			if (card.Type.Contains("Legendary"))
 			{
@@ -228,7 +223,7 @@ namespace HyperCore.Data
 			}
 		}
 
-		private static void ParseRarity(Card card)
+		private void ParseRarity(Card card)
 		{
 			if (card.Rarity.Contains("Common"))
 			{
@@ -257,7 +252,7 @@ namespace HyperCore.Data
 
 		}
 
-		private static void RemoveEmptyProp(Card card)
+		private void RemoveEmptyProp(Card card)
 		{
 			foreach (var prop in typeof(Card).GetProperties())
 			{
@@ -277,7 +272,7 @@ namespace HyperCore.Data
 		/// Parse card properties
 		/// </summary>
 		/// <param name="card">Card to process</param>
-		public static void Parse(Card card)
+		public void Parse(Card card)
 		{
 			try
 			{

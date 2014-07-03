@@ -1,0 +1,5 @@
+﻿<NavigationWindow x:Class="HyperMTG.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="525" Width="840" MinHeight="525" MinWidth="840" ShowsNavigationUI="False" Source="Index.xaml" Navigating="NavigationWindow_Navigating">
+</NavigationWindow>

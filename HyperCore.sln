@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperCore", "HyperCore\Hype
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{CBB1E031-7B93-4B19-85E7-C56554BA1C6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperMTG", "HyperMTG\HyperMTG.csproj", "{986C6A36-E452-4293-A06D-4851CD135076}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{CBB1E031-7B93-4B19-85E7-C56554BA1C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBB1E031-7B93-4B19-85E7-C56554BA1C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBB1E031-7B93-4B19-85E7-C56554BA1C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{986C6A36-E452-4293-A06D-4851CD135076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{986C6A36-E452-4293-A06D-4851CD135076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{986C6A36-E452-4293-A06D-4851CD135076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{986C6A36-E452-4293-A06D-4851CD135076}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

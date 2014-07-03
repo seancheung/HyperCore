@@ -79,6 +79,7 @@
     <Compile Include="Exceptions\IOFileException.cs" />
     <Compile Include="Exceptions\ParseException.cs" />
     <Compile Include="Exceptions\RequestException.cs" />
+    <Compile Include="IO\AppData.cs" />
     <Compile Include="IO\Database.cs" />
     <Compile Include="IO\Extern.cs" />
     <Compile Include="IO\Internal\GZipComp.cs" />
@@ -109,14 +110,27 @@
     <Content Include="IO\Internal\DLL\Ionic.Zip.dll" />
     <Content Include="IO\Internal\DLL\LitJson.dll" />
     <Content Include="IO\Internal\DLL\System.Data.SQLite.dll" />
-    <None Include="Resources\ConnectionCommand.txt" />
+    <None Include="Resources\ConnectionCommandAccess.txt" />
+    <None Include="Resources\ConnectionCommandSQLite.txt" />
     <None Include="Resources\BuildCommand.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADOX">
+      <Guid>{00000600-0000-0010-8000-00AA006D2EA4}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

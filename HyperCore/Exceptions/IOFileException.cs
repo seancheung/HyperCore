@@ -4,9 +4,21 @@ namespace HyperCore.Exceptions
 {
 	public class IOFileException : HyperException
 	{
-		public string Input { get; set; }
-		public string Output { get; set; }
-		public string Path { get; set; }
+		public string Input
+		{
+			get;
+			set;
+		}
+		public string Output
+		{
+			get;
+			set;
+		}
+		public string Path
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the IOException class
@@ -20,9 +32,9 @@ namespace HyperCore.Exceptions
 		/// Initializes a new instance of the IOFileException class with parameters
 		/// </summary>
 		public IOFileException(string message, Exception inner)
-			: base(message, inner)
+		: base(message, inner)
 		{
-			
+
 		}
 
 		/// <summary>
@@ -32,7 +44,7 @@ namespace HyperCore.Exceptions
 		/// <param name="message"></param>
 		/// <param name="inner"></param>
 		public IOFileException(string path, string message, Exception inner)
-			: base("{0}\nPath: {1}", inner, message, path)
+		: base("{0}\nPath: {1}", inner, message, path)
 		{
 			Path = path;
 		}
@@ -45,7 +57,7 @@ namespace HyperCore.Exceptions
 		/// <param name="message"></param>
 		/// <param name="inner"></param>
 		public IOFileException(string input, string output, string message, Exception inner)
-			: base("{0}\nInput: {1}\nOutput: {2}", inner, message, input, output)
+		: base("{0}\nInput: {1}\nOutput: {2}", inner, message, input, output)
 		{
 			Input = input;
 			Output = output;

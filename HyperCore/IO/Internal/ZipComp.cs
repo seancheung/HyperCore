@@ -17,12 +17,20 @@ namespace HyperCore.IO
 		/// <summary>
 		/// Image folder path
 		/// </summary>
-		public string SrcPath { get; private set; }
+		public string SrcPath
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Temp files path
 		/// </summary>
-		public string TmpPath { get; private set; }
+		public string TmpPath
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Initializer
@@ -104,7 +112,7 @@ namespace HyperCore.IO
 					{
 						lock (_lock)
 						{
-							DownloadImage.Download(id, TmpPath);
+							DownloadImage.Instance.Download(id, TmpPath);
 							zipFile.AddFile(String.Format("{0}{1}.jpg", TmpPath, id), "\\");
 							zipFile.Save();
 						}

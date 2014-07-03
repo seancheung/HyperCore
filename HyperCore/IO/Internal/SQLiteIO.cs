@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.SQLite;
 using System.Linq;
-using System.IO.Compression;
-using System.IO;
 
 namespace HyperCore.IO
 {
@@ -14,14 +12,14 @@ namespace HyperCore.IO
 		/// <summary>
 		/// Single instance of SQLiteConnection
 		/// </summary>
-		private readonly static SQLiteConnection conn = new SQLiteConnection();
+		private static readonly SQLiteConnection conn = new SQLiteConnection();
 
 		/// <summary>
 		/// Initializes a new instance of the SQLiteIO class.
 		/// </summary>
 		public SQLiteIO()
 		{
-			conn.ConnectionString = Resource.ConnectionCommand;
+			conn.ConnectionString = Resource.ConnectionCommandSQLite;
 			Create();
 
 		}
@@ -215,6 +213,34 @@ namespace HyperCore.IO
 				{
 					item.Data = compdata;
 					item.Length = data.Length;
+				}
+				datacontext.SubmitChanges();
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Update setinfo
+		/// </summary>
+		/// <param name="setinfo"></param>
+		/// <returns></returns>
+		public bool Update(SetInfo setinfo)
+		{
+			using (var datacontext = new DataContext(conn))
+			{
+				var tab = datacontext.GetTable<SetInfo>();
+				var que = tab.Where(c => c.SetName == setinfo.SetName);
+
+				if (que.Count() == 0)
+				{
+					return false;
+				}
+
+				foreach (var item in que)
+				{
+					item.SetCode = setinfo.SetCode;
+					item.LastUpdate = setinfo.LastUpdate;
+					item.Local = setinfo.Local;
 				}
 				datacontext.SubmitChanges();
 				return true;

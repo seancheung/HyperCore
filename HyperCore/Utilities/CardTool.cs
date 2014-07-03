@@ -294,7 +294,7 @@ namespace HyperCore.Utilities
 			{
 				return;
 			}
-			
+
 			foreach (var p in typeof(Card).GetProperties())
 			{
 				//Make sure it's readable

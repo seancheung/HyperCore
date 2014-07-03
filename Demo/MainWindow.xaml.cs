@@ -39,17 +39,17 @@ namespace Demo
 			InitializeComponent();
 			deck = new Deck();
 			gdDeck.DataContext = deck;
-			if (!File.Exists(DBPath))
-			{
-				try
-				{
-					Database.Save(new List<string>(), DBPath);
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message);
-				}
-			}
+			//if (!File.Exists(DBPath))
+			//{
+			//	try
+			//	{
+			//		Database.Save(new List<string>(), DBPath);
+			//	}
+			//	catch (Exception ex)
+			//	{
+			//		MessageBox.Show(ex.Message);
+			//	}
+			//}
 
 		}
 
@@ -64,30 +64,30 @@ namespace Demo
 			try
 			{
 				//First load set list from local
-				var sets = Database.LoadSets(DBPath);
-				if (sets.ToList().Count == 0)
+				var setinfo = Database.Instance.LoadSets();
+				if (setinfo.ToList().Count == 0)
 				{
 					//If no sets are loaded, grab data from online and save to local
-					sets = ParseSet.Parse();
-					Database.Save(sets, DBPath);
+					var sets = new ParseSet().Parse();
+					Database.Instance.Save(sets);
 				}
 
 				var lbs = new List<CheckBox>();
-				var localSets = Database.LoadCards(DBPath).Select(c => c.SetCode);
-				foreach (var set in Database.LoadSets(DBPath))
+				foreach (var set in Database.Instance.LoadSets())
 				{
 					//Mark local database
 					lbs.Add(new CheckBox()
 					{
-						Content = set,
-						Foreground = localSets.Contains(set.SplitSetName()[1]) ?
+						Content = set.FullName,
+						ToolTip = set.LastUpdate,
+						Foreground = set.Local ?
 									 new SolidColorBrush(Colors.DodgerBlue) : new SolidColorBrush(Colors.Black)
 					});
 				}
 				lbSets.ItemsSource = lbs;
 
-				var formats = Database.LoadFormats(DBPath);
-				combFormat.ItemsSource = formats;
+				//var formats = Database.LoadFormats(DBPath);
+				//combFormat.ItemsSource = formats;
 			}
 			catch (Exception ex)
 			{
@@ -133,7 +133,7 @@ namespace Demo
 							progBar.Value = 0;
 						});
 
-						var cards = ParseCard.GetCards(s.SplitSetName()[0], s.SplitSetName()[1]).ToList();
+						var cards = ParseCard.Instance.GetCards(s.SplitSetName()[0], s.SplitSetName()[1]).ToList();
 
 						var n = cards.Count;
 
@@ -159,6 +159,9 @@ namespace Demo
 						}
 
 						WaitHandle.WaitAll(waitHandles);
+
+						//Refresh setinfo
+						Database.Instance.Update(s);
 
 						//Uncheck finished set
 						Dispatcher.Invoke((Action)delegate
@@ -195,22 +198,14 @@ namespace Demo
 
 		private void Button_Load(object sender, RoutedEventArgs e)
 		{
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Database(*.hd)|*.hd|All(*.*)|*.*";
-			dlg.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
-			dlg.RestoreDirectory = true;
-			if (dlg.ShowDialog() == true)
+			try
 			{
-				var path = dlg.FileName;
-				try
-				{
-					var data = Database.LoadCards();
-					lvCards.ItemsSource = data;
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message);
-				}
+				var data = Database.Instance.LoadCards();
+				lvCards.ItemsSource = data;
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
 			}
 		}
 
@@ -313,10 +308,10 @@ namespace Demo
 					progBar.Value++;
 				});
 
-				ParseCard.Parse(card, lang);
-				lock(_lock)
+				ParseCard.Instance.Parse(card, lang);
+				lock (_lock)
 				{
-					Database.GrabImage(card);
+					Database.Instance.GrabImage(card);
 				}
 			}
 
@@ -324,7 +319,7 @@ namespace Demo
 			{
 				//Save Data
 				//Database.Save(cards, DBPath);
-				Database.Save(cards);
+				Database.Instance.Save(cards);
 			}
 
 			//Set the current thread state as finished
@@ -349,8 +344,8 @@ namespace Demo
 		{
 			try
 			{
-				var formats = ParseFormat.Parse();
-				Database.Save(formats, DBPath);
+				var formats = new ParseFormat().Parse();
+				Database.Instance.Save(formats, DBPath);
 				MessageBox.Show("Successfuly updated formats");
 			}
 			catch (Exception ex)
@@ -610,10 +605,10 @@ namespace Demo
 					Card newCard = card as Card;
 					if (newCard != null)
 					{
-						ParseCard.Parse(newCard, lang);
+						ParseCard.Instance.Parse(newCard, lang);
 					}
 
-					Database.Save(new Card[] { newCard }, DBPath);
+					Database.Instance.Save(new Card[] { newCard }, DBPath);
 					MessageBox.Show("Updating complete, please reload data");
 				}
 				catch (Exception ex)
@@ -660,7 +655,7 @@ namespace Demo
 							progBar.Value = 0;
 						});
 
-						var db = Database.LoadCards(DBPath);
+						var db = Database.Instance.LoadCards(DBPath);
 						var cards = db.Where(c => c.SetCode == s.SplitSetName()[1]).ToList();
 
 						var n = cards.Count;
@@ -714,15 +709,15 @@ namespace Demo
 
 		private void Button_RenameImages(object sender, RoutedEventArgs e)
 		{
-			var dbcards = Database.LoadCards(DBPath);
+			var dbcards = Database.Instance.LoadCards();
 			ImageHandler dp = new ImageHandler("IMG\\", "tmp\\");
 			dp.Rename(dbcards, "name", "(", "number", ")").ToList();
 		}
 
 		private void Button_Test(object sender, RoutedEventArgs e)
 		{
-			Database.ReadImage(lvCards.SelectedValue as Card, Environment.CurrentDirectory);
-			MessageBox.Show("ok");
+			//Database.ReadImage(lvCards.SelectedValue as Card, Environment.CurrentDirectory);
+			//MessageBox.Show("ok");
 
 		}
 

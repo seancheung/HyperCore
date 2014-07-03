@@ -121,7 +121,10 @@
   <data name="BuildCommand" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\BuildCommand.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
-  <data name="ConnectionCommand" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\ConnectionCommand.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  <data name="ConnectionCommandAccess" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionCommandAccess.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="ConnectionCommandSQLite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConnectionCommandSQLite.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
 </root>

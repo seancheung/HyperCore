@@ -4,22 +4,22 @@ namespace HyperCore.Utilities
 	public static class Characters
 	{
 		/// <summary>
-		/// Replace special characters like 'â' with legal ones
+		/// Replace special characters like 'a' with legal ones
 		/// </summary>
 		/// <param name="text"></param>
 		/// <returns></returns>
 		public static string ReplaceSpecial(this string text)
 		{
 			return text
-				.Replace("ö", "o")
-				.Replace("â", "a")
-				.Replace("á", "a")
-				.Replace("í", "i")
-				.Replace("ú", "u")
-				.Replace("û", "u")
-				.Replace("Æ", "AE")
-				.Replace("é", "e")
-				.Replace("à", "a");
+			       .Replace("?", "o")
+			       .Replace("a", "a")
+			       .Replace("á", "a")
+			       .Replace("í", "i")
+			       .Replace("ú", "u")
+			       .Replace("?", "u")
+			       .Replace("?", "AE")
+			       .Replace("é", "e")
+			       .Replace("à", "a");
 		}
 
 		/// <summary>
@@ -30,13 +30,13 @@ namespace HyperCore.Utilities
 		public static string ReplaceColor(this string color)
 		{
 			return color
-				.Replace("White", "W")
-				.Replace("Green", "G")
-				.Replace("Blue", "U")
-				.Replace("Red", "R")
-				.Replace("Black", "B")
-				.Replace("Colorless", "C")
-				.Trim();
+			       .Replace("White", "W")
+			       .Replace("Green", "G")
+			       .Replace("Blue", "U")
+			       .Replace("Red", "R")
+			       .Replace("Black", "B")
+			       .Replace("Colorless", "C")
+			       .Trim();
 		}
 
 		/// <summary>
@@ -47,13 +47,13 @@ namespace HyperCore.Utilities
 		public static string ReplaceColorBack(this string symbol)
 		{
 			return symbol
-				.Replace("W", "White")
-				.Replace("G", "Green")
-				.Replace("U", "Blue")
-				.Replace("R", "Red")
-				.Replace("B", "Black")
-				.Replace("C","Colorless")
-				.Trim();
+			       .Replace("W", "White")
+			       .Replace("G", "Green")
+			       .Replace("U", "Blue")
+			       .Replace("R", "Red")
+			       .Replace("B", "Black")
+			       .Replace("C", "Colorless")
+			       .Trim();
 		}
 
 		/// <summary>
@@ -64,12 +64,12 @@ namespace HyperCore.Utilities
 		public static string ReplaceCost(this string cost)
 		{
 			return cost
-				.Replace("{Tap}", "{T}")
-				.Replace("{White}", "{W}")
-				.Replace("{Blue}", "{U}")
-				.Replace("{Black}", "{B}")
-				.Replace("{Red}", "{R}")
-				.Replace("{Green}", "{G}");
+			       .Replace("{Tap}", "{T}")
+			       .Replace("{White}", "{W}")
+			       .Replace("{Blue}", "{U}")
+			       .Replace("{Black}", "{B}")
+			       .Replace("{Red}", "{R}")
+			       .Replace("{Green}", "{G}");
 		}
 
 		/// <summary>
@@ -80,12 +80,12 @@ namespace HyperCore.Utilities
 		public static string ReplaceCostBack(this string symbol)
 		{
 			return symbol
-				.Replace("{T}", "{Tap}")
-				.Replace("{W}", "{White}")
-				.Replace("{U}", "{Blue}")
-				.Replace("{B}", "{Black}")
-				.Replace("{R}", "{Red}")
-				.Replace("{G}", "{Green}");
+			       .Replace("{T}", "{Tap}")
+			       .Replace("{W}", "{White}")
+			       .Replace("{U}", "{Blue}")
+			       .Replace("{B}", "{Black}")
+			       .Replace("{R}", "{Red}")
+			       .Replace("{G}", "{Green}");
 		}
 	}
 }

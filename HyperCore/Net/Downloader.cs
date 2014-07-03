@@ -7,6 +7,11 @@ namespace HyperCore.Net
 {
 	public class Downloader
 	{
+		/// <summary>
+		/// Single Instance
+		/// </summary>
+		public static readonly Downloader Instance = new Downloader();
+
 		private Downloader() { }
 
 		/// <summary>
@@ -14,7 +19,7 @@ namespace HyperCore.Net
 		/// </summary>
 		/// <param name="url">Download link</param>
 		/// <param name="path">Stroring path</param>
-		public static void Downloadfile(string url, string path)
+		public void Downloadfile(string url, string path)
 		{
 			try
 			{
@@ -35,7 +40,7 @@ namespace HyperCore.Net
 		/// </summary>
 		/// <param name="url"></param>
 		/// <returns></returns>
-		public static byte[] DownloadByte(string url)
+		public byte[] DownloadByte(string url)
 		{
 			try
 			{

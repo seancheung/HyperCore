@@ -7,6 +7,11 @@ namespace HyperCore.Net
 {
 	public class Request
 	{
+		/// <summary>
+		/// Single Instance
+		/// </summary>
+		public static readonly Request Instance = new Request();
+
 		private Request() { }
 
 		/// <summary>
@@ -14,7 +19,7 @@ namespace HyperCore.Net
 		/// </summary>
 		/// <param name="url">A url to create request</param>
 		/// <returns>Data from the response</returns>
-		public static string GetWebData(string url)
+		public string GetWebData(string url)
 		{
 			HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
 			httpWebRequest.AllowAutoRedirect = false;

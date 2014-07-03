@@ -14,51 +14,51 @@ namespace HyperCore.Data
 		/// </summary>
 		/// <param name="format">Game format</param>
 		/// <returns>An url for webrequesting</returns>
-		private static string GetURL(FORMAT format)
+		private string GetURL(FORMAT format)
 		{
 			string url;
 
 			switch (format)
 			{
-				case FORMAT.Standard:
-					url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrstandard";
-					break;
-				case FORMAT.Modern:
-					url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrmodern";
-					break;
-				case FORMAT.Extended:
-					url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrextended";
-					break;
-				case FORMAT.Block:
-					url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrblock";
-					break;
-				case FORMAT.Vintage:
-					url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrvintage";
-					break;
-				case FORMAT.Legacy:
-					url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrlegacy";
-					break;
-				case FORMAT.Classic:
-					url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=magic/rules/mtgoclassic";
-					break;
-				case FORMAT.Commander:
-					url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=magic/rules/100cardsingleton-commander";
-					break;
-				default:
-					url = null;
-					break;
+			case FORMAT.Standard:
+				url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrstandard";
+				break;
+			case FORMAT.Modern:
+				url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrmodern";
+				break;
+			case FORMAT.Extended:
+				url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrextended";
+				break;
+			case FORMAT.Block:
+				url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrblock";
+				break;
+			case FORMAT.Vintage:
+				url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrvintage";
+				break;
+			case FORMAT.Legacy:
+				url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=judge/resources/sfrlegacy";
+				break;
+			case FORMAT.Classic:
+				url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=magic/rules/mtgoclassic";
+				break;
+			case FORMAT.Commander:
+				url = "http://www.wizards.com/Magic/TCG/Resources.aspx?x=magic/rules/100cardsingleton-commander";
+				break;
+			default:
+				url = null;
+				break;
 			}
 
 			return url;
 		}
 
 
-		private static Format Parse(FORMAT format)
+		private Format Parse(FORMAT format)
 		{
 			string webdata;
 			try
 			{
-				webdata = Request.GetWebData(GetURL(format));
+				webdata = Request.Instance.GetWebData(GetURL(format));
 			}
 			catch
 			{
@@ -68,8 +68,8 @@ namespace HyperCore.Data
 			try
 			{
 				webdata = webdata.Substring(webdata.IndexOf("<div class=\"article-content\">"),
-				webdata.IndexOf("</div>", webdata.IndexOf("<div class=\"article-content\">"))
-				- webdata.IndexOf("<div class=\"article-content\">"));
+				                            webdata.IndexOf("</div>", webdata.IndexOf("<div class=\"article-content\">"))
+				                            - webdata.IndexOf("<div class=\"article-content\">"));
 				if (!webdata.Contains("<ul>"))
 				{
 					return null;
@@ -84,17 +84,17 @@ namespace HyperCore.Data
 				if (!text3.Contains("keyName=\"name\""))
 				{
 					string[] array = text3
-						.Replace("<ul>", string.Empty)
-						.Replace("</ul>", string.Empty)
-						.Replace("<i>", string.Empty)
-						.Replace("</i>", string.Empty)
-						.Replace("<b>", string.Empty)
-						.Replace("</b>", string.Empty)
-						.Split(new string[]
-						{
-							"<li>",
-							"</li>"
-						}, StringSplitOptions.RemoveEmptyEntries);
+					                 .Replace("<ul>", string.Empty)
+					                 .Replace("</ul>", string.Empty)
+					                 .Replace("<i>", string.Empty)
+					                 .Replace("</i>", string.Empty)
+					                 .Replace("<b>", string.Empty)
+					                 .Replace("</b>", string.Empty)
+					                 .Split(new string[]
+					{
+						"<li>",
+						"</li>"
+					}, StringSplitOptions.RemoveEmptyEntries);
 					for (int i = 0; i < array.Length; i++)
 					{
 						string text4 = array[i];
@@ -111,17 +111,17 @@ namespace HyperCore.Data
 						int num4 = webdata.IndexOf("</ul>", num3);
 						string text5 = webdata.Substring(num3, num4 - num3);
 						array = text5
-							.Replace("<ul>", string.Empty)
-							.Replace("</ul>", string.Empty)
-							.Replace("<i>", string.Empty)
-							.Replace("</i>", string.Empty)
-							.Replace("<b>", string.Empty)
-							.Replace("</b>", string.Empty)
-							.Split(new string[]
-							{
-								"<li>",
-								"</li>"
-							}, StringSplitOptions.RemoveEmptyEntries);
+						        .Replace("<ul>", string.Empty)
+						        .Replace("</ul>", string.Empty)
+						        .Replace("<i>", string.Empty)
+						        .Replace("</i>", string.Empty)
+						        .Replace("<b>", string.Empty)
+						        .Replace("</b>", string.Empty)
+						        .Split(new string[]
+						{
+							"<li>",
+							"</li>"
+						}, StringSplitOptions.RemoveEmptyEntries);
 						for (int i = 0; i < array.Length; i++)
 						{
 							string text4 = array[i];
@@ -137,17 +137,17 @@ namespace HyperCore.Data
 				{
 					string text5 = text3;
 					string[] array = text5
-						.Replace("<ul>", string.Empty)
-						.Replace("</ul>", string.Empty)
-						.Replace("<i>", string.Empty)
-						.Replace("</i>", string.Empty)
-						.Replace("<b>", string.Empty)
-						.Replace("</b>", string.Empty)
-						.Split(new string[]
-						{
-							"<li>",
-							"</li>"
-						}, StringSplitOptions.RemoveEmptyEntries);
+					                 .Replace("<ul>", string.Empty)
+					                 .Replace("</ul>", string.Empty)
+					                 .Replace("<i>", string.Empty)
+					                 .Replace("</i>", string.Empty)
+					                 .Replace("<b>", string.Empty)
+					                 .Replace("</b>", string.Empty)
+					                 .Split(new string[]
+					{
+						"<li>",
+						"</li>"
+					}, StringSplitOptions.RemoveEmptyEntries);
 					for (int i = 0; i < array.Length; i++)
 					{
 						string text4 = array[i];
@@ -170,7 +170,7 @@ namespace HyperCore.Data
 		/// Get A list of all Formats
 		/// </summary>
 		/// <returns></returns>
-		public static IEnumerable<Format> Parse()
+		public IEnumerable<Format> Parse()
 		{
 			foreach (FORMAT format in Enum.GetValues(typeof(FORMAT)))
 			{
@@ -179,7 +179,7 @@ namespace HyperCore.Data
 				{
 					continue;
 				}
-				
+
 				try
 				{
 					result = Parse(format);

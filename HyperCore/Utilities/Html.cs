@@ -21,10 +21,10 @@ namespace HyperCore.Utilities
 			text = Regex.Replace(text, "&(lt|#60);", "<", RegexOptions.IgnoreCase);
 			text = Regex.Replace(text, "&(gt|#62);", ">", RegexOptions.IgnoreCase);
 			text = Regex.Replace(text, "&(nbsp|#160);", " ", RegexOptions.IgnoreCase);
-			text = Regex.Replace(text, "&(iexcl|#161);", "¡", RegexOptions.IgnoreCase);
-			text = Regex.Replace(text, "&(cent|#162);", "¢", RegexOptions.IgnoreCase);
-			text = Regex.Replace(text, "&(pound|#163);", "£", RegexOptions.IgnoreCase);
-			text = Regex.Replace(text, "&(copy|#169);", "©", RegexOptions.IgnoreCase);
+			text = Regex.Replace(text, "&(iexcl|#161);", "?", RegexOptions.IgnoreCase);
+			text = Regex.Replace(text, "&(cent|#162);", "￠", RegexOptions.IgnoreCase);
+			text = Regex.Replace(text, "&(pound|#163);", "￡", RegexOptions.IgnoreCase);
+			text = Regex.Replace(text, "&(copy|#169);", "?", RegexOptions.IgnoreCase);
 			text = Regex.Replace(text, "&#(\\d+);", "", RegexOptions.IgnoreCase);
 			text.Replace("<", "");
 			text.Replace(">", "");

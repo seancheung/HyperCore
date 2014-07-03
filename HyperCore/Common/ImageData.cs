@@ -6,12 +6,24 @@ namespace HyperCore.Common
 	public class ImageData
 	{
 		[Column(Name = "id", IsPrimaryKey = true)]
-		public string ID { get; set; }
+		public string ID
+		{
+			get;
+			set;
+		}
 
 		[Column(Name = "data")]
-		public byte[] Data { get; set; }
+		public byte[] Data
+		{
+			get;
+			set;
+		}
 
 		[Column(Name = "length")]
-		public int Length { get; set; }
+		public int Length
+		{
+			get;
+			set;
+		}
 	}
 }

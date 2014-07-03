@@ -28,19 +28,31 @@ namespace HyperCore.Common
 		/// <summary>
 		/// Type of the format
 		/// </summary>
-		public FORMAT Type { get; set; }
+		public FORMAT Type
+		{
+			get;
+			set;
+		}
 
 		[XmlArray("sets"), XmlArrayItem("set")]
 		/// <summary>
 		/// A list that contains names of all legal sets
 		/// </summary>
-		public List<string> LegalSets { get; set; }
+		public List<string> LegalSets
+		{
+			get;
+			set;
+		}
 
 		[XmlArray("banned"), XmlArrayItem("name")]
 		/// <summary>
 		/// A list that contains names of all banned cards
 		/// </summary>
-		public List<string> BannedCards { get; set; }
+		public List<string> BannedCards
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Initialize with parameters

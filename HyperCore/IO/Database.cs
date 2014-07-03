@@ -79,12 +79,19 @@ namespace HyperCore.IO
 			}
 		}
 
+		private Database() { }
+
+		/// <summary>
+		/// Single Instance
+		/// </summary>
+		public static readonly Database Instance = new Database();
+
 		/// <summary>
 		/// Load cards
 		/// </summary>
 		/// <param name="xmlPath"></param>
 		/// <returns></returns>
-		public static IEnumerable<Card> LoadCards(string xmlPath)
+		public IEnumerable<Card> LoadCards(string xmlPath)
 		{
 			try
 			{
@@ -106,7 +113,7 @@ namespace HyperCore.IO
 		/// Load cards form local db
 		/// </summary>
 		/// <returns></returns>
-		public static IEnumerable<Card> LoadCards()
+		public IEnumerable<Card> LoadCards()
 		{
 			try
 			{
@@ -124,7 +131,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="xmlPath"></param>
 		/// <returns></returns>
-		public static IEnumerable<Format> LoadFormats(string xmlPath)
+		public IEnumerable<Format> LoadFormats(string xmlPath)
 		{
 			try
 			{
@@ -147,7 +154,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="xmlPath"></param>
 		/// <returns></returns>
-		public static IEnumerable<string> LoadSets(string xmlPath)
+		public IEnumerable<string> LoadSets(string xmlPath)
 		{
 			try
 			{
@@ -166,10 +173,28 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
+		/// Load sets form database
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<SetInfo> LoadSets()
+		{
+			try
+			{
+				SQLiteIO sql = new SQLiteIO();
+				return sql.LoadSetinfo();
+			}
+			catch (Exception ex)
+			{
+				throw new IOFileException("IO Error happended when loading set database", ex);
+			}
+		}
+
+
+		/// <summary>
 		/// Create empty databse file
 		/// </summary>
 		/// <param name="xmlPath"></param>
-		private static void Create(string xmlPath)
+		private void Create(string xmlPath)
 		{
 			try
 			{
@@ -194,7 +219,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <param name="xmlPath"></param>
-		public static void Save(IEnumerable<Card> cards, string xmlPath)
+		public void Save(IEnumerable<Card> cards, string xmlPath)
 		{
 			if (!File.Exists(xmlPath))
 			{
@@ -244,7 +269,7 @@ namespace HyperCore.IO
 		/// Save cards to local db
 		/// </summary>
 		/// <param name="cards"></param>
-		public static void Save(IEnumerable<Card> cards)
+		public void Save(IEnumerable<Card> cards)
 		{
 			try
 			{
@@ -262,7 +287,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="formats"></param>
 		/// <param name="xmlPath"></param>
-		public static void Save(IEnumerable<Format> formats, string xmlPath)
+		public void Save(IEnumerable<Format> formats, string xmlPath)
 		{
 			if (!File.Exists(xmlPath))
 			{
@@ -299,7 +324,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="sets"></param>
 		/// <param name="xmlPath"></param>
-		public static void Save(IEnumerable<string> sets, string xmlPath)
+		public void Save(IEnumerable<string> sets, string xmlPath)
 		{
 			if (!File.Exists(xmlPath))
 			{
@@ -332,12 +357,60 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
+		/// Save set list
+		/// </summary>
+		/// <param name="sets"></param>
+		public void Save(IEnumerable<string> sets)
+		{
+			var setinfo = new List<SetInfo>();
+
+			try
+			{
+				foreach (var set in sets)
+					{
+						setinfo.Add(new SetInfo()
+						{
+							SetName = set.SplitSetName()[0],
+							SetCode = set.SplitSetName()[1],
+							LastUpdate = DateTime.MinValue,
+							Local = false
+						});
+					}
+
+				SQLiteIO sql = new SQLiteIO();
+				sql.Insert(setinfo);
+			}
+			catch (Exception ex)
+			{
+				throw new IOFileException("IO Error happended when saving sets database", ex);
+			}
+		}
+
+		/// <summary>
+		/// Update setinfo
+		/// </summary>
+		/// <param name="set"></param>
+		public void Update(string set)
+		{
+			var setinfo = new SetInfo()
+			{
+				SetName = set.SplitSetName()[0],
+				SetCode = set.SplitSetName()[1],
+				LastUpdate = DateTime.Now,
+				Local = true
+			};
+
+			SQLiteIO sql = new SQLiteIO();
+			sql.Update(setinfo);
+		}
+
+		/// <summary>
 		/// Serialize object to xmlNode
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <param name="rootName"></param>
 		/// <returns></returns>
-		private static XmlNode SerializeNode(Object obj, string rootName)
+		private XmlNode SerializeNode(Object obj, string rootName)
 		{
 			using (var strw = new StringWriter())
 			{
@@ -362,19 +435,19 @@ namespace HyperCore.IO
 		/// Grab a card's images from online to local
 		/// </summary>
 		/// <param name="card"></param>
-		public static void GrabImage(Card card)
+		public void GrabImage(Card card)
 		{
 			try
 			{
 				foreach (string id in card.GetIDs())
 				{
-					var data = DownloadImage.Download(id);
+					var data = DownloadImage.Instance.Download(id);
 					SaveImage(id, data);
 				}
 
 				foreach (string id in card.GetzIDs())
 				{
-					var data = DownloadImage.Download(id);
+					var data = DownloadImage.Instance.Download(id);
 					SaveImage(id, data);
 				}
 			}
@@ -389,7 +462,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="data"></param>
-		private static bool SaveImage(string id, byte[] data)
+		private bool SaveImage(string id, byte[] data)
 		{
 			SQLiteIO sql = new SQLiteIO();
 			return sql.Insert(id, data);
@@ -400,7 +473,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="card"></param>
 		/// <param name="path"></param>
-		public static void ReadImage(Card card, string path)
+		public void ReadImage(Card card, string path)
 		{
 			SQLiteIO sql = new SQLiteIO();
 			foreach (var id in card.GetIDs())
@@ -410,7 +483,7 @@ namespace HyperCore.IO
 			}
 		}
 
-		//public static void SaveAsJson(Card card, string filePath)
+		//public void SaveAsJson(Card card, string filePath)
 		//{
 		//	using (var stream = File.Open(filePath, FileMode.Create))
 		//	{
@@ -420,7 +493,7 @@ namespace HyperCore.IO
 		//	}
 		//}
 
-		//public static Card ReadCardFromJson(string filePath)
+		//public Card ReadCardFromJson(string filePath)
 		//{
 		//	using (var stream = File.Open(filePath, FileMode.Open))
 		//	{

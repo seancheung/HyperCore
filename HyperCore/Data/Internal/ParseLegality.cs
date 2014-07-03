@@ -7,21 +7,16 @@ namespace HyperCore.Data
 {
 	internal class ParseLegality
 	{
-		private ParseLegality()
-		{
-
-		}
-
 		/// <summary>
 		/// Fill card legality
 		/// </summary>
 		/// <param name="card"></param>
-		public static void Parse(Card card)
+		public void Parse(Card card)
 		{
 			string webdata;
 			try
 			{
-				webdata = Request.GetWebData(GetURL(card.ID));
+				webdata = Request.Instance.GetWebData(GetURL(card.ID));
 			}
 			catch
 			{
@@ -37,8 +32,8 @@ namespace HyperCore.Data
 			try
 			{
 				webdata = webdata.Substring(webdata.IndexOf("This card has restrictions in the following formats"),
-				webdata.IndexOf("For more information regarding each format and play style modifications")
-				- webdata.IndexOf("This card has restrictions in the following formats"));
+				                            webdata.IndexOf("For more information regarding each format and play style modifications")
+				                            - webdata.IndexOf("This card has restrictions in the following formats"));
 				while (webdata.Contains("<td style=\"text-align:center;\">"))
 				{
 					int num1 = webdata.IndexOf("<tr class=\"cardItem evenItem\">") + 30;
@@ -69,7 +64,7 @@ namespace HyperCore.Data
 		/// </summary>
 		/// <param name="id">Card ID</param>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL(string id)
+		private string GetURL(string id)
 		{
 			if (id.Contains("|"))
 			{

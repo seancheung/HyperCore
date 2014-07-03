@@ -61,7 +61,8 @@ namespace HyperCore {
         }
         
         /// <summary>
-        ///   查找类似 CREATE TABLE IF NOT EXISTS &apos;Card&apos;(&apos;id&apos; TEXT NOT NULL,&apos;zid&apos; TEXT,&apos;var&apos; TEXT,&apos;name&apos; TEXT NOT NULL,&apos;zname&apos; TEXT,&apos;set&apos; TEXT NOT NULL,&apos;setcode&apos; TEXT NOT NULL,&apos;color&apos; TEXT,&apos;colorcode&apos; TEXT,&apos;cost&apos; TEXT,&apos;cmc&apos; TEXT,&apos;type&apos; TEXT NOT NULL,&apos;ztype&apos; TEXT,&apos;typecode&apos; TEXT NOT NULL,&apos;pow&apos; TEXT,&apos;tgh&apos; TEXT,&apos;loyalty&apos; TEXT,&apos;text&apos; TEXT,&apos;ztext&apos; TEXT,&apos;flavor&apos; TEXT,&apos;zflavor&apos; TEXT,&apos;artist&apos; TEXT,&apos;rarity&apos; TEXT NOT NULL,&apos;raritycode&apos; TEXT NOT NULL,&apos;number&apos; TEXT NOT NULL,&apos;rulings&apos; TEXT,&apos;legality&apos; TEXT,&apos;rating&apos; TEXT,PRIMARY KEY(&apos;id&apos;)) 的本地化字符串。
+        ///   查找类似 CREATE TABLE IF NOT EXISTS &apos;Card&apos;(&apos;id&apos; TEXT NOT NULL,&apos;zid&apos; TEXT,&apos;var&apos; TEXT,&apos;name&apos; TEXT NOT NULL,&apos;zname&apos; TEXT,&apos;set&apos; TEXT NOT NULL,&apos;setcode&apos; TEXT NOT NULL,&apos;color&apos; TEXT,&apos;colorcode&apos; TEXT,&apos;cost&apos; TEXT,&apos;cmc&apos; TEXT,&apos;type&apos; TEXT NOT NULL,&apos;ztype&apos; TEXT,&apos;typecode&apos; TEXT NOT NULL,&apos;pow&apos; TEXT,&apos;tgh&apos; TEXT,&apos;loyalty&apos; TEXT,&apos;text&apos; TEXT,&apos;ztext&apos; TEXT,&apos;flavor&apos; TEXT,&apos;zflavor&apos; TEXT,&apos;artist&apos; TEXT,&apos;rarity&apos; TEXT NOT NULL,&apos;raritycode&apos; TEXT NOT NULL,&apos;number&apos; TEXT NOT NULL,&apos;rulings&apos; TEXT,&apos;legality&apos; TEXT,&apos;rating&apos; TEXT,PRIMARY KEY(&apos;id&apos;));
+        ///CRE [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string BuildCommand {
             get {
@@ -70,11 +71,20 @@ namespace HyperCore {
         }
         
         /// <summary>
+        ///   查找类似 Provider=Microsoft.Jet.OLEDB.4.0;Data Source=DATA.ac 的本地化字符串。
+        /// </summary>
+        internal static string ConnectionCommandAccess {
+            get {
+                return ResourceManager.GetString("ConnectionCommandAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 data source=DATA.db;password=5AEB55D5-F169-4EB2-A768-B20EBD20151E 的本地化字符串。
         /// </summary>
-        internal static string ConnectionCommand {
+        internal static string ConnectionCommandSQLite {
             get {
-                return ResourceManager.GetString("ConnectionCommand", resourceCulture);
+                return ResourceManager.GetString("ConnectionCommandSQLite", resourceCulture);
             }
         }
     }

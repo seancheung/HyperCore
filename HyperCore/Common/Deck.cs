@@ -16,7 +16,7 @@ namespace HyperCore.Common
 		}
 
 		/// <summary>
-		/// Use ObservableDictionary<TKey,TValue> if data binding is used, 
+		/// Use ObservableDictionary<TKey,TValue> if data binding is used,
 		/// otherwise a simple Dictionary<TKey,TValue> is proper.
 		/// Provide a comparer on instantiating
 		/// </summary>
@@ -27,7 +27,7 @@ namespace HyperCore.Common
 			set;
 		}
 		/// <summary>
-		/// Use ObservableDictionary<TKey,TValue> if data binding is used, 
+		/// Use ObservableDictionary<TKey,TValue> if data binding is used,
 		/// otherwise a simple Dictionary<TKey,TValue> is proper.
 		/// Provide a comparer on instantiating
 		/// </summary>

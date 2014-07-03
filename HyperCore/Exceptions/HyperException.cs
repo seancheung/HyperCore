@@ -10,7 +10,7 @@ namespace HyperCore.Exceptions
 		/// </summary>
 		public HyperException()
 		{
-			
+
 		}
 
 		/// <summary>
@@ -18,7 +18,7 @@ namespace HyperCore.Exceptions
 		/// </summary>
 		/// <param name="message">Exception message</param>
 		public HyperException(string message)
-			: base(message)
+		: base(message)
 		{
 
 		}
@@ -29,7 +29,7 @@ namespace HyperCore.Exceptions
 		/// <param name="message">Exception message</param>
 		/// <param name="inner">Inner exception</param>
 		public HyperException(string message, Exception inner)
-			: base(message, inner)
+		: base(message, inner)
 		{
 
 		}
@@ -41,7 +41,7 @@ namespace HyperCore.Exceptions
 		/// <param name="inner"></param>
 		/// <param name="args"></param>
 		public HyperException(string format, Exception inner, params object[] args)
-			: base(string.Format(format, args), inner)
+		: base(string.Format(format, args), inner)
 		{
 
 		}

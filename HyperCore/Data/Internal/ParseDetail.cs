@@ -8,21 +8,17 @@ namespace HyperCore.Data
 {
 	internal class ParseDetail
 	{
-		private ParseDetail()
-		{
-			
-		}
 
 		/// <summary>
 		/// Fill card details
 		/// </summary>
 		/// <param name="card">Card to process</param>
-		public static void Parse(Card card)
+		public void Parse(Card card)
 		{
 			string webdata;
 			try
 			{
-				webdata = Request.GetWebData(GetURL(card.ID));
+				webdata = Request.Instance.GetWebData(GetURL(card.ID));
 			}
 			catch
 			{
@@ -217,7 +213,7 @@ namespace HyperCore.Data
 				card.Text = string.Empty;
 			}
 			#endregion
-			
+
 
 			#region Card Flavor
 			if (webdata.IndexOf("Flavor Text:") > 0)
@@ -703,7 +699,7 @@ namespace HyperCore.Data
 					card.ColorBside = null;
 				}
 			}
-				
+
 		}
 
 		/// <summary>
@@ -711,7 +707,7 @@ namespace HyperCore.Data
 		/// </summary>
 		/// <param name="id">Card ID</param>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL(string id)
+		private string GetURL(string id)
 		{
 			if (id.Contains("|"))
 			{

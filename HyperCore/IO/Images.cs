@@ -102,14 +102,14 @@ namespace HyperCore.IO
 				if (prop != null)
 				{
 					sb.Append(
-					prop.GetValue(card, null) ?? arg
+					    prop.GetValue(card, null) ?? arg
 					);
 				}
 				else
 				{
 					sb.Append(arg);
 				}
-				
+
 			}
 
 			try

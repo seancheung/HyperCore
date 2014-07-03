@@ -11,7 +11,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="inputFiles">Full paths of files to merge</param>
 		/// <param name="outputFile">Output file full path</param>
-		public static void Merge(string[] inputFiles, string outputFile)
+		public void Merge(string[] inputFiles, string outputFile)
 		{
 			using (var fs = File.Create(outputFile))
 			{
@@ -48,7 +48,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="inputFile">File to split</param>
 		/// <param name="outputPath">Path to split to</param>
-		public static void Split(string inputFile, string outputPath)
+		public void Split(string inputFile, string outputPath)
 		{
 			using (var br = new BinaryReader(File.OpenRead(inputFile)))
 			{

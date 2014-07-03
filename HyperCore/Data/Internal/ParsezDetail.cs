@@ -8,17 +8,12 @@ namespace HyperCore.Data
 {
 	internal class ParsezDetail
 	{
-		private ParsezDetail()
-		{
-			
-		}
-
-		private static void GetzDetail(Card card)
+		private void GetzDetail(Card card)
 		{
 			string webdata;
 			try
 			{
-				webdata = Request.GetWebData(GetURL(card.zID));
+				webdata = Request.Instance.GetWebData(GetURL(card.zID));
 			}
 			catch
 			{
@@ -247,7 +242,7 @@ namespace HyperCore.Data
 					throw new ParseException(card, "Parsing Error happended when parsing card zsType:", ex);
 				}
 			}
-				
+
 		}
 
 		/// <summary>
@@ -255,7 +250,7 @@ namespace HyperCore.Data
 		/// </summary>
 		/// <param name="zid">Card Foreign ID</param>
 		/// <returns>the url for webrequesting</returns>
-		private static string GetURL(string zid)
+		private string GetURL(string zid)
 		{
 			if (zid.Contains("|"))
 			{
@@ -269,7 +264,7 @@ namespace HyperCore.Data
 		/// Fill card foreign info
 		/// </summary>
 		/// <param name="card">Card to process</param>
-		public static void Parse(Card card)
+		public void Parse(Card card)
 		{
 			if (!string.IsNullOrWhiteSpace(card.zID))
 			{

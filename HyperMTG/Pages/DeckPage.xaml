@@ -1,0 +1,123 @@
+﻿<Page x:Class="HyperMTG.DeckPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="640"
+	Title="DeckPage">
+    <Page.Resources>
+        <Style TargetType="TreeViewItem">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style x:Key="TreeViewCheckItemStyle" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Name}" Foreground="White" IsThreeState="True"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ContextMenu">
+                <Setter.Value>
+                    <ContextMenu>
+                        <MenuItem Header="Select All"/>
+                        <MenuItem Header="Select None"/>
+                        <MenuItem Header="Select Inverse"/>
+                    </ContextMenu>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Background" Value="#80000000"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="#80000000"/>
+        </Style>
+    </Page.Resources>
+    <Page.Background>
+        <ImageBrush ImageSource="/HyperMTG;component/Resources/112568.jpg" Stretch="UniformToFill"/>
+    </Page.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Menu Background="#98FFFFFF">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" />
+                <MenuItem Header="_Open" />
+                <Separator />
+                <MenuItem Header="_Save" />
+                <MenuItem Header="_Save As...">
+                    <MenuItem Header="HyperDeck" />
+                    <MenuItem Header="Magic Workstation" />
+                    <MenuItem Header="Virtual Playtable" />
+                    <MenuItem Header="Mage" />
+                    <MenuItem Header="MO/Apprent" />
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Quit" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="Import From Clipboard" />
+                <MenuItem Header="Copy To Clipboard" />
+            </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="Analyze" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About" />
+            </MenuItem>
+            <MenuItem Header="Home" />
+        </Menu>
+        <StatusBar Background="#98FFFFFF" Grid.Row="2">
+            <Label Content="Total Sets:"/>
+            <Separator/>
+            <Label Content="Total Cards:"/>
+        </StatusBar>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBox Margin="6,9" Background="#80000000" BorderThickness="0" Foreground="White"/>
+                <Button Width="20" Height="20" HorizontalAlignment="Right" Margin="6"/>
+                <TreeView Grid.Row="1" Background="Transparent" BorderThickness="0">
+                    <TreeViewItem Header="Filter">
+                        <TreeViewItem Name="treeViewFormat" Header="Format" Style="{StaticResource TreeViewCheckItemStyle}"/>
+                        <TreeViewItem Name="treeViewColor" Header="Color"  Style="{StaticResource TreeViewCheckItemStyle}"/>
+                        <TreeViewItem Name="treeViewType" Header="Type"  Style="{StaticResource TreeViewCheckItemStyle}"/>
+                        <TreeViewItem Header="Cost">
+                            <Slider Maximum="7" Minimum="0" SmallChange="1" TickPlacement="TopLeft" Width="120" AutoToolTipPlacement="TopLeft" Cursor="Hand"/>
+                        </TreeViewItem>
+                        <TreeViewItem Name="treeViewRarity" Header="Rarity"  Style="{StaticResource TreeViewCheckItemStyle}"/>
+                        <TreeViewItem Header="Power">
+                            <Slider Maximum="10" Minimum="0" SmallChange="1" TickPlacement="TopLeft" Width="120" AutoToolTipPlacement="TopLeft" Cursor="Hand"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Toghness">
+                            <Slider Maximum="10" Minimum="0" SmallChange="1" TickPlacement="TopLeft" Width="120" AutoToolTipPlacement="TopLeft" Cursor="Hand"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Rating">
+                            <Slider Maximum="5" Minimum="0" SmallChange="0.5" TickPlacement="TopLeft" Width="120" AutoToolTipPlacement="TopLeft" Cursor="Hand" TickFrequency="0.5" LargeChange="0.5"/>
+                        </TreeViewItem>
+                    </TreeViewItem>
+                    <TreeViewItem Name="treeViewSet" Header="Set" Style="{StaticResource TreeViewCheckItemStyle}"/>
+                </TreeView>
+            </Grid>
+            <ListView Grid.Column="1" Margin="1"  Background="#98FFFFFF" BorderThickness="0"/>
+            <ListView Grid.Column="3" Margin="1" Background="#80000000" BorderThickness="0"/>
+        </Grid>
+    </Grid>
+</Page>

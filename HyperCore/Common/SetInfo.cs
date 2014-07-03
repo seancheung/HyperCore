@@ -7,12 +7,36 @@ namespace HyperCore.Common
 	public class SetInfo
 	{
 		[Column(Name = "SetName", IsPrimaryKey = true)]
-		public string SetName { get; set; }
+		public string SetName
+		{
+			get;
+			set;
+		}
 		[Column(Name = "SetCode")]
-		public string SetCode { get; set; }
+		public string SetCode
+		{
+			get;
+			set;
+		}
 		[Column(Name = "LastUpdate")]
-		public DateTime LastUpdate { get; set; }
+		public DateTime LastUpdate
+		{
+			get;
+			set;
+		}
 		[Column(Name = "Local")]
-		public bool Local { get; set; }
+		public bool Local
+		{
+			get;
+			set;
+		}
+
+		public string FullName
+		{
+			get
+			{
+				return String.Format("{0}({1})", SetName, SetCode);
+			}
+		}
 	}
 }
