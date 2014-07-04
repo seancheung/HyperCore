@@ -52,7 +52,7 @@ namespace HyperCore.Data
 			#region zName
 			try
 			{
-				int num3 = webdata.IndexOf("<div class=\"value\">", webdata.IndexOf("Card Name:")) + 20;
+				int num3 = webdata.IndexOf("<div class=\"name\">", webdata.IndexOf("Card Name:")) + 20;
 				int num4 = webdata.IndexOf("</div>", num3);
 				card.zName = webdata.Substring(num3, num4 - num3).Trim();
 			}
@@ -65,7 +65,7 @@ namespace HyperCore.Data
 			#region zType
 			try
 			{
-				int num5 = webdata.IndexOf("<div class=\"value\">", webdata.IndexOf("Types:")) + 20;
+				int num5 = webdata.IndexOf("<div class=\"name\">", webdata.IndexOf("Types:")) + 20;
 				int num6 = webdata.IndexOf("</div>", num5);
 				card.zType = webdata.Substring(num5, num6 - num5).Replace("-", string.Empty).Replace(" ", string.Empty).Trim();
 			}
@@ -143,7 +143,7 @@ namespace HyperCore.Data
 				#region zbName
 				try
 				{
-					int num15 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Card Name:")) + 20;
+					int num15 = webdata.IndexOf("<div class=\"name\">", webdata.LastIndexOf("Card Name:")) + 20;
 					int num16 = webdata.IndexOf("</div>", num15);
 					card.zName = String.Format("{0}|{1}", card.zName, webdata.Substring(num15, num16 - num15).Trim());
 				}
@@ -156,7 +156,7 @@ namespace HyperCore.Data
 				#region zbType
 				try
 				{
-					int num17 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Types:")) + 20;
+					int num17 = webdata.IndexOf("<div class=\"name\">", webdata.LastIndexOf("Types:")) + 20;
 					int num18 = webdata.IndexOf("</div>", num17);
 					card.zType = String.Format("{0}|{1}", card.zType, webdata.Substring(num17, num18 - num17).Replace("-", string.Empty).Replace(" ", string.Empty).Trim());
 				}
@@ -233,7 +233,7 @@ namespace HyperCore.Data
 			{
 				try
 				{
-					int num17 = webdata.IndexOf("<div class=\"value\">", webdata.LastIndexOf("Types:")) + 20;
+					int num17 = webdata.IndexOf("<div class=\"name\">", webdata.LastIndexOf("Types:")) + 20;
 					int num18 = webdata.IndexOf("</div>", num17);
 					card.zType = String.Format("{0}|{1}", card.zType, webdata.Substring(num17, num18 - num17).Replace("-", string.Empty).Replace(" ", string.Empty).Trim());
 				}

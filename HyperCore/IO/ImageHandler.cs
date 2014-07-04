@@ -1,27 +1,29 @@
-﻿using System;
+﻿using HyperCore.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using HyperCore.Common;
-using System.Reflection;
+using HyperCore.Utilities;
+using HyperCore.Data;
+using System.IO;
 
 namespace HyperCore.IO
 {
 	public class ImageHandler
 	{
 
-		private ZipComp zipComp;
+		private DotNetZipIO zipComp;
 
 		/// <summary>
 		/// Initializes a new instance of the Images class.
 		/// </summary>
 		public ImageHandler(string srcPath, string tmpPath)
 		{
-			zipComp = new ZipComp(srcPath, tmpPath);
+			zipComp = new DotNetZipIO(srcPath, tmpPath);
 		}
 
 		/// <summary>
-		/// Download image
+		/// DownloadBytes image
 		/// </summary>
 		/// <param name="card"></param>
 		/// <returns></returns>
@@ -40,7 +42,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Download images
+		/// DownloadBytes images
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <returns>Failed cards</returns>
@@ -129,7 +131,7 @@ namespace HyperCore.IO
 		/// Rename cards by custom expression
 		/// </summary>
 		/// <param name="cards"></param>
-		/// <param name="args"></param>
+		/// <param name="args">Rename expression, like 'setcode - id(number).name'</param>
 		/// <returns>Failed cards</returns>
 		public IEnumerable<Card> Rename(IEnumerable<Card> cards, params string[] args)
 		{
@@ -139,6 +141,82 @@ namespace HyperCore.IO
 				{
 					yield return card;
 				}
+			}
+		}
+
+		/// <summary>
+		/// Grab a card's images from online to local
+		/// </summary>
+		/// <param name="card"></param>
+		public void GrabImage(Card card)
+		{
+			try
+			{
+				foreach (string id in card.GetIDs())
+				{
+					var data = DownloadImage.Instance.DownloadBytes(id);
+					SaveImage(id, data);
+				}
+
+				foreach (string id in card.GetzIDs())
+				{
+					var data = DownloadImage.Instance.DownloadBytes(id);
+					SaveImage(id, data);
+				}
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		/// <summary>
+		/// Save byte array into database
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="data"></param>
+		private bool SaveImage(string id, byte[] data)
+		{
+			SQLiteIO sql = new SQLiteIO();
+			return sql.Insert(id, data);
+		}
+
+		/// <summary>
+		/// Read card images to provided path
+		/// </summary>
+		/// <param name="card"></param>
+		/// <param name="path"></param>
+		public void ReadImages(Card card, string path)
+		{
+			SQLiteIO sql = new SQLiteIO();
+			foreach (var id in card.GetIDs())
+			{
+				var bytes = sql.LoadFile(id);
+				if (bytes != null)
+				{
+					File.WriteAllBytes(String.Format("{0}/{1}.jpg", path, id), bytes);
+				}
+				
+			}
+		}
+
+		/// <summary>
+		/// Read Read card images to streams
+		/// </summary>
+		/// <param name="card"></param>
+		/// <returns></returns>
+		public IEnumerable<Stream> ReadImages(Card card)
+		{
+			SQLiteIO sql = new SQLiteIO();
+			foreach (var id in card.GetIDs())
+			{
+				var bytes = sql.LoadFile(id);
+				if (bytes == null)
+				{
+					yield break;
+				}
+				
+				yield return new MemoryStream(bytes);
 			}
 		}
 	}

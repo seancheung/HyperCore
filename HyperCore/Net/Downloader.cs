@@ -17,7 +17,7 @@ namespace HyperCore.Net
 		/// <summary>
 		/// Downlaod file from the provided url and store it to the provided path
 		/// </summary>
-		/// <param name="url">Download link</param>
+		/// <param name="url">DownloadBytes link</param>
 		/// <param name="path">Stroring path</param>
 		public void Downloadfile(string url, string path)
 		{
@@ -36,7 +36,7 @@ namespace HyperCore.Net
 		}
 
 		/// <summary>
-		/// Download file into byte array
+		/// DownloadBytes file into byte array
 		/// </summary>
 		/// <param name="url"></param>
 		/// <returns></returns>

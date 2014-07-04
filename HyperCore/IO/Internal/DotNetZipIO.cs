@@ -7,7 +7,7 @@ using System.IO;
 
 namespace HyperCore.IO
 {
-	internal class ZipComp
+	internal class DotNetZipIO
 	{
 		/// <summary>
 		/// Zip process locker
@@ -37,7 +37,7 @@ namespace HyperCore.IO
 		/// </summary>
 		/// <param name="srcPath">Image folder path</param>
 		/// <param name="tmpPath">Temp files path</param>
-		public ZipComp(string srcPath, string tmpPath)
+		public DotNetZipIO(string srcPath, string tmpPath)
 		{
 			SrcPath = srcPath;
 			TmpPath = tmpPath;
@@ -112,7 +112,7 @@ namespace HyperCore.IO
 					{
 						lock (_lock)
 						{
-							DownloadImage.Instance.Download(id, TmpPath);
+							DownloadImage.Instance.DownloadBytes(id, TmpPath);
 							zipFile.AddFile(String.Format("{0}{1}.jpg", TmpPath, id), "\\");
 							zipFile.Save();
 						}

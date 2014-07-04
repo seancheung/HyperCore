@@ -3,31 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:core="clr-namespace:HyperCore.Common;assembly=HyperCore"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="640"
 	Title="DeckPage">
     <Page.Resources>
         <Style TargetType="TreeViewItem">
             <Setter Property="Foreground" Value="White"/>
-        </Style>
-        <Style x:Key="TreeViewCheckItemStyle" TargetType="{x:Type TreeViewItem}">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <CheckBox Content="{Binding Name}" Foreground="White" IsThreeState="True"/>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ContextMenu">
-                <Setter.Value>
-                    <ContextMenu>
-                        <MenuItem Header="Select All"/>
-                        <MenuItem Header="Select None"/>
-                        <MenuItem Header="Select Inverse"/>
-                    </ContextMenu>
-                </Setter.Value>
-            </Setter>
         </Style>
         <Style TargetType="ListViewItem">
             <Setter Property="Background" Value="#80000000"/>
@@ -76,9 +59,13 @@
             <MenuItem Header="Home" />
         </Menu>
         <StatusBar Background="#98FFFFFF" Grid.Row="2">
-            <Label Content="Total Sets:"/>
+            <Label Content="Result:"/>
+            <Label Content="{Binding ElementName=listView_Result, Path=Items.Count}"/>
             <Separator/>
-            <Label Content="Total Cards:"/>
+            <Label Content="Mainboard:"/>
+            <Label Content="{Binding ElementName=listView_Main, Path=Items.Count}"/>
+            <Separator/>
+            <Label Content="Sideboard:"/>
         </StatusBar>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -95,14 +82,50 @@
                 <TextBox Margin="6,9" Background="#80000000" BorderThickness="0" Foreground="White"/>
                 <Button Width="20" Height="20" HorizontalAlignment="Right" Margin="6"/>
                 <TreeView Grid.Row="1" Background="Transparent" BorderThickness="0">
+                    <TreeView.Resources>
+                        <Style x:Key="TreeViewCheckItemStyle" TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="ItemTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding}" Foreground="White" IsThreeState="True"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="ContextMenu">
+                                <Setter.Value>
+                                    <ContextMenu>
+                                        <MenuItem Header="Select All"/>
+                                        <MenuItem Header="Select None"/>
+                                        <MenuItem Header="Select Inverse"/>
+                                    </ContextMenu>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <ObjectDataProvider x:Key="colors" MethodName="GetNames" ObjectType="{x:Type sys:Enum}">
+                            <ObjectDataProvider.MethodParameters>
+                                <x:Type TypeName="core:COLOR"/>
+                            </ObjectDataProvider.MethodParameters>
+                        </ObjectDataProvider>
+                        <ObjectDataProvider x:Key="types" MethodName="GetNames" ObjectType="{x:Type sys:Enum}">
+                            <ObjectDataProvider.MethodParameters>
+                                <x:Type TypeName="core:TYPE"/>
+                            </ObjectDataProvider.MethodParameters>
+                        </ObjectDataProvider>
+                        <ObjectDataProvider x:Key="rarities" MethodName="GetNames" ObjectType="{x:Type sys:Enum}">
+                            <ObjectDataProvider.MethodParameters>
+                                <x:Type TypeName="core:RARITY"/>
+                            </ObjectDataProvider.MethodParameters>
+                        </ObjectDataProvider>
+                    </TreeView.Resources>
                     <TreeViewItem Header="Filter">
                         <TreeViewItem Name="treeViewFormat" Header="Format" Style="{StaticResource TreeViewCheckItemStyle}"/>
-                        <TreeViewItem Name="treeViewColor" Header="Color"  Style="{StaticResource TreeViewCheckItemStyle}"/>
-                        <TreeViewItem Name="treeViewType" Header="Type"  Style="{StaticResource TreeViewCheckItemStyle}"/>
+                        <TreeViewItem Name="treeViewColor" Header="Color"  Style="{StaticResource TreeViewCheckItemStyle}" ItemsSource="{Binding Source={StaticResource colors}}"/>
+                        <TreeViewItem Name="treeViewType" Header="Type"  Style="{StaticResource TreeViewCheckItemStyle}" ItemsSource="{Binding Source={StaticResource types}}"/>
                         <TreeViewItem Header="Cost">
-                            <Slider Maximum="7" Minimum="0" SmallChange="1" TickPlacement="TopLeft" Width="120" AutoToolTipPlacement="TopLeft" Cursor="Hand"/>
+                            <Slider Maximum="10" Minimum="0" SmallChange="1" TickPlacement="TopLeft" Width="120" AutoToolTipPlacement="TopLeft" Cursor="Hand"/>
                         </TreeViewItem>
-                        <TreeViewItem Name="treeViewRarity" Header="Rarity"  Style="{StaticResource TreeViewCheckItemStyle}"/>
+                        <TreeViewItem Name="treeViewRarity" Header="Rarity"  Style="{StaticResource TreeViewCheckItemStyle}" ItemsSource="{Binding Source={StaticResource rarities}}"/>
                         <TreeViewItem Header="Power">
                             <Slider Maximum="10" Minimum="0" SmallChange="1" TickPlacement="TopLeft" Width="120" AutoToolTipPlacement="TopLeft" Cursor="Hand"/>
                         </TreeViewItem>
@@ -116,8 +139,8 @@
                     <TreeViewItem Name="treeViewSet" Header="Set" Style="{StaticResource TreeViewCheckItemStyle}"/>
                 </TreeView>
             </Grid>
-            <ListView Grid.Column="1" Margin="1"  Background="#98FFFFFF" BorderThickness="0"/>
-            <ListView Grid.Column="3" Margin="1" Background="#80000000" BorderThickness="0"/>
+            <ListView Name="listView_Result" Grid.Column="1" Margin="1"  Background="#98FFFFFF" BorderThickness="0"/>
+            <ListView Name="listView_Main" Grid.Column="3" Margin="1" Background="#80000000" BorderThickness="0"/>
         </Grid>
     </Grid>
 </Page>

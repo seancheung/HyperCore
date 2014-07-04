@@ -2,8 +2,8 @@ using System.Data.Linq.Mapping;
 
 namespace HyperCore.Common
 {
-	[Table(Name = "Image")]
-	public class ImageData
+	[Table(Name = "File")]
+	public class FileData
 	{
 		[Column(Name = "id", IsPrimaryKey = true)]
 		public string ID

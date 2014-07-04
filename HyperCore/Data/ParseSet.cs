@@ -39,14 +39,14 @@ namespace HyperCore.Data
 					throw new ParseException("Parsing Error happended when fetching Set list - step.1", ex);
 				}
 
-				while (webdata.Contains("value="))
+				while (webdata.Contains("name="))
 				{
 					string set = string.Empty;
 					try
 					{
 						int num = webdata.IndexOf("/en\">") + 5;
 						int num2 = webdata.IndexOf("</option>", num);
-						int num3 = webdata.IndexOf("<option value=") + 15;
+						int num3 = webdata.IndexOf("<option name=") + 15;
 						int num4 = webdata.IndexOf("/en\">", num3);
 						set = String.Format("{0}({1})", webdata.Substring(num, num2 - num), webdata.Substring(num3, num4 - num3).ToUpper());
 						webdata = webdata.Substring(num2);

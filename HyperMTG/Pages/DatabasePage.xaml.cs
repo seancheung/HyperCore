@@ -11,12 +11,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HyperCore.Common;
 
 namespace HyperMTG
 {
 
 	public partial class DatabasePage : Page
 	{
+		List<Card> Sets = new List<Card>();
+
 		public DatabasePage()
 		{
 			InitializeComponent();

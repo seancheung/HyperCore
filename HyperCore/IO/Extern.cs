@@ -394,97 +394,97 @@ namespace HyperCore.IO
 
 								switch (partID)
 								{
-								case 0:
-									if (deck.Comment == null)
-									{
-										deck.Comment = line;
-									}
-									else
-									{
-										deck.Comment += line;
-									}
-									break;
-								case 1:
-									var idxa = line.IndexOf("[");
-									var idxb = line.IndexOf("]");
-
-									if (idxa > 0 && idxb > idxa)
-									{
-										MWSCard card = new MWSCard();
-
-										var count = line.Remove(idxa).Trim();
-										card.Count = Convert.ToInt32(count);
-
-										var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
-										card.SetCode = setcode.Trim();
-
-										var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
-										card.Name = name.Trim();
-
-										deck.MainBoardSpells.Add(card);
-									}
-									break;
-								case 2:
-
-									idxa = line.IndexOf("[");
-									idxb = line.IndexOf("]");
-
-									if (idxa > 0 && idxb > idxa)
-									{
-										MWSCard card = new MWSCard();
-
-										var count = line.Remove(idxa).Trim();
-										card.Count = Convert.ToInt32(count);
-
-										var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
-										card.SetCode = setcode.Trim();
-
-										var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
-										card.Name = name.Trim();
-
-										var idxc = line.IndexOf("(");
-										var idxd = line.IndexOf(")");
-										if (idxc > 0 && idxd > idxc)
+									case 0:
+										if (deck.Comment == null)
 										{
-											var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc - 1) : string.Empty;
-											card.Var = var.Trim();
-											card.Name = name.Remove(name.IndexOf("(")).Trim();
+											deck.Comment = line;
 										}
-
-										deck.MainBoardLands.Add(card);
-									}
-									break;
-								case 3:
-									idxa = line.IndexOf("[");
-									idxb = line.IndexOf("]");
-
-									if (idxa > 0 && idxb > idxa)
-									{
-										MWSCard card = new MWSCard();
-
-										var count = line.Remove(idxa).Replace("SB:", string.Empty).Trim();
-										card.Count = Convert.ToInt32(count);
-
-										var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
-										card.SetCode = setcode.Trim();
-
-										var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
-										card.Name = name.Trim();
-
-										var idxc = line.IndexOf("(");
-										var idxd = line.IndexOf(")");
-										if (idxc > 0 && idxd > idxc)
+										else
 										{
-											var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc - 1) : string.Empty;
-											card.Var = var.Trim();
-											card.Name = name.Remove(name.IndexOf("(")).Trim();
+											deck.Comment += line;
 										}
+										break;
+									case 1:
+										var idxa = line.IndexOf("[");
+										var idxb = line.IndexOf("]");
 
-										deck.SideBoard.Add(card);
-									}
-									break;
-								default:
-									break;
+										if (idxa > 0 && idxb > idxa)
+										{
+											MWSCard card = new MWSCard();
+
+											var count = line.Remove(idxa).Trim();
+											card.Count = Convert.ToInt32(count);
+
+											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
+											card.SetCode = setcode.Trim();
+
+											var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
+											card.Name = name.Trim();
+
+											deck.MainBoardSpells.Add(card);
+										}
+										break;
+									case 2:
+
+										idxa = line.IndexOf("[");
+										idxb = line.IndexOf("]");
+
+										if (idxa > 0 && idxb > idxa)
+										{
+											MWSCard card = new MWSCard();
+
+											var count = line.Remove(idxa).Trim();
+											card.Count = Convert.ToInt32(count);
+
+											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
+											card.SetCode = setcode.Trim();
+
+											var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
+											card.Name = name.Trim();
+
+											var idxc = line.IndexOf("(");
+											var idxd = line.IndexOf(")");
+											if (idxc > 0 && idxd > idxc)
+											{
+												var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc - 1) : string.Empty;
+												card.Var = var.Trim();
+												card.Name = name.Remove(name.IndexOf("(")).Trim();
+											}
+
+											deck.MainBoardLands.Add(card);
+										}
+										break;
+									case 3:
+										idxa = line.IndexOf("[");
+										idxb = line.IndexOf("]");
+
+										if (idxa > 0 && idxb > idxa)
+										{
+											MWSCard card = new MWSCard();
+
+											var count = line.Remove(idxa).Replace("SB:", string.Empty).Trim();
+											card.Count = Convert.ToInt32(count);
+
+											var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
+											card.SetCode = setcode.Trim();
+
+											var name = idxb < line.Length ? line.Substring(idxb + 1) : string.Empty;
+											card.Name = name.Trim();
+
+											var idxc = line.IndexOf("(");
+											var idxd = line.IndexOf(")");
+											if (idxc > 0 && idxd > idxc)
+											{
+												var var = idxd - idxc > 1 ? line.Substring(idxc + 1, idxd - idxc - 1) : string.Empty;
+												card.Var = var.Trim();
+												card.Name = name.Remove(name.IndexOf("(")).Trim();
+											}
+
+											deck.SideBoard.Add(card);
+										}
+										break;
+									default:
+										break;
 								}
 
 							}
@@ -1177,23 +1177,23 @@ namespace HyperCore.IO
 			{
 				switch (fileType)
 				{
-				case FILETYPE.Virtual_Play_Table:
-					new VPT().Export(ConvertToVDeck(deck), path);
-					break;
-				case FILETYPE.Magic_Workstation:
-					new MWS().Export(ConvertToMDeck(deck), path);
-					break;
-				case FILETYPE.Mage:
-					new MAGE().Export(ConvertToGDeck(deck), path);
-					break;
-				case FILETYPE.Magic_Online:
-					new MO().Export(ConvertToODeck(deck), path);
-					break;
-				case FILETYPE.HyperDeck:
-					new Hyper().Export(ConvertToXDeck(deck), path);
-					break;
-				default:
-					throw new IOFileException(path, "File type not supported", null);
+					case FILETYPE.Virtual_Play_Table:
+						new VPT().Export(ConvertToVDeck(deck), path);
+						break;
+					case FILETYPE.Magic_Workstation:
+						new MWS().Export(ConvertToMDeck(deck), path);
+						break;
+					case FILETYPE.Mage:
+						new MAGE().Export(ConvertToGDeck(deck), path);
+						break;
+					case FILETYPE.Magic_Online:
+						new MO().Export(ConvertToODeck(deck), path);
+						break;
+					case FILETYPE.HyperDeck:
+						new Hyper().Export(ConvertToXDeck(deck), path);
+						break;
+					default:
+						throw new IOFileException(path, "File type not supported", null);
 				}
 			}
 			catch
@@ -1418,8 +1418,8 @@ namespace HyperCore.IO
 		{
 			try
 			{
-				var main = deck.MainBoard.Select(c => c.Key.ID + "#" + c.Value.ToString());
-				var side = deck.SideBoard.Select(c => c.Key.ID + "#" + c.Value.ToString());
+				var main = deck.MainBoard.Select(c => String.Format("{0}#{1}", c.Key.ID, c.Value));
+				var side = deck.SideBoard.Select(c => String.Format("{0}#{1}", c.Key.ID, c.Value));
 				Hyper.HyperDeck xdeck = new Hyper.HyperDeck(deck.Name, deck.Comment, deck.Format, deck.Mode, main, side);
 
 				return xdeck;

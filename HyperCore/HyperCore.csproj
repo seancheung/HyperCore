@@ -55,14 +55,11 @@
   <ItemGroup>
     <Compile Include="Common\Card.cs" />
     <Compile Include="Common\Deck.cs" />
-    <Compile Include="Common\FILETYPE.cs" />
-    <Compile Include="Common\FORMAT.cs" />
-    <Compile Include="Common\ImageData.cs" />
-    <Compile Include="Common\LANGUAGE.cs" />
-    <Compile Include="Common\MODE.cs" />
+    <Compile Include="Common\Format.cs" />
+    <Compile Include="Common\FileData.cs" />
+    <Compile Include="Common\GlobalProp.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\SetInfo.cs" />
-    <Compile Include="Common\WEBSITE.cs" />
     <Compile Include="Data\Internal\ParseDetail.cs" />
     <Compile Include="Data\Internal\ParseID.cs" />
     <Compile Include="Data\Internal\ParsezID.cs" />
@@ -70,6 +67,7 @@
     <Compile Include="Data\Internal\ParseEx.cs" />
     <Compile Include="Data\Internal\ParseLegality.cs" />
     <Compile Include="Data\ParseCard.cs" />
+    <Compile Include="Data\ParseDefault.cs" />
     <Compile Include="Data\ParseFormat.cs" />
     <Compile Include="Data\DownloadImage.cs" />
     <Compile Include="Data\ParseSet.cs" />
@@ -82,13 +80,13 @@
     <Compile Include="IO\AppData.cs" />
     <Compile Include="IO\Database.cs" />
     <Compile Include="IO\Extern.cs" />
-    <Compile Include="IO\Internal\GZipComp.cs" />
-    <Compile Include="IO\Images.cs" />
+    <Compile Include="IO\Internal\GZipIO.cs" />
+    <Compile Include="IO\ImageHandler.cs" />
     <Compile Include="IO\Internal\AccessIO.cs" />
     <Compile Include="IO\Internal\JsonIO.cs" />
-    <Compile Include="IO\Internal\Merger.cs" />
+    <Compile Include="IO\Internal\MergerIO.cs" />
     <Compile Include="IO\Internal\SQLiteIO.cs" />
-    <Compile Include="IO\Internal\ZipComp.cs" />
+    <Compile Include="IO\Internal\DotNetZipIO.cs" />
     <Compile Include="Net\Downloader.cs" />
     <Compile Include="Net\Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,9 +105,9 @@
     <Compile Include="Utilities\Spliter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="IO\Internal\DLL\Ionic.Zip.dll" />
-    <Content Include="IO\Internal\DLL\LitJson.dll" />
-    <Content Include="IO\Internal\DLL\System.Data.SQLite.dll" />
+    <None Include="IO\Internal\DLL\Ionic.Zip.dll" />
+    <None Include="IO\Internal\DLL\LitJson.dll" />
+    <None Include="IO\Internal\DLL\System.Data.SQLite.dll" />
     <None Include="Resources\ConnectionCommandAccess.txt" />
     <None Include="Resources\ConnectionCommandSQLite.txt" />
     <None Include="Resources\BuildCommand.txt" />

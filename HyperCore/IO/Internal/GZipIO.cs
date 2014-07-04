@@ -6,7 +6,7 @@ using System.IO.Compression;
 
 namespace HyperCore.IO
 {
-	internal class GZipComp
+	internal class GZipIO
 	{
 		/// <summary>
 		/// Compress target ByteArray

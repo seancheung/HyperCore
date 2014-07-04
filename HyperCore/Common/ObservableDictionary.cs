@@ -261,7 +261,7 @@ namespace HyperCore.Common
 		{
 			bool keyExists = _keyedEntryCollection.Contains(key);
 
-			// if identical key/value pair already exists, nothing to do
+			// if identical key/name pair already exists, nothing to do
 			if (keyExists && value.Equals((TValue)_keyedEntryCollection[key].Value))
 				return false;
 

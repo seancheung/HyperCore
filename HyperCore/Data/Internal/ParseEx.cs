@@ -1,5 +1,4 @@
 ﻿using HyperCore.Common;
-using HyperCore.Exceptions;
 using HyperCore.Utilities;
 using System;
 using System.Linq;
@@ -258,7 +257,7 @@ namespace HyperCore.Data
 			{
 				if (prop.CanWrite)
 				{
-					if (prop.GetValue(card, null) == string.Empty)
+					if (prop.GetValue(card, null).ToString() == string.Empty)
 					{
 						prop.SetValue(card, null, null);
 					}

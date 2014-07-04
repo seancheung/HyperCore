@@ -8,7 +8,7 @@ namespace HyperCore.Data
 	internal class ParsezID
 	{
 
-		private void GetzID(Card card, LANGUAGE lang)
+		private void GetzID(Card card,LANGUAGE lang)
 		{
 			string webdata;
 			try

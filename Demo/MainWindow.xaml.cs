@@ -311,7 +311,7 @@ namespace Demo
 				ParseCard.Instance.Parse(card, lang);
 				lock (_lock)
 				{
-					Database.Instance.GrabImage(card);
+					//Database.Instance.GrabImage(card);
 				}
 			}
 
@@ -716,7 +716,7 @@ namespace Demo
 
 		private void Button_Test(object sender, RoutedEventArgs e)
 		{
-			//Database.ReadImage(lvCards.SelectedValue as Card, Environment.CurrentDirectory);
+			//Database.ReadImages(lvCards.SelectedValue as Card, Environment.CurrentDirectory);
 			//MessageBox.Show("ok");
 
 		}

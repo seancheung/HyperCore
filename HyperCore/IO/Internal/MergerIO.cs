@@ -4,7 +4,7 @@ using System.IO;
 
 namespace HyperCore.IO
 {
-	internal class Merger
+	internal class MergerIO
 	{
 		/// <summary>
 		/// Merge multiple files

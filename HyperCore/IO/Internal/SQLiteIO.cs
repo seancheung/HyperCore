@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace HyperCore.IO
 {
-	public class SQLiteIO
+	internal class SQLiteIO
 	{
 		/// <summary>
 		/// Single instance of SQLiteConnection
@@ -25,7 +25,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Create Database and Table
+		/// CreateXmlData Database and Table
 		/// </summary>
 		private void Create()
 		{
@@ -98,8 +98,8 @@ namespace HyperCore.IO
 		{
 			using (var datacontext = new DataContext(conn))
 			{
-				var tab = datacontext.GetTable<ImageData>();
-				var compdata = new GZipComp().Compress(data);
+				var tab = datacontext.GetTable<FileData>();
+				var compdata = new GZipIO().Compress(data);
 				var que = tab.Where(i => i.ID == id);
 
 				if (que.Count() != 0)
@@ -107,7 +107,7 @@ namespace HyperCore.IO
 					return Update(id, data);
 				}
 
-				tab.InsertOnSubmit(new ImageData()
+				tab.InsertOnSubmit(new FileData()
 				{
 					ID = id,
 					Data = compdata,
@@ -150,7 +150,7 @@ namespace HyperCore.IO
 		{
 			using (var datacontext = new DataContext(conn))
 			{
-				var tab = datacontext.GetTable<ImageData>();
+				var tab = datacontext.GetTable<FileData>();
 				var que = tab.Where(i => i.ID == id);
 
 				if (que.Count() == 0)
@@ -200,8 +200,8 @@ namespace HyperCore.IO
 		{
 			using (var datacontext = new DataContext(conn))
 			{
-				var tab = datacontext.GetTable<ImageData>();
-				var compdata = new GZipComp().Compress(data);
+				var tab = datacontext.GetTable<FileData>();
+				var compdata = new GZipIO().Compress(data);
 				var que = tab.Where(i => i.ID == id);
 
 				if (que.Count() == 0)
@@ -282,7 +282,7 @@ namespace HyperCore.IO
 		{
 			using (var datacontext = new DataContext(conn))
 			{
-				var tab = datacontext.GetTable<ImageData>();
+				var tab = datacontext.GetTable<FileData>();
 				var datas = tab.Where(i => i.ID == id).ToArray();
 
 				if (datas.Count() != 1)
@@ -290,7 +290,7 @@ namespace HyperCore.IO
 					return null;
 				}
 
-				return new GZipComp().Decompress(datas[0].Data, datas[0].Length);
+				return new GZipIO().Decompress(datas[0].Data, datas[0].Length);
 			}
 		}
 

@@ -141,10 +141,9 @@
     <Resource Include="Resources\155049.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AppData.dat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Resource Include="Resources\AppData.dat">
       <SubType>Designer</SubType>
-    </None>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HyperCore\HyperCore.csproj">

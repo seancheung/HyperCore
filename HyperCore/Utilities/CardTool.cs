@@ -284,7 +284,7 @@ namespace HyperCore.Utilities
 		}
 
 		/// <summary>
-		/// Copy a card's properties' values from a target card
+		/// Copy a card's properties' values from target card
 		/// </summary>
 		/// <param name="card"></param>
 		/// <param name="target"></param>

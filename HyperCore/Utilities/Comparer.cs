@@ -30,7 +30,7 @@ namespace HyperCore.Utilities
 		}
 
 		/// <summary>
-		/// Compare Enum on their integer value
+		/// Compare Enum on their integer name
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		public class EnumComparer<T> : IEqualityComparer<T> where T : struct

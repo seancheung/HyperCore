@@ -87,7 +87,7 @@ namespace HyperCore.IO
 		public static readonly Database Instance = new Database();
 
 		/// <summary>
-		/// Load cards
+		/// Load cards from file
 		/// </summary>
 		/// <param name="xmlPath"></param>
 		/// <returns></returns>
@@ -110,7 +110,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Load cards form local db
+		/// Load cards form database
 		/// </summary>
 		/// <returns></returns>
 		public IEnumerable<Card> LoadCards()
@@ -127,7 +127,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Load formats
+		/// Load formats from file
 		/// </summary>
 		/// <param name="xmlPath"></param>
 		/// <returns></returns>
@@ -150,7 +150,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Load sets
+		/// Load sets from file
 		/// </summary>
 		/// <param name="xmlPath"></param>
 		/// <returns></returns>
@@ -191,10 +191,10 @@ namespace HyperCore.IO
 
 
 		/// <summary>
-		/// Create empty databse file
+		/// CreateXmlData empty xml file
 		/// </summary>
 		/// <param name="xmlPath"></param>
-		private void Create(string xmlPath)
+		private void CreateXmlData(string xmlPath)
 		{
 			try
 			{
@@ -215,7 +215,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Save cards
+		/// Save cards to file
 		/// </summary>
 		/// <param name="cards"></param>
 		/// <param name="xmlPath"></param>
@@ -225,7 +225,7 @@ namespace HyperCore.IO
 			{
 				try
 				{
-					Create(xmlPath);
+					CreateXmlData(xmlPath);
 				}
 				catch
 				{
@@ -266,7 +266,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Save cards to local db
+		/// Save cards to database
 		/// </summary>
 		/// <param name="cards"></param>
 		public void Save(IEnumerable<Card> cards)
@@ -283,7 +283,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Save format list
+		/// Save formats to file
 		/// </summary>
 		/// <param name="formats"></param>
 		/// <param name="xmlPath"></param>
@@ -293,7 +293,7 @@ namespace HyperCore.IO
 			{
 				try
 				{
-					Create(xmlPath);
+					CreateXmlData(xmlPath);
 				}
 				catch
 				{
@@ -320,7 +320,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Save set list
+		/// Save sets to file
 		/// </summary>
 		/// <param name="sets"></param>
 		/// <param name="xmlPath"></param>
@@ -330,7 +330,7 @@ namespace HyperCore.IO
 			{
 				try
 				{
-					Create(xmlPath);
+					CreateXmlData(xmlPath);
 				}
 				catch
 				{
@@ -357,7 +357,7 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Save set list
+		/// Save sets to database
 		/// </summary>
 		/// <param name="sets"></param>
 		public void Save(IEnumerable<string> sets)
@@ -387,9 +387,9 @@ namespace HyperCore.IO
 		}
 
 		/// <summary>
-		/// Update setinfo
+		/// Update setinfo(mark as local, and update updatetime)
 		/// </summary>
-		/// <param name="set"></param>
+		/// <param name="set">Set full name with set code, like 'Theros(THS)'</param>
 		public void Update(string set)
 		{
 			var setinfo = new SetInfo()
@@ -431,61 +431,10 @@ namespace HyperCore.IO
 			}
 		}
 
-		/// <summary>
-		/// Grab a card's images from online to local
-		/// </summary>
-		/// <param name="card"></param>
-		public void GrabImage(Card card)
-		{
-			try
-			{
-				foreach (string id in card.GetIDs())
-				{
-					var data = DownloadImage.Instance.Download(id);
-					SaveImage(id, data);
-				}
-
-				foreach (string id in card.GetzIDs())
-				{
-					var data = DownloadImage.Instance.Download(id);
-					SaveImage(id, data);
-				}
-			}
-			catch
-			{
-				throw;
-			}
-		}
-
-		/// <summary>
-		/// Save byte array into database
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="data"></param>
-		private bool SaveImage(string id, byte[] data)
-		{
-			SQLiteIO sql = new SQLiteIO();
-			return sql.Insert(id, data);
-		}
-
-		/// <summary>
-		/// Read card to provided path
-		/// </summary>
-		/// <param name="card"></param>
-		/// <param name="path"></param>
-		public void ReadImage(Card card, string path)
-		{
-			SQLiteIO sql = new SQLiteIO();
-			foreach (var id in card.GetIDs())
-			{
-				var bytes = sql.LoadFile(id);
-				File.WriteAllBytes(String.Format("{0}/{1}.jpg", path, id), bytes);
-			}
-		}
 
 		//public void SaveAsJson(Card card, string filePath)
 		//{
-		//	using (var stream = File.Open(filePath, FileMode.Create))
+		//	using (var stream = File.Open(filePath, FileMode.CreateXmlData))
 		//	{
 		//		var sw = new StreamWriter(stream);
 		//		sw.Write(new JsonIO().Convert(card));

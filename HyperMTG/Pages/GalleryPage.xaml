@@ -7,6 +7,6 @@
       d:DesignHeight="300" d:DesignWidth="480"
 	Title="GalleryPage">
     <Page.Background>
-        <ImageBrush ImageSource="/HyperMTG;component/Resources/332670.jpg" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="/HyperMTG;component/Resources/301329.jpg" Stretch="UniformToFill"/>
     </Page.Background>
 </Page>
