@@ -32,7 +32,7 @@ namespace Demo
 		//Dowanloading thread
 		private Thread tdDownload;
 
-		public LANGUAGE lang = LANGUAGE.Chinese_Simplified;
+		public LANGUAGE lang = LANGUAGE.ChineseSimplified;
 
 		public MainWindow()
 		{
@@ -236,11 +236,11 @@ namespace Demo
 								status = true;
 								break;
 							case 2:
-								new Extern(DBPath).Export(deck, path, FILETYPE.Virtual_Play_Table);
+								new Extern(DBPath).Export(deck, path, FILETYPE.VirtualPlayTable);
 								status = true;
 								break;
 							case 3:
-								new Extern(DBPath).Export(deck, path, FILETYPE.Magic_Workstation);
+								new Extern(DBPath).Export(deck, path, FILETYPE.MagicWorkstation);
 								status = true;
 								break;
 							case 4:
@@ -248,7 +248,7 @@ namespace Demo
 								status = true;
 								break;
 							case 5:
-								new Extern(DBPath).Export(deck, path, FILETYPE.Magic_Online);
+								new Extern(DBPath).Export(deck, path, FILETYPE.MagicOnline);
 								status = true;
 								break;
 							default:

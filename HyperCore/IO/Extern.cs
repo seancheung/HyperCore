@@ -1045,7 +1045,7 @@ namespace HyperCore.IO
 			Deck deck = new Deck();
 			var ext = path.Substring(path.LastIndexOf(".") + 1).ToUpper();
 
-			if (ext == FILETYPE.Virtual_Play_Table.GetFileExt().ToUpper())
+			if (ext == FILETYPE.VirtualPlayTable.GetFileExt().ToUpper())
 			{
 				try
 				{
@@ -1072,7 +1072,7 @@ namespace HyperCore.IO
 					throw;
 				}
 			}
-			else if (ext == FILETYPE.Magic_Workstation.GetFileExt().ToUpper())
+			else if (ext == FILETYPE.MagicWorkstation.GetFileExt().ToUpper())
 			{
 				try
 				{
@@ -1177,16 +1177,16 @@ namespace HyperCore.IO
 			{
 				switch (fileType)
 				{
-					case FILETYPE.Virtual_Play_Table:
+					case FILETYPE.VirtualPlayTable:
 						new VPT().Export(ConvertToVDeck(deck), path);
 						break;
-					case FILETYPE.Magic_Workstation:
+					case FILETYPE.MagicWorkstation:
 						new MWS().Export(ConvertToMDeck(deck), path);
 						break;
 					case FILETYPE.Mage:
 						new MAGE().Export(ConvertToGDeck(deck), path);
 						break;
-					case FILETYPE.Magic_Online:
+					case FILETYPE.MagicOnline:
 						new MO().Export(ConvertToODeck(deck), path);
 						break;
 					case FILETYPE.HyperDeck:

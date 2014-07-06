@@ -65,9 +65,9 @@ namespace HyperCore.Data
 			GetzID(card, lang);
 
 			//use traditional chinese in case of simplified being unavailable
-			if (card.zID == string.Empty && lang == LANGUAGE.Chinese_Simplified)
+			if (card.zID == string.Empty && lang == LANGUAGE.ChineseSimplified)
 			{
-				GetzID(card, LANGUAGE.Chinese_Traditional);
+				GetzID(card, LANGUAGE.ChineseTraditional);
 			}
 
 		}

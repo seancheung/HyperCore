@@ -15,10 +15,10 @@ namespace HyperCore.Utilities
 
 			switch (lang)
 			{
-				case LANGUAGE.Chinese_Simplified:
+				case LANGUAGE.ChineseSimplified:
 					result = "cn";
 					break;
-				case LANGUAGE.Chinese_Traditional:
+				case LANGUAGE.ChineseTraditional:
 					result = "tw";
 					break;
 				case LANGUAGE.German:

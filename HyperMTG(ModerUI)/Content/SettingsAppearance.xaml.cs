@@ -23,9 +23,6 @@ namespace HyperMTG_ModerUI_.Content
 		public SettingsAppearance()
 		{
 			InitializeComponent();
-
-			// create and assign the appearance view model
-			this.DataContext = new SettingsAppearanceViewModel();
 		}
 	}
 }

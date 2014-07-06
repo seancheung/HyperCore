@@ -14,16 +14,16 @@ namespace HyperCore.Utilities
 			string ext = "deck";
 			switch (ft)
 			{
-				case FILETYPE.Virtual_Play_Table:
+				case FILETYPE.VirtualPlayTable:
 					break;
-				case FILETYPE.Magic_Workstation:
+				case FILETYPE.MagicWorkstation:
 					ext = "mwDeck";
 					break;
 				case FILETYPE.HyperDeck:
 					ext = "xDeck";
 					break;
 				case FILETYPE.Mage:
-				case FILETYPE.Magic_Online:
+				case FILETYPE.MagicOnline:
 					ext = "txt";
 					break;
 				default:

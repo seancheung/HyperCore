@@ -47,10 +47,10 @@ namespace HyperCore.Common
 	/// </summary>
 	public enum FILETYPE
 	{
-		Virtual_Play_Table,
-		Magic_Workstation,
+		VirtualPlayTable,
+		MagicWorkstation,
 		Mage,
-		Magic_Online,
+		MagicOnline,
 		HyperDeck
 	}
 
@@ -59,8 +59,8 @@ namespace HyperCore.Common
 	/// </summary>
 	public enum LANGUAGE
 	{
-		Chinese_Simplified,
-		Chinese_Traditional,
+		ChineseSimplified,
+		ChineseTraditional,
 		German,
 		French,
 		Italian,
