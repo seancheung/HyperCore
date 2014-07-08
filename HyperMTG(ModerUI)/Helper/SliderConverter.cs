@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace HyperMTG_ModerUI_
+namespace HyperMTG.Helper
 {
 	public class SliderConverter : IMultiValueConverter
 	{

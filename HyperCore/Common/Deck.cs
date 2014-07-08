@@ -57,8 +57,6 @@ namespace HyperCore.Common
 			set;
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
 		/// <summary>
 		/// Initializes a new instance of the Deck class.
 		/// </summary>

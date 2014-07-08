@@ -6,6 +6,21 @@ namespace GZipIO
 {
 	public class GZipCompressor : ICompressor
 	{
+		public string CompressorType
+		{
+			get { return "GZip"; }
+		}
+
+		public string Description
+		{
+			get { return "Compress/Decompress bytes"; }
+		}
+
+		public string Name
+		{
+			get { return "GZipCompressor"; }
+		}
+
 		public byte[] Compress(byte[] data)
 		{
 			MemoryStream ms = new MemoryStream();

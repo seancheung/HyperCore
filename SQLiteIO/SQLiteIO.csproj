@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SQLiteIO</RootNamespace>
-    <AssemblyName>SQLiteIO</AssemblyName>
+    <AssemblyName>HyperKore.SQLiteIO</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\HyperMTG%28ModerUI%29\bin\Debug\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,7 +50,8 @@
   <ItemGroup>
     <ProjectReference Include="..\HyperKore\HyperKore.csproj">
       <Project>{373d6166-5dd7-4f94-b1f3-87469d51ea75}</Project>
-      <Name>HyperKore</Name>
+      <Name>HyperKore %28HyperKore\HyperKore%29</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

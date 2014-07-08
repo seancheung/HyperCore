@@ -27,6 +27,21 @@ namespace SQLiteIO
 			Create();
 		}
 
+		public string DBType
+		{
+			get { return "SQLite"; }
+		}
+
+		public string Description
+		{
+			get { return "Store Card/Image/Set database"; }
+		}
+
+		public string Name
+		{
+			get { return "DBSQLite"; }
+		}
+
 		public bool Delete(Card card)
 		{
 			using (var datacontext = new DataContext(conn))

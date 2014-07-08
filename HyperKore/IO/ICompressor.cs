@@ -1,7 +1,13 @@
-﻿namespace HyperKore.IO
+﻿using HyperKore.Plugin;
+namespace HyperKore.IO
 {
-	public interface ICompressor
+	public interface ICompressor : IPlugin
 	{
+		/// <summary>
+		/// Type of the compressor
+		/// </summary>
+		string CompressorType { get; }
+
 		/// <summary>
 		/// Compress target byte array
 		/// </summary>

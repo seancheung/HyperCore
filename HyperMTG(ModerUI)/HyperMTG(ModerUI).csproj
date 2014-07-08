@@ -8,8 +8,8 @@
     <ProjectGuid>{C879C911-BA38-42D7-8E4E-CBAD19F64127}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HyperMTG_ModerUI_</RootNamespace>
-    <AssemblyName>HyperMTG%28ModerUI%29</AssemblyName>
+    <RootNamespace>HyperMTG</RootNamespace>
+    <AssemblyName>HyperMTG</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -67,7 +67,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Converters\SliderConverter.cs" />
+    <Compile Include="Helper\ObservableObject.cs" />
+    <Compile Include="Helper\PropertySupport.cs" />
+    <Compile Include="Helper\RelayCommand.cs" />
+    <Compile Include="Helper\SliderConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -142,14 +145,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HyperCore\HyperCore.csproj">
-      <Project>{31e320ff-fc81-4ea8-8136-328352497107}</Project>
-      <Name>HyperCore</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HyperKore\HyperKore.csproj">
+      <Project>{373d6166-5dd7-4f94-b1f3-87469d51ea75}</Project>
+      <Name>HyperKore %28HyperKore\HyperKore%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

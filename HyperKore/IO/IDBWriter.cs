@@ -1,10 +1,16 @@
 ﻿using HyperKore.Common;
+using HyperKore.Plugin;
 using System.Collections.Generic;
 
 namespace HyperKore.IO
 {
-	public interface IDBWriter
+	public interface IDBWriter : IPlugin
 	{
+		/// <summary>
+		/// Type of the Database
+		/// </summary>
+		string DBType { get; }
+
 		/// <summary>
 		/// Dlete card
 		/// </summary>

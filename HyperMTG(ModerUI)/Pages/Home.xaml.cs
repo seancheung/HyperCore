@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HyperMTG_ModerUI_.Pages
+namespace HyperMTG.Pages
 {
 	/// <summary>
 	/// Interaction logic for Home.xaml

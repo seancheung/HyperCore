@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace HyperMTG_ModerUI_.Content
+namespace HyperMTG.Content
 {
 	/// <summary>
 	/// A simple view model for configuring theme, font and accent colors.

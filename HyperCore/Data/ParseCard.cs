@@ -27,6 +27,7 @@ namespace HyperCore.Data
 			parsezDetailInstance = new ParsezDetail();
 			parseLegalityInstance = new ParseLegality();
 			parseExInstance = new ParseEx();
+			parseIDInstance = new ParseID();
 		}
 		/// <summary>
 		/// Get a list of cards with ID property filled

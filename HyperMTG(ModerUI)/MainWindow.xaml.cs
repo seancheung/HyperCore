@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HyperMTG_ModerUI_
+namespace HyperMTG
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
@@ -24,6 +24,11 @@ namespace HyperMTG_ModerUI_
 		public MainWindow()
 		{
 			InitializeComponent();
+			var plugins  = HyperKore.IO.IOHandler.Instance.GetPlugins<HyperKore.IO.ICompressor>();
+			foreach (var plugin in plugins)
+			{
+				MessageBox.Show(plugin.Name + plugin.Description);
+			}
 		}
 	}
 }
