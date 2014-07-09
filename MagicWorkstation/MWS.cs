@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace MagicWorkstation
 {
-	public class MWS : IDeckReader, IDeckWriter
+	public sealed class MWS : IDeckReader, IDeckWriter
 	{
 		public string DeckType
 		{
@@ -41,21 +41,21 @@ namespace MagicWorkstation
 				{
 					for (int i = 0; i < item.Count; i++)
 					{
-						deck.MainBoard.Add(ConvertToCard(item, database));
+						deck.MainBoard.Add(Convert(item, database));
 					}
 				}
 				foreach (var item in mdeck.MainBoardSpells)
 				{
 					for (int i = 0; i < item.Count; i++)
 					{
-						deck.MainBoard.Add(ConvertToCard(item, database));
+						deck.MainBoard.Add(Convert(item, database));
 					}
 				}
 				foreach (var item in mdeck.SideBoard)
 				{
 					for (int i = 0; i < item.Count; i++)
 					{
-						deck.SideBoard.Add(ConvertToCard(item, database));
+						deck.SideBoard.Add(Convert(item, database));
 					}
 				}
 
@@ -74,8 +74,8 @@ namespace MagicWorkstation
 		{
 			try
 			{
-				var vdeck = ConvertToMDeck(deck);
-				Export(vdeck, output);
+				var mdeck = Convert(deck);
+				Export(mdeck, output);
 				return true;
 			}
 			catch
@@ -84,7 +84,7 @@ namespace MagicWorkstation
 			}
 		}
 
-		private Card ConvertToCard(MWSCard card, IEnumerable<Card> database)
+		private Card Convert(MWSCard card, IEnumerable<Card> database)
 		{
 			var res = database.FirstOrDefault(c => card.SetCode == c.SetCode && card.Name == c.GetLegalName());
 			if (res != null)
@@ -93,11 +93,11 @@ namespace MagicWorkstation
 			}
 			else
 			{
-				throw new CardMissingXception("Card not found when loading vpt deck.", card.Name, card.SetCode);
+				throw new CardMissingXception("Card not found when loading MWS deck.", card.Name, card.SetCode);
 			}
 		}
 
-		private MWSDeck ConvertToMDeck(Deck deck)
+		private MWSDeck Convert(Deck deck)
 		{
 			try
 			{
@@ -160,7 +160,7 @@ namespace MagicWorkstation
 			}
 			catch (Exception ex)
 			{
-				throw new IOXception("IO Error happended when exporting mws file", ex);
+				throw new IOXception("IO Error happended when exporting MWS file", ex);
 			}
 		}
 
@@ -206,7 +206,7 @@ namespace MagicWorkstation
 									MWSCard card = new MWSCard();
 
 									var count = line.Remove(idxa).Trim();
-									card.Count = Convert.ToInt32(count);
+									card.Count = System.Convert.ToInt32(count);
 
 									var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
 									card.SetCode = setcode.Trim();
@@ -228,7 +228,7 @@ namespace MagicWorkstation
 									MWSCard card = new MWSCard();
 
 									var count = line.Remove(idxa).Trim();
-									card.Count = Convert.ToInt32(count);
+									card.Count = System.Convert.ToInt32(count);
 
 									var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
 									card.SetCode = setcode.Trim();
@@ -258,7 +258,7 @@ namespace MagicWorkstation
 									MWSCard card = new MWSCard();
 
 									var count = line.Remove(idxa).Replace("SB:", string.Empty).Trim();
-									card.Count = Convert.ToInt32(count);
+									card.Count = System.Convert.ToInt32(count);
 
 									var setcode = idxb - idxa > 1 ? line.Substring(idxa + 1, idxb - idxa - 1) : string.Empty;
 									card.SetCode = setcode.Trim();
@@ -310,114 +310,114 @@ namespace MagicWorkstation
 			}
 			catch (Exception ex)
 			{
-				throw new IOXception("IO Error happended when opening mws file", ex);
+				throw new IOXception("IO Error happended when opening MWS file", ex);
 			}
 		}
+	}
 
-		public class MWSCard
+	internal class MWSCard
+	{
+		/// <summary>
+		/// Initializes a new instance of the MWSCard class with parameters.
+		/// </summary>
+		public MWSCard(string setCode, string name, int count = 1, string @var = null)
 		{
-			/// <summary>
-			/// Initializes a new instance of the MWSCard class with parameters.
-			/// </summary>
-			public MWSCard(string setCode, string name, int count = 1, string @var = null)
-			{
-				Count = count;
-				SetCode = setCode;
-				Name = name;
-				Var = @var;
-			}
-
-			/// <summary>
-			/// Initializes a new instance of the MWSCard class.
-			/// </summary>
-			public MWSCard()
-			{
-				Count = 0;
-				SetCode = String.Empty;
-				Name = String.Empty;
-				Var = String.Empty;
-			}
-
-			public int Count
-			{
-				get;
-				set;
-			}
-
-			public string Name
-			{
-				get;
-				set;
-			}
-
-			public string SetCode
-			{
-				get;
-				set;
-			}
-
-			public string Var
-			{
-				get;
-				set;
-			}
+			Count = count;
+			SetCode = setCode;
+			Name = name;
+			Var = @var;
 		}
 
-		public class MWSDeck
+		/// <summary>
+		/// Initializes a new instance of the MWSCard class.
+		/// </summary>
+		public MWSCard()
 		{
-			/// <summary>
-			/// Initializes a new instance of the MWSDeck class with parameters.
-			/// </summary>
-			public MWSDeck(string name, IEnumerable<MWSCard> mainBoardLands, IEnumerable<MWSCard> mainBoardSpells, IEnumerable<MWSCard> sideBoard, string comment = "")
-			{
-				Name = name;
-				Comment = comment;
-				MainBoardLands = new List<MWSCard>(mainBoardLands);
-				MainBoardSpells = new List<MWSCard>(mainBoardSpells);
-				SideBoard = new List<MWSCard>(sideBoard);
-			}
+			Count = 0;
+			SetCode = String.Empty;
+			Name = String.Empty;
+			Var = String.Empty;
+		}
 
-			/// <summary>
-			/// Initializes a new instance of the MWSDeck class.
-			/// </summary>
-			public MWSDeck()
-			{
-				Name = String.Empty;
-				Comment = String.Empty;
-				MainBoardLands = new List<MWSCard>();
-				MainBoardSpells = new List<MWSCard>();
-				SideBoard = new List<MWSCard>();
-			}
+		public int Count
+		{
+			get;
+			set;
+		}
 
-			public string Comment
-			{
-				get;
-				set;
-			}
+		public string Name
+		{
+			get;
+			set;
+		}
 
-			public List<MWSCard> MainBoardLands
-			{
-				get;
-				set;
-			}
+		public string SetCode
+		{
+			get;
+			set;
+		}
 
-			public List<MWSCard> MainBoardSpells
-			{
-				get;
-				set;
-			}
+		public string Var
+		{
+			get;
+			set;
+		}
+	}
 
-			public string Name
-			{
-				get;
-				set;
-			}
+	internal class MWSDeck
+	{
+		/// <summary>
+		/// Initializes a new instance of the MWSDeck class with parameters.
+		/// </summary>
+		public MWSDeck(string name, IEnumerable<MWSCard> mainBoardLands, IEnumerable<MWSCard> mainBoardSpells, IEnumerable<MWSCard> sideBoard, string comment = "")
+		{
+			Name = name;
+			Comment = comment;
+			MainBoardLands = new List<MWSCard>(mainBoardLands);
+			MainBoardSpells = new List<MWSCard>(mainBoardSpells);
+			SideBoard = new List<MWSCard>(sideBoard);
+		}
 
-			public List<MWSCard> SideBoard
-			{
-				get;
-				set;
-			}
+		/// <summary>
+		/// Initializes a new instance of the MWSDeck class.
+		/// </summary>
+		public MWSDeck()
+		{
+			Name = String.Empty;
+			Comment = String.Empty;
+			MainBoardLands = new List<MWSCard>();
+			MainBoardSpells = new List<MWSCard>();
+			SideBoard = new List<MWSCard>();
+		}
+
+		public string Comment
+		{
+			get;
+			set;
+		}
+
+		public List<MWSCard> MainBoardLands
+		{
+			get;
+			set;
+		}
+
+		public List<MWSCard> MainBoardSpells
+		{
+			get;
+			set;
+		}
+
+		public string Name
+		{
+			get;
+			set;
+		}
+
+		public List<MWSCard> SideBoard
+		{
+			get;
+			set;
 		}
 	}
 }

@@ -18,5 +18,12 @@ namespace HyperKore.Xception
 			this.p2 = p2;
 			this.p3 = p3;
 		}
+
+		public CardMissingXception(string p1, string p2)
+		{
+			// TODO: Complete member initialization
+			this.p1 = p1;
+			this.p2 = p2;
+		}
 	}
 }

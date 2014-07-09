@@ -42,14 +42,14 @@ namespace VirtualPlaytable
 				{
 					for (int i = 0; i < item.Cards.Sum(c => c.Count); i++)
 					{
-						deck.MainBoard.Add(ConvertToCard(item, database));
+						deck.MainBoard.Add(Convert(item, database));
 					}
 				}
 				foreach (var item in vdeck.Sections[1].Items)
 				{
 					for (int i = 0; i < item.Cards.Sum(c => c.Count); i++)
 					{
-						deck.SideBoard.Add(ConvertToCard(item, database));
+						deck.SideBoard.Add(Convert(item, database));
 					}
 				}
 
@@ -77,7 +77,7 @@ namespace VirtualPlaytable
 		{
 			try
 			{
-				var vdeck = ConvertToVDeck(deck);
+				var vdeck = Convert(deck);
 				Export(vdeck, output);
 				return true;
 			}
@@ -87,7 +87,7 @@ namespace VirtualPlaytable
 			}
 		}
 
-		private Card ConvertToCard(VPTItem item, IEnumerable<Card> database)
+		private Card Convert(VPTItem item, IEnumerable<Card> database)
 		{
 			var res = database.FirstOrDefault(c => item.Cards.First().SetCode == c.SetCode && item.Name == c.GetLegalName());
 			if (res != null)
@@ -96,11 +96,11 @@ namespace VirtualPlaytable
 			}
 			else
 			{
-				throw new CardMissingXception("Card not found when loading vpt deck.", item.Name, item.Cards[0].SetCode);
+				throw new CardMissingXception("Card not found when loading VPT deck.", item.Name, item.Cards[0].SetCode);
 			}
 		}
 
-		private VPTDeck ConvertToVDeck(Deck deck)
+		private VPTDeck Convert(Deck deck)
 		{
 			try
 			{
@@ -150,7 +150,7 @@ namespace VirtualPlaytable
 			}
 			catch (Exception ex)
 			{
-				throw new IOXception("IO Error happended when exporting vpt file", ex);
+				throw new IOXception("IO Error happended when exporting VPT file", ex);
 			}
 		}
 
@@ -164,197 +164,197 @@ namespace VirtualPlaytable
 			}
 			catch (Exception ex)
 			{
-				throw new IOXception("IO Error happended when opening vpt file", ex);
+				throw new IOXception("IO Error happended when opening VPT file", ex);
 			}
 		}
+	}
 
-		[XmlType("card")]
-		public class VPTCard
+	[XmlType("card")]
+	public class VPTCard
+	{
+		/// <summary>
+		/// Initializes a new instance of the VPTCard class.
+		/// </summary>
+		public VPTCard(string setCode, string lang, string @var, int count)
 		{
-			/// <summary>
-			/// Initializes a new instance of the VPTCard class.
-			/// </summary>
-			public VPTCard(string setCode, string lang, string @var, int count)
-			{
-				SetCode = setCode;
-				Lang = lang;
-				Var = @var;
-				Count = count;
-			}
-
-			/// <summary>
-			/// Initializes a new instance of the VPTCard class.
-			/// </summary>
-			public VPTCard()
-			{
-				SetCode = String.Empty;
-				Lang = String.Empty;
-				Var = String.Empty;
-				Count = 0;
-			}
-
-			[XmlAttribute("count")]
-			public int Count
-			{
-				get;
-				set;
-			}
-
-			[XmlAttribute("lang")]
-			public string Lang
-			{
-				get;
-				set;
-			}
-
-			[XmlAttribute("set")]
-			public string SetCode
-			{
-				get;
-				set;
-			}
-
-			[XmlAttribute("ver")]
-			public string Var
-			{
-				get;
-				set;
-			}
+			SetCode = setCode;
+			Lang = lang;
+			Var = @var;
+			Count = count;
 		}
 
-		[XmlRoot("deck")]
-		public class VPTDeck
+		/// <summary>
+		/// Initializes a new instance of the VPTCard class.
+		/// </summary>
+		public VPTCard()
 		{
-			/// <summary>
-			/// Initializes a new instance of the VPTDeck class.
-			/// </summary>
-			public VPTDeck(string game, string mode, string format, string name, List<VPTSection> sections)
-			{
-				Game = game;
-				Mode = mode;
-				Format = format;
-				Name = name;
-				Sections = sections;
-			}
-
-			/// <summary>
-			/// Initializes a new instance of the VPTDeck class.
-			/// </summary>
-			public VPTDeck()
-			{
-				Game = String.Empty;
-				Mode = String.Empty;
-				Format = String.Empty;
-				Name = String.Empty;
-				Sections = new List<VPTSection>();
-			}
-
-			[XmlAttribute("format")]
-			public string Format
-			{
-				get;
-				set;
-			}
-
-			[XmlAttribute("game")]
-			public string Game
-			{
-				get;
-				set;
-			}
-
-			[XmlAttribute("mode")]
-			public string Mode
-			{
-				get;
-				set;
-			}
-
-			[XmlAttribute("name")]
-			public string Name
-			{
-				get;
-				set;
-			}
-
-			[XmlElement("section")]
-			public List<VPTSection> Sections
-			{
-				get;
-				set;
-			}
+			SetCode = String.Empty;
+			Lang = String.Empty;
+			Var = String.Empty;
+			Count = 0;
 		}
 
-		[XmlType("item")]
-		public class VPTItem
+		[XmlAttribute("count")]
+		public int Count
 		{
-			/// <summary>
-			/// Initializes a new instance of the VPTItem class.
-			/// </summary>
-			public VPTItem(string name, List<VPTCard> cards)
-			{
-				Name = name;
-				Cards = cards;
-			}
-
-			/// <summary>
-			/// Initializes a new instance of the VPTItem class.
-			/// </summary>
-			public VPTItem()
-			{
-				Name = String.Empty;
-				Cards = new List<VPTCard>();
-			}
-
-			[XmlElement("card")]
-			public List<VPTCard> Cards
-			{
-				get;
-				set;
-			}
-
-			[XmlAttribute("id")]
-			public string Name
-			{
-				get;
-				set;
-			}
+			get;
+			set;
 		}
 
-		[XmlType("section")]
-		public class VPTSection
+		[XmlAttribute("lang")]
+		public string Lang
 		{
-			/// <summary>
-			/// Initializes a new instance of the VPTSection class.
-			/// </summary>
-			public VPTSection(string iD, List<VPTItem> items)
-			{
-				ID = iD;
-				this.Items = items;
-			}
+			get;
+			set;
+		}
 
-			/// <summary>
-			/// Initializes a new instance of the VPTSection class.
-			/// </summary>
-			public VPTSection()
-			{
-				ID = String.Empty;
-				Items = new List<VPTItem>();
-			}
+		[XmlAttribute("set")]
+		public string SetCode
+		{
+			get;
+			set;
+		}
 
-			[XmlAttribute("id")]
-			public string ID
-			{
-				get;
-				set;
-			}
+		[XmlAttribute("ver")]
+		public string Var
+		{
+			get;
+			set;
+		}
+	}
 
-			[XmlElement("item")]
-			public List<VPTItem> Items
-			{
-				get;
-				set;
-			}
+	[XmlRoot("deck")]
+	public class VPTDeck
+	{
+		/// <summary>
+		/// Initializes a new instance of the VPTDeck class.
+		/// </summary>
+		public VPTDeck(string game, string mode, string format, string name, List<VPTSection> sections)
+		{
+			Game = game;
+			Mode = mode;
+			Format = format;
+			Name = name;
+			Sections = sections;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the VPTDeck class.
+		/// </summary>
+		public VPTDeck()
+		{
+			Game = String.Empty;
+			Mode = String.Empty;
+			Format = String.Empty;
+			Name = String.Empty;
+			Sections = new List<VPTSection>();
+		}
+
+		[XmlAttribute("format")]
+		public string Format
+		{
+			get;
+			set;
+		}
+
+		[XmlAttribute("game")]
+		public string Game
+		{
+			get;
+			set;
+		}
+
+		[XmlAttribute("mode")]
+		public string Mode
+		{
+			get;
+			set;
+		}
+
+		[XmlAttribute("name")]
+		public string Name
+		{
+			get;
+			set;
+		}
+
+		[XmlElement("section")]
+		public List<VPTSection> Sections
+		{
+			get;
+			set;
+		}
+	}
+
+	[XmlType("item")]
+	public class VPTItem
+	{
+		/// <summary>
+		/// Initializes a new instance of the VPTItem class.
+		/// </summary>
+		public VPTItem(string name, List<VPTCard> cards)
+		{
+			Name = name;
+			Cards = cards;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the VPTItem class.
+		/// </summary>
+		public VPTItem()
+		{
+			Name = String.Empty;
+			Cards = new List<VPTCard>();
+		}
+
+		[XmlElement("card")]
+		public List<VPTCard> Cards
+		{
+			get;
+			set;
+		}
+
+		[XmlAttribute("id")]
+		public string Name
+		{
+			get;
+			set;
+		}
+	}
+
+	[XmlType("section")]
+	public class VPTSection
+	{
+		/// <summary>
+		/// Initializes a new instance of the VPTSection class.
+		/// </summary>
+		public VPTSection(string iD, List<VPTItem> items)
+		{
+			ID = iD;
+			this.Items = items;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the VPTSection class.
+		/// </summary>
+		public VPTSection()
+		{
+			ID = String.Empty;
+			Items = new List<VPTItem>();
+		}
+
+		[XmlAttribute("id")]
+		public string ID
+		{
+			get;
+			set;
+		}
+
+		[XmlElement("item")]
+		public List<VPTItem> Items
+		{
+			get;
+			set;
 		}
 	}
 }
